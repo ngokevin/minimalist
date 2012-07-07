@@ -157,6 +157,13 @@ $(function(){
             }).on('mouseup click', function(){
                 buttonPressed = false;
             });
+
+            // Vertically align textfield
+            if($(window).width() > 800){
+                var $form = $('form.new_item');
+                var windowHeight = $(window).height();
+                $form.css('marginTop', (windowHeight - $form.height())/2.5);
+            }
         }
 
 

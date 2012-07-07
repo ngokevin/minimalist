@@ -8,8 +8,8 @@
 	@include box-sizing(border-box);
 }
 
-html{
-	overflow: hidden;
+html, body{
+	max-width: 100%;
 }
 
 body{
@@ -17,7 +17,6 @@ body{
 	color: $text_color;
 	font-weight: 300;
 	font-size: 20px;
-	overflow: hidden;
 }
 
 ul{

@@ -1,6 +1,6 @@
 @import 'globals';
 
-@media only screen and (max-width: 720px){
+@media only screen and (max-width: 800px){ // If you change max-width, also change it in the JS
 	body{
 		font-size: 16px;
 	}
@@ -64,6 +64,7 @@
 
 	form.new_item{
 		margin: 0;
+		margin-top: 0 !important;
 		width: 100%;
 		max-width: none;
 
