@@ -1,4 +1,39 @@
-$(document).ready(function() {
+$(function(){
+
+	$('.new_item textarea').on('focus', function(){
+
+		var $this = $(this);
+		var placeholder = $this.attr('title');
+
+		// Remove placeholder text
+		if( $this.val() == placeholder ){
+			$this.val('');
+		}
+
+		// Focus mode
+		$('.items').addClass('focus-mode');
+
+	}).on('blur', function(){
+
+		var $this = $(this);
+
+		// Remove placeholder text
+		if( $this.val() === '' ){
+			$this.val($this.attr('title'));
+		}
+
+		// Remove focus mode
+		$('.items').removeClass('focus-mode');
+
+	});
+
+	$(".items_list").sortable({
+		handle: '.move',
+		placeholder: 'ui-state-highlight',
+		cursorAt: { left: 0 }
+	});
+
+	$( ".items_list" ).disableSelection();
 
     function dbg(s) {
         console.log(s);
@@ -31,7 +66,7 @@ $(document).ready(function() {
                     sampleList.each(function(index, listItem) {
                         // Add <li><p>TEXT</p><p>TEXT2</p></li>.
                         var pChildren = []
-                        var children = $(listItem).children();
+                        var children = $(listItem).children('p');
                         children.each(function(index, child) {
                             pChildren.push(child.innerHTML);
                         });
@@ -60,6 +95,8 @@ $(document).ready(function() {
                 newListItem = $('<li></li>');
                 $(listItem).each(function(index, pChild) {
                     newListItem.append($('<p>' + pChild + '</p>'));
+                    newListItem.append($('<div class="actions"><span class="delete ss-icon">delete</span><span class="move ss-icon">move</span></div>'));
+                $('#items-list').prepend(newListItem);
                 });
                 list.append(newListItem);
             });
@@ -72,7 +109,7 @@ $(document).ready(function() {
             addButton.click(function(e) {
                 e.preventDefault();
                 var itemText = $('#add-item-text').val();
-                var newListItem = $('<li><p>' + itemText + '</p></li>')
+                var newListItem = $('<li><p>' + itemText + '</p><div class="actions"><span class="delete ss-icon">delete</span><span class="move ss-icon">move</span></div></li>');
                 $('#items-list').prepend(newListItem);
 
                 // Add to localStorage.
@@ -85,7 +122,7 @@ $(document).ready(function() {
             // Adds item to list in localStorage.
             list = JSON.parse(localStorage[listName]);
             var pChildren = []
-            var children = listItem.children();
+            var children = listItem.children('p');
             children.each(function(index, child) {
                 pChildren.push(child.innerHTML);
             });
@@ -96,8 +133,8 @@ $(document).ready(function() {
 
         return {
             init: init
-        }
+        };
     }();
-    Fireshirt.init()
+    Fireshirt.init();
 
 });

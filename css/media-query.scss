@@ -1,0 +1,36 @@
+@import 'globals';
+
+@media only screen and (max-width: 700px){
+
+	nav.prime{
+		@include clearfix;	
+		position: static;
+		top: auto;
+		background: #fff;
+		border-bottom: 1px solid $border_color;
+
+		li{
+			float: left;
+			margin: 0 10px 0 0;
+			border-right: 1px solid $border_color;
+		}
+	}
+
+	form.new_item{
+		margin-top: 0;
+		width: 100%;
+		max-width: none;
+
+		textarea{
+			font-size: 24px;
+			height: 60px;
+			padding: 20px 20px 5px;
+		}
+
+		input[type="submit"]{
+			height: 60px;
+			width: 60px;
+		}
+	}
+
+} // 700px

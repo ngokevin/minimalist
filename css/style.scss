@@ -31,7 +31,8 @@ li{
 // **********************************************************
 
 .items_list, form.new_item{
-	width: $full;
+	width: 97%;
+	max-width: $full;
 	margin: auto;
 }
 
@@ -61,20 +62,22 @@ form.new_item{
 	position: relative;
 
 	textarea{
+		@include transition(all 300ms ease);
 		height: 90px;
 		width: 100%;
 		font-size: 42px;
 		font-weight: 300;
-		color: $text_color;
-		letter-spacing: -1px;
-		line-height: 1.3;
-		padding: 20px ($button_width + 20px) 20px 20px;
+		color: $light_text_color;
+		line-height: 1;
+		padding: 28px ($button_width + 20px) 20px 20px;
 		border: 0 none;
+		overflow: auto;
 
 		&:focus{
 			@include box-shadow(inset 1px 1px rgba(#000, 0.2));
 			border: 0 none;
 			outline: none;
+			color: $text_color;
 		}
 	}
 
@@ -96,15 +99,88 @@ form.new_item{
 	line-height: 1.5;
 
 	li{
-		margin-bottom: 35px;
+		@include transition(all 300ms ease);
+		margin-bottom: 20px;
+		padding-bottom: 20px;
+		position: relative;
+		border-bottom: 1px solid $border_color;
+		cursor: pointer;
+
+		&:hover{
+			.actions{
+				opacity: 1;
+				left: -120px;
+			}
+		}
+
+		&:active, &:focus{
+			@include transition(none);
+
+			.actions{
+				opacity: 0;
+			}
+		}
+
+		&:last-child{
+			border-bottom: 0 none;
+		}
+	}
+
+	.ui-state-highlight, .ui-state-highlight:last-child{
+		border: 2px dashed $border_color;
+		height: 40px;
+	}
+
+	.ui-sortable-helper{
+		@include transform(scale(0.8));
+		@include transform-origin(left center);
 	}
 
 	p{
 		margin: 0 0 1em;
 
-		&:last-child{
+		&:last-of-type{
 			margin-bottom: 0;
 		}
 	}
 	
 }
+
+.focus-mode li:not(:first-child){
+	color: $light_text_color;
+
+	&:hover{
+		color: $text_color;
+	}
+}
+
+.actions{
+	@include clearfix;
+	@include transition(all 300ms ease);
+	position: absolute;
+	left: -70px;
+	top: 50%;
+	margin-top: -30px;
+	padding-right: 30px;
+	opacity: 0;
+	font-size: 14px;
+	font-weight: normal;
+	color: lighten(#b1b7ba, 10%);
+
+	span{
+		background: #fff;
+		display: block;
+		width: 40px;
+		margin-left: 10px;
+		float: left;
+		text-align: center;
+		padding: 13px 0 10px;
+		line-height: 1;
+
+		&:hover{
+			color: $light_text_color;
+		}
+	}
+}
+
+@import 'media-query.scss';
