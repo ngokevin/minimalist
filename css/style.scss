@@ -31,7 +31,8 @@ li{
 // **********************************************************
 
 .items_list, form.new_item{
-	width: $full;
+	width: 97%;
+	max-width: $full;
 	margin: auto;
 }
 
@@ -102,7 +103,7 @@ form.new_item{
 		margin-bottom: 20px;
 		padding-bottom: 20px;
 		position: relative;
-		border-bottom: 1px solid #d5d7d8;
+		border-bottom: 1px solid $border_color;
 		cursor: pointer;
 
 		&:hover{
@@ -162,14 +163,24 @@ form.new_item{
 	margin-top: -30px;
 	padding-right: 30px;
 	opacity: 0;
+	font-size: 14px;
+	font-weight: normal;
+	color: lighten(#b1b7ba, 10%);
 
 	span{
-		@include hide-text;
 		background: #fff;
 		display: block;
 		width: 40px;
-		height: 40px;
 		margin-left: 10px;
 		float: left;
+		text-align: center;
+		padding: 13px 0 10px;
+		line-height: 1;
+
+		&:hover{
+			color: $light_text_color;
+		}
 	}
 }
+
+@import 'media-query.scss';
