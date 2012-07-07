@@ -32,7 +32,7 @@ $(function(){
                     var sampleList = $('#items-list li');
                     sampleList.each(function(index, listItem) {
                         // Add <li><p>TEXT</p><p>TEXT2</p></li>.
-                        var pChildren = []
+                        var pChildren = [];
                         var children = $(listItem).children('p');
                         children.each(function(index, child) {
                             pChildren.push(child.innerHTML);
@@ -89,7 +89,7 @@ $(function(){
         function addItemToLocalStorage(listName, listItem) {
             // Adds item to list in localStorage.
             list = JSON.parse(localStorage[listName]);
-            var pChildren = []
+            var pChildren = [];
             var children = listItem.children('p');
             children.each(function(index, child) {
                 pChildren.push(child.innerHTML);

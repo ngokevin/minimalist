@@ -16,6 +16,34 @@
 			float: left;
 			margin: 0 10px 0 0;
 			border-right: 1px solid $border_color;
+			position: static;
+		}
+
+		.lists{
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			width: 100%;
+			font-size: 18px;
+			padding: 0 20px;
+			border-top: 1px solid $border_color;
+
+			li{
+				float: none;
+				margin: 0;
+				border-right: 0 none;
+				border-bottom: 1px solid $border_color;
+
+				a{
+					padding: 20px 0;
+					overflow: visible;
+				}
+			}
+		}
+
+		.show{
+			top: 40px;
 		}
 	}
 
