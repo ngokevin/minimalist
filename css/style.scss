@@ -160,7 +160,7 @@ form.new_item{
 		border-bottom: 1px solid $border_color;
 		cursor: pointer;
 
-		&:hover{
+		&.show-actions{
 			.actions{
 				opacity: 1;
 				left: -120px;

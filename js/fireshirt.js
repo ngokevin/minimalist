@@ -1,9 +1,9 @@
 $(function(){
-	
-	$('.toggle-lists').on('click', function(e){
-		e.preventDefault();
-		$('.lists', $(this).parent()).toggleClass('show');
-	});
+    
+    $('.toggle-lists').on('click', function(e){
+        e.preventDefault();
+        $('.lists', $(this).parent()).toggleClass('show');
+    });
 
     function dbg(s) {
         console.log(s);
@@ -67,6 +67,14 @@ $(function(){
                 newListItem.append($(getActionElements()));
                 list.append(newListItem);
             });
+
+            var hoverConfig = {
+                 over: function(){ $(this).addClass('show-actions'); }, // function = onMouseOver callback
+                 timeout: 500, // number = milliseconds delay before onMouseOut
+                 out: function(){ $(this).removeClass('show-actions'); } // function = onMouseOut callback
+            };
+
+            $("#items-list li").hoverIntent( hoverConfig );
         }
 
 
@@ -127,17 +135,17 @@ $(function(){
                 // Remove focus mode
                 $('.items').removeClass('focus-mode');
             }).on('keyup', function() {
-				var $this = $(this);
-				var valLength = $this.val().length;
+                var $this = $(this);
+                var valLength = $this.val().length;
 
-				if( valLength >= 130 ){
-					$this.addClass('small');
-				} else if( valLength >= 27 ){
-					$this.addClass('medium');
-				} else {
-					$this.removeClass('medium small');
-				}
-			});
+                if( valLength >= 130 ){
+                    $this.addClass('small');
+                } else if( valLength >= 27 ){
+                    $this.addClass('medium');
+                } else {
+                    $this.removeClass('medium small');
+                }
+            });
         }
 
 
