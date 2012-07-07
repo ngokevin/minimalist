@@ -156,6 +156,8 @@ $(function(){
         function deleteItemButtons(){
             $('.items_list').on('click', '.actions .delete', function(e){
                 $(this).parents('li').remove();
+
+                // TODO: Remove item from localStorage
             });
         }
 
