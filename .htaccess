@@ -1,0 +1,6 @@
+AddType text/cache-manifest .manifest
+
+<Files .cache.manifest>
+    ExpiresActive On
+    ExpiresDefault "access"
+</Files>
