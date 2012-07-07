@@ -16,6 +16,11 @@ $(function(){
 }
 */
 
+    $('.toggle-lists').on('click', function(e){
+        e.preventDefault();
+        $('.lists', $(this).parent()).toggleClass('show');
+    });
+
     function dbg(s) {
         console.log(s);
     }
@@ -23,11 +28,17 @@ $(function(){
     var Fireshirt = function() {
         var currentList;
         var localStorage = window.localStorage;
-
+        var buttonPressed = false;
+        var textareaMultiline = false;
+        var hoverConfig = {
+             over: function(){ $(this).addClass('show-actions'); }, // function = onMouseOver callback
+             timeout: 400, // number = milliseconds delay before onMouseOut
+             out: function(){ $(this).removeClass('show-actions'); } // function = onMouseOut callback
+        };
 
         function init() {
             initLocalStorage();
-            addItemButton();
+            addItemButtons();
             initTextArea();
             initItemsListSorting();
         }
@@ -86,6 +97,8 @@ $(function(){
                 newListItem.append($(getActionElements()));
                 list.append(newListItem);
             });
+
+            $("#items-list li").hoverIntent( hoverConfig );
         }
 
 
@@ -132,26 +145,36 @@ $(function(){
         }
 
 
-        function addItemButton() {
-            // Add item to list when submitting text.
-            var addButton = $('#add-item');
-            addButton.click(function(e) {
-                e.preventDefault();
-                var itemText = $('#add-item-text').val();
-                var newListItem = $('<li><p>' + itemText + '</p>' + getActionElements() + '</li>');
-                $('#items-list').prepend(newListItem);
-
-                // Add to localStorage.
-                var newItemData = addItemToLocalStorage(currentList, newListItem);
-                newListItem.data('id', newItemData.id);
-                newListItem.data('rank', newItemData.rank);
+        function addItemButtons() {
+            $('#add-item').on('click', function(e) {
+                addNewItem(e);
             });
+        }
+
+
+        // Add item to list when submitting text.
+        function addNewItem(e){
+            e.preventDefault();
+
+            var $textarea = $('#add-item-text');
+            var itemText = $textarea.val();
+            var newListItem = $('<li class="new_item"><p>' + itemText + '</p>' + getActionElements() + '</li>');
+            $('li.new_item').removeClass('new_item');
+            $('#items-list').prepend(newListItem);
+            $('li.new_item').hoverIntent(hoverConfig);
+            $textarea.focus().val('');
+
+            // Add to localStorage.
+            addItemToLocalStorage(currentList, newListItem);
+
+            $textarea.removeClass('medium small');
+            textareaMultiline = false;
         }
 
 
         function getActionElements() {
             // Return div with action elements to add to list items.
-            return '<div class="actions"><span class="delete ss-icon">delete</span><span class="move ss-icon">move</span></div>';
+            return '<div class="actions"><span class="delete ss-icon">delete</span><span class="edit ss-icon">write</span></div>';
         }
 
 
@@ -198,17 +221,61 @@ $(function(){
                 }
 
                 // Remove focus mode
-                $('.items').removeClass('focus-mode');
+                if( !buttonPressed ) $('.items').removeClass('focus-mode');
+            }).on('keyup', function(e) {
+                var $this = $(this);
+                var valLength = $this.val().length;
+
+                // Change font size in textarea
+                if( !textareaMultiline ){
+                    if( valLength >= 130 ){
+                        $this.addClass('small');
+                    } else if( valLength >= 27 ){
+                        $this.addClass('medium');
+                    } else {
+                        $this.removeClass('medium small');
+                    }
+                }
+
+                // Insert new line on shift+header
+                if (e.keyCode == 13 && e.shiftKey) {
+                       var content = this.value;
+                       var caret = getCaret(this);
+                       this.value = content.substring(0,caret)+
+                                     ""+content.substring(caret,content.length-1);
+                        $this.addClass('small');
+                        textareaMultiline = true;
+                       e.stopPropagation();
+                       return;
+                }
+
+                // Submit form on enter
+                if(e.keyCode == 13){
+                    e.stopPropagation();
+                    addNewItem(e);
+                }
             });
+
+            $('.new_item input[type="submit"]').on('mousedown click', function(){
+                $('.items').addClass('focus-mode');
+                buttonPressed = true;
+            }).on('mouseup click', function(){
+                buttonPressed = false;
+            });
+
+            // Vertically align textfield
+            if($(window).width() > 800){
+                var $form = $('form.new_item');
+                var windowHeight = $(window).height();
+                $form.css('marginTop', (windowHeight - $form.height())/2.2);
+            }
         }
 
 
         function initItemsListSorting() {
             var oldRank = null;
             $(".items_list").sortable({
-                handle: '.move',
                 placeholder: 'ui-state-highlight',
-                cursorAt: { left: 0 },
                 change: function(event, ui) {
                     oldRank = ui.item.data('rank');
                 },
@@ -227,12 +294,33 @@ $(function(){
                             }
                         }
                     });
-                    reRankItem(currentList, parseInt(oldRank), parseInt(newRank));
-                }
+                    // reRankItem(currentList, parseInt(oldRank), parseInt(newRank));
+                },
+                placeholder: 'ui-state-highlight'
             });
             $( ".items_list" ).disableSelection();
-        };
+        }
 
+        function getCaret(el) {
+          if (el.selectionStart) {
+             return el.selectionStart;
+          } else if (document.selection) {
+             el.focus();
+
+           var r = document.selection.createRange();
+           if (r === null) {
+            return 0;
+           }
+
+            var re = el.createTextRange(),
+            rc = re.duplicate();
+            re.moveToBookmark(r.getBookmark());
+            rc.setEndPoint('EndToStart', re);
+
+            return rc.text.length;
+          }
+          return 0;
+        }
 
         return {
             init: init

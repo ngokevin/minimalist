@@ -9,6 +9,10 @@
 }
 
 body{
+	max-width: 100%;
+}
+
+body{
 	background: $bg;
 	color: $text_color;
 	font-weight: 300;
@@ -31,7 +35,7 @@ li{
 // **********************************************************
 
 .items_list, form.new_item{
-	width: 95%;
+	width: 90%;
 	max-width: $full;
 	margin: auto;
 }
@@ -69,6 +73,8 @@ nav.prime{
 		right: 40px + 10;
 		top: -90px;
 		width: 200px;
+		max-height: 300px;
+		overflow: auto;
 		padding: 15px 20px;
 		opacity: 0;
 		pointer-events: none;
@@ -120,15 +126,24 @@ form.new_item{
 		overflow: auto;
 
 		&:focus{
-			@include box-shadow(inset 1px 1px rgba(#000, 0.2));
+			@include box-shadow(inset 1px -1px rgba(#000, 0.2));
 			border: 0 none;
 			outline: none;
 			color: $text_color;
+		}
+
+		&.medium{
+			font-size: 24px;
+		}
+
+		&.small{
+			font-size: 16px;
 		}
 	}
 
 	input[type="submit"]{
 		@include hide-text;
+		@include border-radius(0);
 		background: $green;
 		color: #fff;
 		height: 90px;
@@ -143,21 +158,14 @@ form.new_item{
 //	List items
 .items_list{
 	line-height: 1.5;
+	margin-bottom: 200px;
 
 	li{
-		@include transition(color 250ms ease);
-		margin-bottom: 20px;
-		padding-bottom: 20px;
+		@include transition(color 400ms ease);
+		padding: 20px 0;
 		position: relative;
 		border-bottom: 1px solid $border_color;
-		cursor: pointer;
-
-		&:hover{
-			.actions{
-				opacity: 1;
-				left: -120px;
-			}
-		}
+		cursor: move;
 
 		&:active, &:focus{
 			@include transition(none);
@@ -200,13 +208,20 @@ form.new_item{
 	}
 }
 
+.show-actions{
+	.actions{
+		opacity: 1;
+		left: -120px;
+	}
+}
+
 .actions{
 	@include clearfix;
 	@include transition(all 300ms ease);
 	position: absolute;
 	left: -70px;
 	top: 50%;
-	margin-top: -30px;
+	margin-top: -20px;
 	padding-right: 30px;
 	opacity: 0;
 	font-size: 14px;
@@ -225,6 +240,7 @@ form.new_item{
 
 		&:hover{
 			color: $light_text_color;
+			cursor: pointer;
 		}
 	}
 }
