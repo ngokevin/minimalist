@@ -64,4 +64,14 @@
 		}
 	}
 
+	.actions{
+		left: auto;
+		right: -80px;
+	}
+
+	.show-actions .actions{
+		left: auto;
+		right: -20px;
+	}
+
 } // 700px

@@ -120,7 +120,7 @@ form.new_item{
 		overflow: auto;
 
 		&:focus{
-			@include box-shadow(inset 1px 1px rgba(#000, 0.2));
+			@include box-shadow(inset 1px -1px rgba(#000, 0.2));
 			border: 0 none;
 			outline: none;
 			color: $text_color;
@@ -154,18 +154,10 @@ form.new_item{
 
 	li{
 		@include transition(color 250ms ease);
-		margin-bottom: 20px;
-		padding-bottom: 20px;
+		padding: 20px 0;
 		position: relative;
 		border-bottom: 1px solid $border_color;
 		cursor: pointer;
-
-		&.show-actions{
-			.actions{
-				opacity: 1;
-				left: -120px;
-			}
-		}
 
 		&:active, &:focus{
 			@include transition(none);
@@ -208,13 +200,20 @@ form.new_item{
 	}
 }
 
+.show-actions{
+	.actions{
+		opacity: 1;
+		left: -120px;
+	}
+}
+
 .actions{
 	@include clearfix;
 	@include transition(all 300ms ease);
 	position: absolute;
 	left: -70px;
 	top: 50%;
-	margin-top: -30px;
+	margin-top: -20px;
 	padding-right: 30px;
 	opacity: 0;
 	font-size: 14px;
