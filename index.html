@@ -1,8 +1,59 @@
-<!DOCTYPE HTML>
+<!DOCTYPE html>
 <html manifest="/.cache.manifest">
-  <head>
-  </head>
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<title>Minimalist</title>
+	<link rel="stylesheet" href="css/style.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
+	
+</head>
+<body>
+	
+	<script type="text/javascript">
+		var lists = {
+			1: {
+				'title': 'First list',
+				'items': {
+					11: 'Good design is as little design as possible'
+				}
+			}
+		}
+	</script>
 
-  <body>
-  </body>
+	<nav class="prime">
+		<ul>
+			<li><a href="/">Home</a></li>
+			<li><span>Reading mode</span></li>
+			<li><a href="/24">Next List</a></li>
+			<li><a href="/24">Previous List</a></li>
+		</ul>
+	</nav>
+
+	<form class="new_item">
+		<textarea name="item">Write&hellip;</textarea>
+		<input type="submit" name="add_item" value="Add" />
+	</form>
+
+	<section class="items">
+		<ul class="items_list" data-list="1">
+			<li data-item="19"><p>Good design is innovative</p></li>
+			<li data-item="18"><p>Good design makes a product useful</p></li>
+			<li data-item="21">
+				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
+				<p>Laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+			</li>
+			<li data-item="17"><p>Good design is aesthetic</p></li>
+			<li data-item="16"><p>Good design makes a product easy to understand</p></li>
+			<li data-item="15"><p>Good design is unobtrusive</p></li>
+			<li data-item="14"><p>Good design is honest</p></li>
+			<li data-item="20"><p>Good design is long-lasting</p></li>
+			<li data-item="13"><p>Good design is thorough</p></li>
+			<li data-item="12"><p>Good design is environmentally friendly</p></li>
+			<li data-item="11"><p>Good design is as little design as possible</p></li>
+		</ul>
+	</section>
+
+	<script src="js/scripts.js"></script>
+</body>
 </html>

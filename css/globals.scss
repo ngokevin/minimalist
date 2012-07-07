@@ -1,0 +1,67 @@
+@import 'mixins';
+
+// Colors
+$bg: #e3e5e6;
+$text_color: #1d1e1f;
+$light_text_color: #bbbebf;
+$link_color: #e62f70;
+
+$green: #1bd495;
+
+// Dimensions
+$full: 600px;
+$gutter: 40px;
+
+// Fonts
+$helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
+
+//============================================================
+//    Custom functions
+
+@function perc($inner, $container:$full) { // shorthand
+  @return percentage($inner/$container);
+}
+
+//============================================================
+//    Custom mixins
+
+@mixin clearfix {
+  zoom: 1;
+  &:before, &:after {
+    content: "";
+    display: table;
+  }
+  &:after {
+    clear: both;
+  }
+}
+.clearfix {
+  @include clearfix;
+}
+
+@mixin ellipsis {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@mixin wrap-text{
+    white-space: normal;
+    overflow: visible;
+}
+
+@mixin hide-text{
+    text-indent: -9999px;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+@mixin img-and-vertical-gradient($image, $start: #000, $stop: #FFF) {    
+    background: $image $start;
+    background: $image, -webkit-gradient(linear, left top, left bottom, from($start), to($stop));
+    background: $image, -webkit-linear-gradient($start, $stop);
+    background: $image, -moz-linear-gradient(center top, $start 0%, $stop 100%);
+    background: $image, -moz-gradient(center top, $start 0%, $stop 100%);
+    background: $image, -ms-linear-gradient($start 0%, $stop 100%);
+    background: $image, linear-gradient($start, $stop);
+}

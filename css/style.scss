@@ -1,0 +1,110 @@
+@import 'normalize';
+@import 'globals';
+
+//	Base
+// **********************************************************
+
+*{
+	@include box-sizing(border-box);
+}
+
+body{
+	background: $bg;
+	color: $text_color;
+	font-weight: 300;
+	font-size: 20px;
+}
+
+ul{
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+li{
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+//	Layout
+// **********************************************************
+
+.items_list, form.new_item{
+	width: $full;
+	margin: auto;
+}
+
+// Main Nav Links
+nav.prime{
+	position: absolute;
+	top: 10px;
+	right: 10px;
+
+	li{
+		background: #fff;
+		width: 40px;
+		margin-bottom: 10px;
+
+		a, span{
+			@include hide-text;
+			display: block;
+			height: 40px;
+		}
+	}
+}
+
+//	New List Item Form
+form.new_item{
+	$button_width: 90px;
+	margin: 100px auto $gutter;
+	position: relative;
+
+	textarea{
+		height: 90px;
+		width: 100%;
+		font-size: 42px;
+		font-weight: 300;
+		color: $text_color;
+		letter-spacing: -1px;
+		line-height: 1.3;
+		padding: 20px ($button_width + 20px) 20px 20px;
+		border: 0 none;
+
+		&:focus{
+			@include box-shadow(inset 1px 1px rgba(#000, 0.2));
+			border: 0 none;
+			outline: none;
+		}
+	}
+
+	input[type="submit"]{
+		@include hide-text;
+		background: $green;
+		color: #fff;
+		height: 90px;
+		width: $button_width;
+		position: absolute;
+		top: 0;
+		right: 0;
+		border: 0 none;
+	}
+}
+
+//	List items
+.items_list{
+	line-height: 1.5;
+
+	li{
+		margin-bottom: 35px;
+	}
+
+	p{
+		margin: 0 0 1em;
+
+		&:last-child{
+			margin-bottom: 0;
+		}
+	}
+	
+}
