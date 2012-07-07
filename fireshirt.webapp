@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "name": "Fireshirt",
+  "description": "Create lists of thoughts you want to remember.",
+  "launch_path": "/~ngoke/fireshirt/",
+  "icons": {
+    "16": "",
+    "48": "",
+    "128": ""
+  },
+  "developer": {
+    "name": "Sawyer Hollenstead and Kevin Ngo",
+    "url": "http://sawyerhollenstead.com"
+  },
+  "installs_allowed_from": [
+    "https://marketplace.mozilla.org"
+  ],
+  "locales": {
+  },
+  "default_locale": "en"
+}
