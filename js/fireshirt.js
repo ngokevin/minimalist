@@ -296,8 +296,7 @@ $(function(){
                         }
                     });
                     // reRankItem(currentList, parseInt(oldRank), parseInt(newRank));
-                },
-                placeholder: 'ui-state-highlight'
+                }
             });
             $( ".items_list" ).disableSelection();
         }
@@ -336,8 +335,11 @@ $(function(){
 
             $('.lists a').on('click', function(){
                 var listID = $(this).data('list');
-                $('.current-list').removeClass('current-list');
-                $('.items ul[data-list="'+listID+'"]').addClass('current-list');
+                $('.current-list').bind('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', function(e){
+                    $(this).removeClass('current-list hinge-close').removeAttr('style');
+                    $('.items ul[data-list="'+listID+'"]').fadeIn().addClass('current-list');
+                }).addClass('hinge-close');
+
                 return false;
             });
         }
