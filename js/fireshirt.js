@@ -13,6 +13,7 @@ $(function(){
         var currentList;
         var localStorage = window.localStorage;
         var buttonPressed = false;
+        var textareaMultiline = false;
         var hoverConfig = {
              over: function(){ $(this).addClass('show-actions'); }, // function = onMouseOver callback
              timeout: 400, // number = milliseconds delay before onMouseOut
@@ -97,6 +98,9 @@ $(function(){
 
             // Add to localStorage.
             addItemToLocalStorage(currentList, newListItem);
+
+            $textarea.removeClass('medium small');
+            textareaMultiline = false;
         }
 
 
@@ -145,12 +149,15 @@ $(function(){
                 var $this = $(this);
                 var valLength = $this.val().length;
 
-                if( valLength >= 130 ){
-                    $this.addClass('small');
-                } else if( valLength >= 27 ){
-                    $this.addClass('medium');
-                } else {
-                    $this.removeClass('medium small');
+                // Change font size in textarea
+                if( !textareaMultiline ){
+                    if( valLength >= 130 ){
+                        $this.addClass('small');
+                    } else if( valLength >= 27 ){
+                        $this.addClass('medium');
+                    } else {
+                        $this.removeClass('medium small');
+                    }
                 }
 
                 // Insert new line on shift+header
@@ -158,9 +165,11 @@ $(function(){
                        var content = this.value;
                        var caret = getCaret(this);
                        this.value = content.substring(0,caret)+
-                                     "\n"+content.substring(carent,content.length-1);
+                                     ""+content.substring(caret,content.length-1);
+                        $this.addClass('small');
+                        textareaMultiline = true;
                        e.stopPropagation();
-
+                       return;
                 }
 
                 // Submit form on enter

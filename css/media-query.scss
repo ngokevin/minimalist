@@ -39,6 +39,7 @@
 			padding: 0 20px;
 			border-top: 1px solid $border_color;
 			overflow: auto;
+			max-height: none;
 
 			li{
 				float: none;
@@ -82,6 +83,7 @@
 
 	.items_list{
 		overflow: hidden;
+		margin-bottom: 40px;
 	}
 
 	.actions{
