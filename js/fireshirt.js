@@ -1,5 +1,9 @@
 $(function(){
 
+
+	/* Textfield focus/blur
+	*********************************************/
+
 	$('.new_item textarea').on('focus', function(){
 
 		var $this = $(this);
@@ -27,6 +31,8 @@ $(function(){
 
 	});
 
+	/* Sortable list items
+	*********************************************/
 	$(".items_list").sortable({
 		handle: '.move',
 		placeholder: 'ui-state-highlight',
@@ -35,6 +41,16 @@ $(function(){
 
 	$( ".items_list" ).disableSelection();
 
+	/* Showing/hiding lists
+	*********************************************/
+
+	$('.toggle-lists').on('click', function(e){
+		e.preventDefault();
+		$('.lists', $(this).parent()).toggleClass('show');
+	});
+
+	/* Creating items
+	*********************************************/
     function dbg(s) {
         console.log(s);
     }
