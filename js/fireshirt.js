@@ -1,5 +1,21 @@
 $(function(){
-    
+/*
+{'lists.sample':
+    [
+        {
+            'id': 1,
+            'items': ['item1', 'item2'],
+            'rank': 2
+        },
+        {
+            'id': 2,
+            'items': ['item3', 'item4'],
+            'rank': 1
+        }
+    ]
+}
+*/
+
     $('.toggle-lists').on('click', function(e){
         e.preventDefault();
         $('.lists', $(this).parent()).toggleClass('show');
@@ -42,15 +58,19 @@ $(function(){
                 if (!localStorage[currentList]) {
                     var listItems = [];
                     var sampleList = $('.current-list li');
+
+                    // Build data structure for localStorage.
                     sampleList.each(function(index, listItem) {
                         // Add <li><p>TEXT</p><p>TEXT2</p></li>.
-                        var pChildren = [];
-                        var children = $(listItem).children('p');
-                        children.each(function(index, child) {
-                            pChildren.push(child.innerHTML);
+                        listItem = $(listItem);
+                        var items = [];
+                        listItem.children('p').each(function(index, child) {
+                            items.push(child.innerHTML);
                         });
-                        listItems.push(pChildren);
+                        newListItem = {'id': listItem.attr('data-id'), 'items': items, 'rank': listItem.attr('data-rank')};
+                        listItems.push(newListItem);
                     });
+
                     localStorage[currentList] = JSON.stringify(listItems);
                 }
                 localStorage['lastViewedList'] = currentList;
@@ -65,12 +85,16 @@ $(function(){
             var list = $('.current-list');
             list.empty();
 
-            listItems.each(function(index, listItem) {
+            listItems.each(function(index) {
+                var listItem = getRankedListItem(listName, index);
+
                 newListItem = $('<li></li>');
-                $(listItem).each(function(index, pChild) {
+                $(listItem['items']).each(function(index, pChild) {
                     newListItem.append($('<p>' + pChild + '</p>'));
                     $('.current-list').prepend(newListItem);
                 });
+                newListItem.data('id', listItem['id']);
+                newListItem.data('rank', listItem['rank']);
                 newListItem.append($(getActionElements()));
                 list.append(newListItem);
             });
@@ -79,11 +103,55 @@ $(function(){
         }
 
 
+        function getRankedListItem(listName, rank) {
+            // Given a list and rank, grab the list item that has the rank.
+            var listItems = $(JSON.parse(localStorage[listName]));
+            var ret;
+            listItems.each(function(index) {
+                if (parseInt(listItems[index]['rank']) == rank) {
+                    ret = listItems[index];
+                }
+            });
+            return ret;
+        }
+
+
+        function reRankItem(list, oldRank, newRank) {
+            // Rerank a list item, shift other elements' ranks if necessary.
+            var listItems = $(JSON.parse(localStorage[list]));
+            var shift = 0;
+            if (newRank < oldRank) {
+                // Promoting.
+                shift = 1;
+            } else {
+                // Demoting
+                shift = -1;
+            }
+
+            dbg(listItems);
+            var rank;
+            listItems.each(function(index, element) {
+                rank = parseInt(element['rank'])
+                if ((rank < oldRank || parseInt(rank) > newRank)) {
+                    return;
+                }
+                if (rank == oldRank) {
+                    element['rank'] = newRank;
+                } else {
+                    element['rank'] = rank + shift;
+                }
+            });
+            dbg(listItems);
+            localStorage[list] = JSON.stringify(listItems);
+        }
+
+
         function addItemButtons() {
             $('#add-item').on('click', function(e) {
                 addNewItem(e);
             });
         }
+
 
         // Add item to list when submitting text.
         function addNewItem(e){
@@ -114,13 +182,22 @@ $(function(){
         function addItemToLocalStorage(listName, listItem) {
             // Adds item to list in localStorage.
             list = JSON.parse(localStorage[listName]);
+
+            // Get list of <p> elements' text to add to item.
             var pChildren = [];
             var children = listItem.children('p');
             children.each(function(index, child) {
                 pChildren.push(child.innerHTML);
             });
-            list.unshift(pChildren);
+
+            newItem = {
+                'id': '' + list.length,
+                'items': pChildren,
+                'rank': '' + list.length // TODO: push to top of rank
+            }
+            list.unshift(newItem);
             localStorage[listName] = JSON.stringify(list);
+            return newItem;
         }
 
 
@@ -197,7 +274,29 @@ $(function(){
 
 
         function initItemsListSorting() {
+            var oldRank = null;
             $(".items_list").sortable({
+                placeholder: 'ui-state-highlight',
+                change: function(event, ui) {
+                    oldRank = ui.item.data('rank');
+                },
+                update: function(event, ui) {
+                    // Get position in link as new rank.
+                    var id = ui.item.data('id');
+                    var list = $('.current-list li');
+                    var newRank;
+                    list.each(function(index, element) {
+                        var element = $(element);
+                        if (parseInt(element.data('id')) == id) {
+                            if (element.prev('li').length > 0) {
+                                newRank = element.prev('li').data('rank');
+                            } else {
+                                newRank = element.next('li').data('rank');
+                            }
+                        }
+                    });
+                    // reRankItem(currentList, parseInt(oldRank), parseInt(newRank));
+                },
                 placeholder: 'ui-state-highlight'
             });
             $( ".items_list" ).disableSelection();
