@@ -8,7 +8,7 @@
 	@include box-sizing(border-box);
 }
 
-html, body{
+body{
 	max-width: 100%;
 }
 
@@ -73,6 +73,8 @@ nav.prime{
 		right: 40px + 10;
 		top: -90px;
 		width: 200px;
+		max-height: 300px;
+		overflow: auto;
 		padding: 15px 20px;
 		opacity: 0;
 		pointer-events: none;
@@ -158,11 +160,11 @@ form.new_item{
 	line-height: 1.5;
 
 	li{
-		@include transition(color 250ms ease);
+		@include transition(color 400ms ease);
 		padding: 20px 0;
 		position: relative;
 		border-bottom: 1px solid $border_color;
-		cursor: pointer;
+		cursor: move;
 
 		&:active, &:focus{
 			@include transition(none);
@@ -237,6 +239,7 @@ form.new_item{
 
 		&:hover{
 			color: $light_text_color;
+			cursor: pointer;
 		}
 	}
 }

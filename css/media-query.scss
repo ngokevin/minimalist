@@ -80,9 +80,17 @@
 		}
 	}
 
+	.items_list{
+		overflow: hidden;
+	}
+
 	.actions{
 		left: auto;
 		right: -80px;
+
+		.delete{
+			float: right;
+		}
 	}
 
 	.show-actions .actions{

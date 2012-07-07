@@ -21,7 +21,7 @@ $(function(){
 
         function init() {
             initLocalStorage();
-            addItemButton();
+            addItemButtons();
             initTextArea();
             initItemsListSorting();
         }
@@ -77,29 +77,32 @@ $(function(){
         }
 
 
-        function addItemButton() {
-            // Add item to list when submitting text.
-            var addButton = $('#add-item');
-            addButton.click(function(e) {
-                e.preventDefault();
-
-                var $textarea = $('#add-item-text');
-                var itemText = $textarea.val();
-                var newListItem = $('<li class="new_item"><p>' + itemText + '</p>' + getActionElements() + '</li>');
-                $('li.new_item').removeClass('new_item');
-                $('#items-list').prepend(newListItem);
-                $('li.new_item').hoverIntent(hoverConfig);
-                $textarea.focus().val('');
-
-                // Add to localStorage.
-                addItemToLocalStorage(currentList, newListItem);
+        function addItemButtons() {
+            $('#add-item').on('click', function(e) {
+                addNewItem(e);
             });
+        }
+
+        // Add item to list when submitting text.
+        function addNewItem(e){
+            e.preventDefault();
+
+            var $textarea = $('#add-item-text');
+            var itemText = $textarea.val();
+            var newListItem = $('<li class="new_item"><p>' + itemText + '</p>' + getActionElements() + '</li>');
+            $('li.new_item').removeClass('new_item');
+            $('#items-list').prepend(newListItem);
+            $('li.new_item').hoverIntent(hoverConfig);
+            $textarea.focus().val('');
+
+            // Add to localStorage.
+            addItemToLocalStorage(currentList, newListItem);
         }
 
 
         function getActionElements() {
             // Return div with action elements to add to list items.
-            return '<div class="actions"><span class="delete ss-icon">delete</span><span class="move ss-icon">move</span></div>';
+            return '<div class="actions"><span class="delete ss-icon">delete</span><span class="edit ss-icon">write</span></div>';
         }
 
 
@@ -138,7 +141,7 @@ $(function(){
 
                 // Remove focus mode
                 if( !buttonPressed ) $('.items').removeClass('focus-mode');
-            }).on('keyup', function() {
+            }).on('keyup', function(e) {
                 var $this = $(this);
                 var valLength = $this.val().length;
 
@@ -148,6 +151,10 @@ $(function(){
                     $this.addClass('medium');
                 } else {
                     $this.removeClass('medium small');
+                }
+
+                if(e.keyCode == 13){
+                    addNewItem(e);
                 }
             });
 
@@ -162,16 +169,14 @@ $(function(){
             if($(window).width() > 800){
                 var $form = $('form.new_item');
                 var windowHeight = $(window).height();
-                $form.css('marginTop', (windowHeight - $form.height())/2.5);
+                $form.css('marginTop', (windowHeight - $form.height())/2.2);
             }
         }
 
 
         function initItemsListSorting() {
             $(".items_list").sortable({
-                handle: '.move',
-                placeholder: 'ui-state-highlight',
-                cursorAt: { left: 0 }
+                placeholder: 'ui-state-highlight'
             });
             $( ".items_list" ).disableSelection();
         }
