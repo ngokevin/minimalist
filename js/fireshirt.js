@@ -333,12 +333,17 @@ $(function(){
                 }
             });
 
-            $('.lists a').on('click', function(){
+            $('.lists li:not(.new)').on('click', function(e){
+                e.preventDefault();
+
                 var listID = $(this).data('list');
+
                 $('.current-list').bind('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', function(e){
                     $(this).removeClass('current-list hinge-close').removeAttr('style');
                     $('.items ul[data-list="'+listID+'"]').fadeIn().addClass('current-list');
                 }).addClass('hinge-close');
+
+                $('.lists').removeClass('show');
 
                 return false;
             });

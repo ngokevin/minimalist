@@ -46,14 +46,11 @@
 				margin: 0;
 				border-right: 0 none;
 				border-bottom: 1px solid $border_color;
+				padding: 20px 0;
+				overflow: visible;
 
 				&:first-child{
 					width: auto;
-				}
-
-				a{
-					padding: 20px 0;
-					overflow: visible;
 				}
 			}
 		}

@@ -79,14 +79,17 @@ nav.prime{
 		opacity: 0;
 		pointer-events: none;
 		z-index: 100;
+		color: $light_text_color;
 
 		li{
+			@include ellipsis;
 			width: auto;
 			text-align: left;
+			padding: 5px 0;
 
-			a{
-				@include ellipsis;
-				padding: 5px 0;
+			&:hover{
+				color: $text_color;
+				cursor: pointer;
 			}
 
 			&.new{
@@ -100,6 +103,8 @@ nav.prime{
 					color: darken($green, 10%);
 				}
 			} // .new
+
+
 		}
 	}
 
