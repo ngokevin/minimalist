@@ -205,8 +205,9 @@ $(function(){
                 'items': pChildren,
                 'rank': '' + list.length // TODO: push to top of rank
             }
-            list.unshift(newItem);
+            list.prepend(newItem);
             localStorage[listName] = JSON.stringify(list);
+            reRankItem(currentList, list.length - 1, 0)
             return newItem;
         }
 
@@ -337,9 +338,23 @@ $(function(){
                 var listTitle = prompt("List name","");
 
                 if (listTitle !== null){
-                    // Create new list
-                    // Append <ul> to .items
-                    // Toggle current list
+                    // Swap out list.
+                    var lists = $('.items')
+                    $('.current-list').removeClass('current-list');
+                    var newList = $('<ul></ul');
+                    lists.append(newList);
+                    newList.addClass('current-list');
+                    newList.addClass('items_list');
+
+                    // Add new list to list of lists.
+                    $('.lists').prepend($('<li>' + listTitle + '</li>'));
+                    var lists = JSON.parse(localStorage['lists']);
+                    lists.push(listTitle);
+                    localStorage['lists'] = JSON.stringify(lists);
+
+                    currentList = 'lists.' + listTitle;
+                    localStorage[currentList] = JSON.stringify([]);
+                    localStorage['lastViewedList'] = currentList;
                 }
             });
 
