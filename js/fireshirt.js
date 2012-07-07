@@ -347,10 +347,15 @@ $(function(){
 
                 var listID = $(this).data('list');
 
-                $('.current-list').bind('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', function(e){
-                    $(this).removeClass('current-list hinge-close').removeAttr('style');
+                if($('.current-list li').length){
+                    $('.current-list').bind('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', function(e){
+                        $(this).removeClass('current-list hinge-close').removeAttr('style');
+                        $('.items ul[data-list="'+listID+'"]').fadeIn().addClass('current-list');
+                    }).addClass('hinge-close');
+                } else {
+                    $('.current-list').removeClass('current-list hinge-close').removeAttr('style');
                     $('.items ul[data-list="'+listID+'"]').fadeIn().addClass('current-list');
-                }).addClass('hinge-close');
+                }
 
                 $('.lists').removeClass('show');
 
