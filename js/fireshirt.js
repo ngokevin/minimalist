@@ -1,7 +1,7 @@
 $(function(){
 
 
-	/* Textfield focus/blur
+	/* Textfield focus/blur/keyup
 	*********************************************/
 
 	$('.new_item textarea').on('focus', function(){
@@ -29,6 +29,17 @@ $(function(){
 		// Remove focus mode
 		$('.items').removeClass('focus-mode');
 
+	}).on('keyup', function() {
+		var $this = $(this);
+		var valLength = $this.val().length;
+
+		if( valLength >= 130 ){
+			$this.addClass('small');
+		} else if( valLength >= 27 ){
+			$this.addClass('medium');
+		} else {
+			$this.removeClass('medium small');
+		}
 	});
 
 	/* Sortable list items
