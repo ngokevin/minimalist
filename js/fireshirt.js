@@ -52,14 +52,14 @@ $(function(){
             addButton.click(function(e) {
                 e.preventDefault();
                 var itemText = $('#add-item-text').val();
-                var newListItem = $('<li>' + itemText + '</li>');
+                var newListItem = $('<li>' + itemText + '<div class="actions"><span class="delete ss-icon">delete</span><span class="move ss-icon">move</span></div></li>');
                 $('#items-list').prepend(newListItem);
             });
         }
 
         return {
             init: init
-        }
+        };
     }();
     Fireshirt.init();
 

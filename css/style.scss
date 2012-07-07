@@ -127,7 +127,7 @@ form.new_item{
 	}
 
 	.ui-state-highlight, .ui-state-highlight:last-child{
-		border: 2px dashed rgba(#000, 0.2);
+		border: 2px dashed $border_color;
 		height: 40px;
 	}
 
