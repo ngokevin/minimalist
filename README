@@ -1,1 +1,23 @@
-Fireshirt.
+Fireshirt, a list open web app.
+
+P1:
+    Cross-platform support
+    Touch gestures
+    CSS3 animations
+
+    Creating new lists
+    Adding/deleting/editing/arranging items in a list
+    Navigating between lists (swipes, dropdown)
+    Fading peripheral elements when adding/editing an item
+
+    AppCache and localStorage
+    Save state of last accessed list
+
+P2:
+    Loading page
+    Expo view of lists, activated via pinch
+
+    Sub-items
+
+P3:
+    Landing page (show all lists in a list)
