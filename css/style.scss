@@ -8,11 +8,16 @@
 	@include box-sizing(border-box);
 }
 
+html{
+	overflow: hidden;
+}
+
 body{
 	background: $bg;
 	color: $text_color;
 	font-weight: 300;
 	font-size: 20px;
+	overflow: hidden;
 }
 
 ul{
@@ -31,7 +36,7 @@ li{
 // **********************************************************
 
 .items_list, form.new_item{
-	width: 95%;
+	width: 90%;
 	max-width: $full;
 	margin: auto;
 }
@@ -137,6 +142,7 @@ form.new_item{
 
 	input[type="submit"]{
 		@include hide-text;
+		@include border-radius(0);
 		background: $green;
 		color: #fff;
 		height: 90px;

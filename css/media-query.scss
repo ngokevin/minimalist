@@ -14,13 +14,23 @@
 
 		li{
 			float: left;
-			margin: 0 10px 0 0;
+			margin: 0;
 			border-right: 1px solid $border_color;
 			position: static;
+			width: 33%;
+
+			a, span{
+				padding: 17px 0 13px;
+			}
+
+			&:first-child{
+				width: 34%;
+			}
 		}
 
 		.lists{
-			top: 0;
+			@include transition(top 400ms ease);
+			top: 200px;
 			bottom: 0;
 			left: 0;
 			right: 0;
@@ -28,12 +38,17 @@
 			font-size: 18px;
 			padding: 0 20px;
 			border-top: 1px solid $border_color;
+			overflow: auto;
 
 			li{
 				float: none;
 				margin: 0;
 				border-right: 0 none;
 				border-bottom: 1px solid $border_color;
+
+				&:first-child{
+					width: auto;
+				}
 
 				a{
 					padding: 20px 0;
@@ -43,19 +58,19 @@
 		}
 
 		.show{
-			top: 40px;
+			top: 46px;
 		}
 	}
 
 	form.new_item{
-		margin-top: 0;
+		margin: 0;
 		width: 100%;
 		max-width: none;
 
 		textarea{
 			font-size: 24px;
 			height: 60px;
-			padding: 20px 20px 5px;
+			padding: 20px 80px 5px 20px;
 		}
 
 		input[type="submit"]{

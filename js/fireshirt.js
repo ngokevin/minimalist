@@ -13,7 +13,11 @@ $(function(){
         var currentList;
         var localStorage = window.localStorage;
         var buttonPressed = false;
-
+        var hoverConfig = {
+             over: function(){ $(this).addClass('show-actions'); }, // function = onMouseOver callback
+             timeout: 400, // number = milliseconds delay before onMouseOut
+             out: function(){ $(this).removeClass('show-actions'); } // function = onMouseOut callback
+        };
 
         function init() {
             initLocalStorage();
@@ -69,12 +73,6 @@ $(function(){
                 list.append(newListItem);
             });
 
-            var hoverConfig = {
-                 over: function(){ $(this).addClass('show-actions'); }, // function = onMouseOver callback
-                 timeout: 500, // number = milliseconds delay before onMouseOut
-                 out: function(){ $(this).removeClass('show-actions'); } // function = onMouseOut callback
-            };
-
             $("#items-list li").hoverIntent( hoverConfig );
         }
 
@@ -87,8 +85,10 @@ $(function(){
 
                 var $textarea = $('#add-item-text');
                 var itemText = $textarea.val();
-                var newListItem = $('<li class="fadeInDown"><p>' + itemText + '</p>' + getActionElements() + '</li>');
+                var newListItem = $('<li class="new_item"><p>' + itemText + '</p>' + getActionElements() + '</li>');
+                $('li.new_item').removeClass('new_item');
                 $('#items-list').prepend(newListItem);
+                $('li.new_item').hoverIntent(hoverConfig);
                 $textarea.focus().val('');
 
                 // Add to localStorage.
