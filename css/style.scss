@@ -61,20 +61,22 @@ form.new_item{
 	position: relative;
 
 	textarea{
+		@include transition(all 300ms ease);
 		height: 90px;
 		width: 100%;
 		font-size: 42px;
 		font-weight: 300;
-		color: $text_color;
-		letter-spacing: -1px;
-		line-height: 1.3;
-		padding: 20px ($button_width + 20px) 20px 20px;
+		color: $light_text_color;
+		line-height: 1;
+		padding: 28px ($button_width + 20px) 20px 20px;
 		border: 0 none;
+		overflow: auto;
 
 		&:focus{
 			@include box-shadow(inset 1px 1px rgba(#000, 0.2));
 			border: 0 none;
 			outline: none;
+			color: $text_color;
 		}
 	}
 
@@ -96,15 +98,64 @@ form.new_item{
 	line-height: 1.5;
 
 	li{
-		margin-bottom: 35px;
+		@include transition(all 300ms ease);
+		margin-bottom: 20px;
+		padding-bottom: 20px;
+		position: relative;
+		border-bottom: 1px solid #d5d7d8;
+		cursor: pointer;
+
+		&:hover{
+			.actions{
+				opacity: 1;
+				left: -120px;
+			}
+		}
+
+		&:active, &:focus{
+			@include transition(none);
+		}
+
+		&:last-child{
+			border-bottom: 0 none;
+		}
 	}
 
 	p{
 		margin: 0 0 1em;
 
-		&:last-child{
+		&:last-of-type{
 			margin-bottom: 0;
 		}
 	}
 	
+}
+
+.focus-mode li:not(:first-child){
+	color: $light_text_color;
+
+	&:hover{
+		color: $text_color;
+	}
+}
+
+.actions{
+	@include clearfix;
+	@include transition(all 300ms ease);
+	position: absolute;
+	left: -70px;
+	top: 50%;
+	margin-top: -30px;
+	padding-right: 30px;
+	opacity: 0;
+
+	span{
+		@include hide-text;
+		background: #fff;
+		display: block;
+		width: 40px;
+		height: 40px;
+		margin-left: 10px;
+		float: left;
+	}
 }

@@ -31,29 +31,30 @@
 	</nav>
 
 	<form class="new_item">
-		<textarea name="item">Write&hellip;</textarea>
+		<textarea name="item" title="Write&hellip;">Write&hellip;</textarea>
 		<input type="submit" name="add_item" value="Add" />
 	</form>
 
 	<section class="items">
 		<ul class="items_list" data-list="1">
-			<li data-item="19"><p>Good design is innovative</p></li>
-			<li data-item="18"><p>Good design makes a product useful</p></li>
-			<li data-item="21">
-				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt.</p>
-				<p>Laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat.</p>
+			<li data-item="2">
+				<p>Good design is innovative</p>
+				<div class="actions">
+					<span class="delete">Delete</span>
+					<span class="move">Move</span>
+				</div>
 			</li>
-			<li data-item="17"><p>Good design is aesthetic</p></li>
-			<li data-item="16"><p>Good design makes a product easy to understand</p></li>
-			<li data-item="15"><p>Good design is unobtrusive</p></li>
-			<li data-item="14"><p>Good design is honest</p></li>
-			<li data-item="20"><p>Good design is long-lasting</p></li>
-			<li data-item="13"><p>Good design is thorough</p></li>
-			<li data-item="12"><p>Good design is environmentally friendly</p></li>
-			<li data-item="11"><p>Good design is as little design as possible</p></li>
+			<li data-item="1">
+				<p>Good design is as little design as possible</p>
+				<div class="actions">
+					<span class="delete">Delete</span>
+					<span class="move">Move</span>
+				</div>
+			</li>
 		</ul>
 	</section>
 
-	<script src="js/scripts.js"></script>
+	<script src="js/jquery-ui.js"></script>
+	<script src="js/fireshirt.js"></script>
 </body>
 </html>
