@@ -6,10 +6,10 @@
 	<title>Minimalist</title>
 	<link rel="stylesheet" href="css/style.css" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
-	
+
 </head>
 <body>
-	
+
 	<script type="text/javascript">
 		var lists = {
 			1: {
@@ -31,12 +31,12 @@
 	</nav>
 
 	<form class="new_item">
-		<textarea name="item">Write&hellip;</textarea>
-		<input type="submit" name="add_item" value="Add" />
+		<textarea id="add-item-text" name="item">Write&hellip;</textarea>
+		<input id="add-item" type="submit" name="add_item" value="Add" />
 	</form>
 
 	<section class="items">
-		<ul class="items_list" data-list="1">
+		<ul id="items-list" class="items_list" data-list="1">
 			<li data-item="19"><p>Good design is innovative</p></li>
 			<li data-item="18"><p>Good design makes a product useful</p></li>
 			<li data-item="21">
@@ -54,6 +54,6 @@
 		</ul>
 	</section>
 
-	<script src="js/scripts.js"></script>
+	<script src="js/fireshirt.js"></script>
 </body>
 </html>
