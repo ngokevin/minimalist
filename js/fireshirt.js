@@ -37,6 +37,7 @@ $(function(){
         };
 
         function init() {
+            $('h1').delay(500).fadeOut();
             initLocalStorage();
             addItemButtons();
             deleteItemButtons();
@@ -344,6 +345,9 @@ $(function(){
 
             $('.lists li:not(.new)').on('click', function(e){
                 e.preventDefault();
+
+                var title = this.innerHTML
+                $('h1').text(title).delay(500).fadeOut();
 
                 var listID = $(this).data('list');
 
