@@ -362,7 +362,7 @@ $(function(){
                 var $nextList = $currentList.next('ul');
 
                 if( $nextList.length ){
-                    $currentList.removeClass('current-list');
+                    $currentList.removeClass('current-list').removeAttr('style');
                     $nextList.addClass('current-list');
                 }
             });
@@ -372,7 +372,7 @@ $(function(){
                 var $prevList = $currentList.prev('ul');
 
                 if( $prevList.length ){
-                    $currentList.removeClass('current-list');
+                    $currentList.removeClass('current-list').removeAttr('style');
                     $prevList.addClass('current-list');
                 }
             });
