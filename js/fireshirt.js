@@ -25,6 +25,7 @@ $(function(){
             addItemButtons();
             initTextArea();
             initItemsListSorting();
+            initListsButtons();
         }
 
 
@@ -40,7 +41,7 @@ $(function(){
                 currentList = 'lists.sample';
                 if (!localStorage[currentList]) {
                     var listItems = [];
-                    var sampleList = $('#items-list li');
+                    var sampleList = $('.current-list li');
                     sampleList.each(function(index, listItem) {
                         // Add <li><p>TEXT</p><p>TEXT2</p></li>.
                         var pChildren = [];
@@ -61,20 +62,20 @@ $(function(){
             // Removes current list, grabs a list from localStorage and spits
             // it to the page.
             var listItems = $(JSON.parse(localStorage[listName]));
-            var list = $('#items-list');
+            var list = $('.current-list');
             list.empty();
 
             listItems.each(function(index, listItem) {
                 newListItem = $('<li></li>');
                 $(listItem).each(function(index, pChild) {
                     newListItem.append($('<p>' + pChild + '</p>'));
-                    $('#items-list').prepend(newListItem);
+                    $('.current-list').prepend(newListItem);
                 });
                 newListItem.append($(getActionElements()));
                 list.append(newListItem);
             });
 
-            $("#items-list li").hoverIntent( hoverConfig );
+            $(".current-list li").hoverIntent( hoverConfig );
         }
 
 
@@ -92,7 +93,7 @@ $(function(){
             var itemText = $textarea.val();
             var newListItem = $('<li class="new_item"><p>' + itemText + '</p>' + getActionElements() + '</li>');
             $('li.new_item').removeClass('new_item');
-            $('#items-list').prepend(newListItem);
+            $('.current-list').prepend(newListItem);
             $('li.new_item').hoverIntent(hoverConfig);
             $textarea.focus().val('');
 
@@ -221,6 +222,25 @@ $(function(){
             return rc.text.length;
           }
           return 0;
+        }
+
+        function initListsButtons(){
+            $('.lists .new').on('click', function(){
+                var listTitle = prompt("List name","");
+
+                if (listTitle !== null){
+                    // Create new list
+                    // Append <ul> to .items
+                    // Toggle current list
+                }
+            });
+
+            $('.lists a').on('click', function(){
+                var listID = $(this).data('list');
+                $('.current-list').removeClass('current-list');
+                $('.items ul[data-list="'+listID+'"]').addClass('current-list');
+                return false;
+            });
         }
 
         return {

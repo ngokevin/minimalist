@@ -93,10 +93,13 @@ nav.prime{
 				margin-bottom: 0;
 				font-weight: bold;
 
-				a{
-					color: $green;
+				color: $green;
+				cursor: pointer;
+
+				&:hover{
+					color: darken($green, 10%);
 				}
-			}
+			} // .new
 		}
 	}
 
@@ -152,6 +155,10 @@ form.new_item{
 		top: 0;
 		right: 0;
 		border: 0 none;
+
+		&:hover{
+			background: darken($green, 5%);
+		}
 	}
 }
 
@@ -159,6 +166,11 @@ form.new_item{
 .items_list{
 	line-height: 1.5;
 	margin-bottom: 200px;
+	display: none;
+
+	&.current-list{
+		display: block;
+	}
 
 	li{
 		@include transition(color 400ms ease);
@@ -211,7 +223,7 @@ form.new_item{
 .show-actions{
 	.actions{
 		opacity: 1;
-		left: -120px;
+		left: -70px;
 	}
 }
 
@@ -219,7 +231,7 @@ form.new_item{
 	@include clearfix;
 	@include transition(all 300ms ease);
 	position: absolute;
-	left: -70px;
+	left: -30px;
 	top: 50%;
 	margin-top: -20px;
 	padding-right: 30px;
@@ -242,6 +254,11 @@ form.new_item{
 			color: $light_text_color;
 			cursor: pointer;
 		}
+	}
+
+	// Hide this until we get time to add it
+	.edit{
+		display: none;
 	}
 }
 
