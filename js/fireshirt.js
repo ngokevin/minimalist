@@ -347,6 +347,26 @@ $(function(){
 
                 return false;
             });
+
+            $('.next-list').on('click', function(e){
+                var $currentList = $('.current-list');
+                var $nextList = $currentList.next('ul');
+
+                if( $nextList.length ){
+                    $currentList.removeClass('current-list');
+                    $nextList.addClass('current-list');
+                }
+            });
+
+            $('.prev-list').on('click', function(e){
+                var $currentList = $('.current-list');
+                var $prevList = $currentList.prev('ul');
+
+                if( $prevList.length ){
+                    $currentList.removeClass('current-list');
+                    $prevList.addClass('current-list');
+                }
+            });
         }
 
         return {
