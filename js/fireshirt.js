@@ -1,67 +1,10 @@
 $(function(){
-
-
-	/* Textfield focus/blur/keyup
-	*********************************************/
-
-	$('.new_item textarea').on('focus', function(){
-
-		var $this = $(this);
-		var placeholder = $this.attr('title');
-
-		// Remove placeholder text
-		if( $this.val() == placeholder ){
-			$this.val('');
-		}
-
-		// Focus mode
-		$('.items').addClass('focus-mode');
-
-	}).on('blur', function(){
-
-		var $this = $(this);
-
-		// Remove placeholder text
-		if( $this.val() === '' ){
-			$this.val($this.attr('title'));
-		}
-
-		// Remove focus mode
-		$('.items').removeClass('focus-mode');
-
-	}).on('keyup', function() {
-		var $this = $(this);
-		var valLength = $this.val().length;
-
-		if( valLength >= 130 ){
-			$this.addClass('small');
-		} else if( valLength >= 27 ){
-			$this.addClass('medium');
-		} else {
-			$this.removeClass('medium small');
-		}
-	});
-
-	/* Sortable list items
-	*********************************************/
-	$(".items_list").sortable({
-		handle: '.move',
-		placeholder: 'ui-state-highlight',
-		cursorAt: { left: 0 }
-	});
-
-	$( ".items_list" ).disableSelection();
-
-	/* Showing/hiding lists
-	*********************************************/
-
+	
 	$('.toggle-lists').on('click', function(e){
 		e.preventDefault();
 		$('.lists', $(this).parent()).toggleClass('show');
 	});
 
-	/* Creating items
-	*********************************************/
     function dbg(s) {
         console.log(s);
     }
@@ -74,6 +17,8 @@ $(function(){
         function init() {
             initLocalStorage();
             addItemButton();
+            initTextArea();
+            initItemsListSorting();
         }
 
 
@@ -86,7 +31,7 @@ $(function(){
             else {
                 // Grab the sample list from the HTML and add to localStorage
                 // if not already in localStorage.
-                currentList = getListName('sample');
+                currentList = 'lists.sample';
                 if (!localStorage[currentList]) {
                     var listItems = [];
                     var sampleList = $('#items-list li');
@@ -106,11 +51,6 @@ $(function(){
         }
 
 
-        function getListName(list) {
-            return 'lists.' + list;
-        }
-
-
         function initList(listName) {
             // Removes current list, grabs a list from localStorage and spits
             // it to the page.
@@ -122,9 +62,9 @@ $(function(){
                 newListItem = $('<li></li>');
                 $(listItem).each(function(index, pChild) {
                     newListItem.append($('<p>' + pChild + '</p>'));
-                    newListItem.append($('<div class="actions"><span class="delete ss-icon">delete</span><span class="move ss-icon">move</span></div>'));
-                $('#items-list').prepend(newListItem);
+                    $('#items-list').prepend(newListItem);
                 });
+                newListItem.append($(getActionElements()));
                 list.append(newListItem);
             });
         }
@@ -136,16 +76,22 @@ $(function(){
             addButton.click(function(e) {
                 e.preventDefault();
                 var itemText = $('#add-item-text').val();
-                var newListItem = $('<li><p>' + itemText + '</p><div class="actions"><span class="delete ss-icon">delete</span><span class="move ss-icon">move</span></div></li>');
+                var newListItem = $('<li><p>' + itemText + '</p>' + getActionElements() + '</li>');
                 $('#items-list').prepend(newListItem);
 
                 // Add to localStorage.
-                addItemToList(currentList, newListItem);
+                addItemToLocalStorage(currentList, newListItem);
             });
         }
 
 
-        function addItemToList(listName, listItem) {
+        function getActionElements() {
+            // Return div with action elements to add to list items.
+            return '<div class="actions"><span class="delete ss-icon">delete</span><span class="move ss-icon">move</span></div>';
+        }
+
+
+        function addItemToLocalStorage(listName, listItem) {
             // Adds item to list in localStorage.
             list = JSON.parse(localStorage[listName]);
             var pChildren = [];
@@ -156,6 +102,53 @@ $(function(){
             list.unshift(pChildren);
             localStorage[listName] = JSON.stringify(list);
         }
+
+
+        function initTextArea() {
+            $('.new_item textarea').on('focus', function(){
+                var $this = $(this);
+                var placeholder = $this.attr('title');
+
+                // Remove placeholder text
+                if( $this.val() == placeholder ){
+                    $this.val('');
+                }
+
+                // Focus mode
+                $('.items').addClass('focus-mode');
+            }).on('blur', function(){
+                var $this = $(this);
+
+                // Remove placeholder text
+                if( $this.val() === '' ){
+                    $this.val($this.attr('title'));
+                }
+
+                // Remove focus mode
+                $('.items').removeClass('focus-mode');
+            }).on('keyup', function() {
+				var $this = $(this);
+				var valLength = $this.val().length;
+
+				if( valLength >= 130 ){
+					$this.addClass('small');
+				} else if( valLength >= 27 ){
+					$this.addClass('medium');
+				} else {
+					$this.removeClass('medium small');
+				}
+			});
+        }
+
+
+        function initItemsListSorting() {
+            $(".items_list").sortable({
+                handle: '.move',
+                placeholder: 'ui-state-highlight',
+                cursorAt: { left: 0 }
+            });
+            $( ".items_list" ).disableSelection();
+        };
 
 
         return {
