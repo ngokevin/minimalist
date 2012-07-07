@@ -12,6 +12,7 @@ $(function(){
     var Fireshirt = function() {
         var currentList;
         var localStorage = window.localStorage;
+        var buttonPressed = false;
 
 
         function init() {
@@ -83,9 +84,12 @@ $(function(){
             var addButton = $('#add-item');
             addButton.click(function(e) {
                 e.preventDefault();
-                var itemText = $('#add-item-text').val();
-                var newListItem = $('<li><p>' + itemText + '</p>' + getActionElements() + '</li>');
+
+                var $textarea = $('#add-item-text');
+                var itemText = $textarea.val();
+                var newListItem = $('<li class="fadeInDown"><p>' + itemText + '</p>' + getActionElements() + '</li>');
                 $('#items-list').prepend(newListItem);
+                $textarea.focus().val('');
 
                 // Add to localStorage.
                 addItemToLocalStorage(currentList, newListItem);
@@ -133,7 +137,7 @@ $(function(){
                 }
 
                 // Remove focus mode
-                $('.items').removeClass('focus-mode');
+                if( !buttonPressed ) $('.items').removeClass('focus-mode');
             }).on('keyup', function() {
                 var $this = $(this);
                 var valLength = $this.val().length;
@@ -146,6 +150,13 @@ $(function(){
                     $this.removeClass('medium small');
                 }
             });
+
+            $('.new_item input[type="submit"]').on('mousedown click', function(){
+                $('.items').addClass('focus-mode');
+                buttonPressed = true;
+            }).on('mouseup click', function(){
+                buttonPressed = false;
+            });
         }
 
 
@@ -156,7 +167,7 @@ $(function(){
                 cursorAt: { left: 0 }
             });
             $( ".items_list" ).disableSelection();
-        };
+        }
 
 
         return {
