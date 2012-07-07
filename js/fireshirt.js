@@ -39,6 +39,7 @@ $(function(){
         function init() {
             initLocalStorage();
             addItemButtons();
+            deleteItemButtons();
             initTextArea();
             initItemsListSorting();
             initListsButtons();
@@ -99,7 +100,7 @@ $(function(){
                 list.append(newListItem);
             });
 
-            $(".current-list li").hoverIntent( hoverConfig );
+            $(".items_list li").hoverIntent( hoverConfig );
         }
 
 
@@ -149,6 +150,12 @@ $(function(){
         function addItemButtons() {
             $('#add-item').on('click', function(e) {
                 addNewItem(e);
+            });
+        }
+
+        function deleteItemButtons(){
+            $('.items_list').on('click', '.actions .delete', function(e){
+                $(this).parents('li').remove();
             });
         }
 
