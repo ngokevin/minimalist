@@ -27,7 +27,12 @@ $(function(){
 
 	});
 
-	$( ".items_list" ).sortable();
+	$(".items_list").sortable({
+		handle: '.move',
+		placeholder: 'ui-state-highlight',
+		cursorAt: { left: 0 }
+	});
+
 	$( ".items_list" ).disableSelection();
 
     function dbg(s) {

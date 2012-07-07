@@ -114,11 +114,25 @@ form.new_item{
 
 		&:active, &:focus{
 			@include transition(none);
+
+			.actions{
+				opacity: 0;
+			}
 		}
 
 		&:last-child{
 			border-bottom: 0 none;
 		}
+	}
+
+	.ui-state-highlight, .ui-state-highlight:last-child{
+		border: 2px dashed rgba(#000, 0.2);
+		height: 40px;
+	}
+
+	.ui-sortable-helper{
+		@include transform(scale(0.8));
+		@include transform-origin(left center);
 	}
 
 	p{
