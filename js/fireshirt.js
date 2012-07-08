@@ -76,8 +76,8 @@ $(function(){
             $(listNames).each(function(index, listName) {
                 // Create list.
                 var listObj = JSON.parse(localStorage[listName]);
-                var newList = $('<li></li>').addClass('list');
-                newList.data('id', listObj['id']);
+                var newList = $('<ul></ul>').addClass('list');
+                newList.attr('data-id', listObj['id']);
 
                 // Populate list.
                 $(JSON.parse(listObj['list'])).each(function(index, listItems){
@@ -91,7 +91,7 @@ $(function(){
 
                 // Add to list switcher.
                 var newListSwitcherItem = $('<li>' + listName + '</li>');
-                newListSwitcherItem.data('id', newList.data('id'));
+                newListSwitcherItem.attr('data-id', newList.data('id'));
                 $('.lists-switcher').prepend(newListSwitcherItem);
 
                 $('.lists').append(newList);
@@ -225,7 +225,7 @@ $(function(){
                     // If has items, do a hinge out animation.
                     $('.current-list').bind('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', function(e){
                         $(this).removeClass('current-list hinge-close').removeAttr('style');
-                        $('.lists ul[data-id=' + listId + ']').fadeIn().addClass('current-list');
+                        $('.lists ul[data-id="' + listId + '"]').fadeIn().addClass('current-list');
                     }).addClass('hinge-close');
                 } else {
                     $('.current-list').removeClass('current-list hinge-close').removeAttr('style');
@@ -337,8 +337,8 @@ $(function(){
                 newListItem += getActionElements() + '</li>';
 
                 newListItem = $(newListItem);
-                newListItem.data('id', listItem['id']);
-                newListItem.data('rank', listItem['rank']);
+                newListItem.attr('data-id', listItem['id']);
+                newListItem.attr('data-rank', listItem['rank']);
                 listElement.append(newListItem);
             });
         }
