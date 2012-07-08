@@ -1,8 +1,8 @@
 {
   "version": "1.0",
-  "name": "Fireshirt",
+  "name": "Minimalist",
   "description": "Create lists of thoughts you want to remember.",
-  "launch_path": "/~ngoke/fireshirt/",
+  "launch_path": "/",
   "icons": {
     "16": "",
     "48": "",
