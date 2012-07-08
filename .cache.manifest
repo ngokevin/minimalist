@@ -1,8 +1,17 @@
 CACHE MANIFEST
-# v4
+# v5
 index.html
-css/base.css
+css/style.css
+js/jquery.min.js
+js/plugins.js
 js/fireshirt.js
+fonts/ss-legacy.js
+fonts/ss-standard.css
+fonts/ss-standard.eot
+fonts/ss-standard.svg
+fonts/ss-standard.ttf
+fonts/ss-standard.woff
+
 
 NETWORK:
 
