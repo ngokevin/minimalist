@@ -34,7 +34,7 @@ li{
 //	Layout
 // **********************************************************
 
-.items_list, form.new_item{
+.list, form.new_item{
 	width: 90%;
 	max-width: $full;
 	margin: auto;
@@ -169,7 +169,7 @@ form.new_item{
 }
 
 //	List items
-.items_list{
+.list{
 	line-height: 1.5;
 	margin-bottom: 200px;
 	display: none;
@@ -215,7 +215,7 @@ form.new_item{
 			margin-bottom: 0;
 		}
 	}
-	
+
 }
 
 .focus-mode li:not(:first-child){

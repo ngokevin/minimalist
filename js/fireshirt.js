@@ -381,16 +381,19 @@ $(function(){
 
         function addItemToLocalStorage(listName, listItems) {
             // Adds item to list in localStorage.
-            listObj = JSON.parse(JSON.parse(localStorage[listName])['list']);
+            var listObj = JSON.parse(localStorage[listName]);
+            var list = JSON.parse(listObj['list']);
 
             newItem = {
-                'id': '' + listObj.length,
+                'id': '' + list.length,
                 'items': JSON.stringify(listItems),
-                'rank': '' + listObj.length // TODO: push to top of rank
+                'rank': '' + list.length // TODO: push to top of rank
             }
 
-            listObj.push(newItem);
-            localStorage[listName]['list'] = JSON.stringify(listObj);
+            list.push(newItem);
+            listObj['list'] = JSON.stringify(list);
+
+            localStorage[listName] = JSON.stringify(listObj);
             // reRankItem(currentListName, listObj.length - 1, 0)
             return newItem;
         }
