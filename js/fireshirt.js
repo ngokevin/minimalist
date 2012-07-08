@@ -89,6 +89,11 @@ $(function(){
                     newList.addClass('current-list');
                 }
 
+                // Add to list switcher.
+                var newListSwitcherItem = $('<li>' + listName + '</li>');
+                newListSwitcherItem.data('id', newList.data('id'));
+                $('.lists-switcher').prepend(newListSwitcherItem);
+
                 $('.lists').append(newList);
             });
 
@@ -213,17 +218,18 @@ $(function(){
                 var title = this.innerHTML
                 $('h1').text(title).fadeIn().delay(500).fadeOut();
 
-                var listID = $(this).data('list');
+                var listId = $(this).data('id');
 
                 // Animation.
                 if($('.current-list li').length){
+                    // If has items, do a hinge out animation.
                     $('.current-list').bind('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', function(e){
                         $(this).removeClass('current-list hinge-close').removeAttr('style');
-                        $('.lists-switcher ul[data-list="'+listID+'"]').fadeIn().addClass('current-list');
+                        $('.lists ul[data-id=' + listId + ']').fadeIn().addClass('current-list');
                     }).addClass('hinge-close');
                 } else {
                     $('.current-list').removeClass('current-list hinge-close').removeAttr('style');
-                    $('.lists-switcher ul[data-list="'+listID+'"]').fadeIn().addClass('current-list');
+                    $('.lists ul[data-id=' + listId + ']').fadeIn().addClass('current-list');
                 }
 
                 // Unshow list switcher.
@@ -291,7 +297,7 @@ $(function(){
 
         function initDeleteItemButton(){
             $('.list').on('click', '.actions .delete', function(e){
-                $(this).parents('li').remove();
+                $(this).parents('li.new_item').remove();
 
                 // TODO: Remove item from localStorage
             });
