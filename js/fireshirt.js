@@ -37,7 +37,7 @@ $(function(){
         };
 
         function init() {
-            $('h1').delay(500).fadeOut();
+            $('h1').delay(800).fadeOut();
             initLocalStorage();
             addItemButtons();
             deleteItemButtons();
@@ -406,6 +406,8 @@ $(function(){
             init: init
         };
     }();
+    $('.new_item').css('visibility', 'hidden');
     Fireshirt.init();
+    $('.new_item').css('visibility', 'visible');
 
 });
