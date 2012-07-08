@@ -340,7 +340,7 @@ Lists have data attributes data-id and data-name.
                 var items = JSON.parse(JSON.parse(localStorage[currentListName])['list']);
                 $(items).each(function(index, item) {
                     if (item.id == id) {
-                        items.splice(index, index);
+                        items.splice(index, 1);
                         return;
                     }
                 });
