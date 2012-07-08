@@ -67,7 +67,7 @@ nav.prime{
 		}
 	}
 
-	.lists{
+	.lists-switcher{
 		@include transition(all 300ms ease);
 		background: #fff;
 		position: absolute;
@@ -171,7 +171,6 @@ form.new_item{
 //	List items
 .list{
 	line-height: 1.5;
-	margin-bottom: 200px;
 	display: none;
 
 	&.current-list{

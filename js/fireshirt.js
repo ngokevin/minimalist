@@ -23,7 +23,7 @@ $(function(){
 
     $('.toggle-lists').on('click', function(e){
         e.preventDefault();
-        $('.lists', $(this).parent()).toggleClass('show');
+        $('.lists-switcher', $(this).parent()).toggleClass('show');
     });
 
     function dbg(s) {
@@ -55,7 +55,7 @@ $(function(){
 
         function initLists() {
             // Grab last view list if exists. Else create default one.
-            if (localStorage['lastViewedList']) {
+            if (localStorage['lastViewedListId']) {
                 currentListId = localStorage['lastViewedListId'];
                 currentListName = localStorage['lastViewedListName'];
             } else {
@@ -75,17 +75,17 @@ $(function(){
             var listNames = JSON.parse(localStorage['lists']);
             $(listNames).each(function(index, listName) {
                 // Create list.
-                var listObj = JSON.parse(localStorage[listName])['list'];
+                var listObj = JSON.parse(localStorage[listName]);
                 var newList = $('<li></li>').addClass('list');
                 newList.data('id', listObj['id']);
 
                 // Populate list.
-                $(listObj['items']).each(function(index, listItems){
-                    addItemToList(newList, $(listItems));
+                $(JSON.parse(listObj['list'])).each(function(index, listItems){
+                    addItemToListInit(newList, $(listItems));
                 });
 
                 // Show last viewed list.
-                if (localStorage[listName]['id'] == currentListId) {
+                if (parseInt(listObj['id']) == currentListId) {
                     newList.addClass('current-list');
                 }
 
@@ -171,7 +171,7 @@ $(function(){
         function initNewListButton(){
             // On click, prompt list name, create new list, add to list
             // switcher, add to localStorage, switch to new empty list.
-            $('.lists .new').on('click', function(){
+            $('.lists-switcher .new').on('click', function(){
                 var listTitle = prompt('List Name', '');
 
                 if (listTitle !== null){
@@ -191,15 +191,14 @@ $(function(){
                     localStorage['lastViewedListName'] = listTitle;
 
                     // Add new list name to list switcher.
-                    $('.lists').prepend($('<li>' + listTitle + '</li>'));
+                    $('.lists-switcher').prepend($('<li>' + listTitle + '</li>'));
 
                     // Swap out list.
-                    var lists = $('.lists')
+                    var lists = $('.lists-switcher')
                     var newList = $('<ul></ul>');
                     newList.addClass('current-list');
                     newList.addClass('list');
                     $('.current-list').removeClass('current-list');
-                    lists.append(newList);
                 }
             });
         }
@@ -207,7 +206,7 @@ $(function(){
 
         function initListSwitcher() {
             // Clicking a new list swaps in list.
-            $('.lists li:not(.new)').on('click', function(e){
+            $('.lists-switcher li:not(.new)').on('click', function(e){
                 e.preventDefault();
 
                 // Display title briefly.
@@ -220,15 +219,15 @@ $(function(){
                 if($('.current-list li').length){
                     $('.current-list').bind('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', function(e){
                         $(this).removeClass('current-list hinge-close').removeAttr('style');
-                        $('.lists ul[data-list="'+listID+'"]').fadeIn().addClass('current-list');
+                        $('.lists-switcher ul[data-list="'+listID+'"]').fadeIn().addClass('current-list');
                     }).addClass('hinge-close');
                 } else {
                     $('.current-list').removeClass('current-list hinge-close').removeAttr('style');
-                    $('.lists ul[data-list="'+listID+'"]').fadeIn().addClass('current-list');
+                    $('.lists-switcher ul[data-list="'+listID+'"]').fadeIn().addClass('current-list');
                 }
 
                 // Unshow list switcher.
-                $('.lists').removeClass('show');
+                $('.lists-switcher').removeClass('show');
                 return false;
             });
 
@@ -320,19 +319,35 @@ $(function(){
         }
 
 
-        function addItemToList(listElement, listItems, prepend) {
-            // Add list item to given <li> element.
-            listItems.each(function(index, listItem) {
-                var newListItem = $('<li class="new_item"><p>' + listItem + '</p>' + getActionElements() + '</li>');
+        function addItemToListInit(listElement, listObjs) {
+            // Takes in the DOM list and list object and adds list item to
+            // given <li> element.
+            listObjs.each(function(index, listItem) {
+                var newListItem = '<li class="new_item">';
+                // Individual p elements.
+                $(JSON.parse(listItem['items'])).each(function(index, item) {
+                    newListItem += '<p>' + item + '</p>';
+                });
+                newListItem += getActionElements() + '</li>';
+
+                newListItem = $(newListItem);
                 newListItem.data('id', listItem['id']);
                 newListItem.data('rank', listItem['rank']);
-                if (prepend) {
-                    listElement.prepend(newListItem);
+                listElement.append(newListItem);
+            });
+        }
 
-                } else {
-                    listElement.append(newListItem);
-                }
-            })
+
+        function addItemToList(listElement, listItems) {
+            // Takes in a list of strings and adds to DOM list.
+            var newListItem = '<li class="new_item">';
+            listItems.each(function(index, listItem) {
+                newListItem += '<p>' + listItem + '</p>';
+            });
+            newListItem += getActionElements() + '</li>';
+
+            newListItem = $(newListItem);
+            listElement.prepend(newListItem);
         }
 
 

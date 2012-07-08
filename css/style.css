@@ -698,7 +698,7 @@ nav.prime {
       text-decoration: none; }
       nav.prime li a:hover, nav.prime li span:hover {
         color: #868c8e; }
-  nav.prime .lists {
+  nav.prime .lists-switcher {
     -webkit-transition: all 300ms ease;
     -moz-transition: all 300ms ease;
     -ms-transition: all 300ms ease;
@@ -716,22 +716,22 @@ nav.prime {
     pointer-events: none;
     z-index: 100;
     color: #bbbebf; }
-    nav.prime .lists li {
+    nav.prime .lists-switcher li {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       width: auto;
       text-align: left;
       padding: 5px 0; }
-      nav.prime .lists li:hover {
+      nav.prime .lists-switcher li:hover {
         color: #1d1e1f;
         cursor: pointer; }
-      nav.prime .lists li.new {
+      nav.prime .lists-switcher li.new {
         margin-bottom: 0;
         font-weight: bold;
         color: #1bd495;
         cursor: pointer; }
-        nav.prime .lists li.new:hover {
+        nav.prime .lists-switcher li.new:hover {
           color: #15a775; }
   nav.prime .show {
     top: 0;
@@ -794,7 +794,6 @@ form.new_item {
 
 .list {
   line-height: 1.5;
-  margin-bottom: 200px;
   display: none; }
   .list.current-list {
     display: block; }
