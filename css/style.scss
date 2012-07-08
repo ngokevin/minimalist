@@ -132,7 +132,7 @@ form.new_item{
 		line-height: 1;
 		padding: 28px ($button_width + 20px) 20px 20px;
 		border: 0 none;
-		overflow: auto;
+		overflow: hidden;
 
 		&:focus{
 			@include box-shadow(inset 1px -1px rgba(#000, 0.2));

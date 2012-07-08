@@ -86,7 +86,8 @@ Lists have data attributes data-id and data-name.
 
                 // Populate list.
                 $(JSON.parse(listObj['list'])).each(function(index, listItems){
-                    addItemToListInit(newList, $(listItems));
+                    var item = getRankedListItem(listName, index);
+                    addObjToList(listName, newList, item);
                 });
 
                 // Show last viewed list.
@@ -335,15 +336,25 @@ Lists have data attributes data-id and data-name.
                 var id = listItem.data('id');
                 listItem.remove()
 
-                // Remove from localStorage.
+                // Remove from localStorage based on data-id.
+                var rank;
                 var listObj = JSON.parse(localStorage[currentListName]);
                 var items = JSON.parse(JSON.parse(localStorage[currentListName])['list']);
                 $(items).each(function(index, item) {
                     if (item.id == id) {
+                        rank = item.rank;
                         items.splice(index, 1);
                         return;
                     }
                 });
+
+                // Move ranks of items up.
+                $(items).each(function(index, item) {
+                    if (item.rank > rank) {
+                        item.rank--;
+                    }
+                });
+
                 listObj['list'] = JSON.stringify(items);
                 localStorage[currentListName] = JSON.stringify(listObj);
             });
@@ -358,22 +369,33 @@ Lists have data attributes data-id and data-name.
             var itemText = $textarea.val();
 
             // Add to current list
-            addItemToList($('.current-list'), $([itemText]), prepend=true);
+            var listElement = $('.current-list'), listItems = $([itemText]);
+            var newListItem = '<li class="new_item">';
+            listItems.each(function(index, listItem) {
+                newListItem += '<p>' + listItem + '</p>';
+            });
+            newListItem += getActionElements() + '</li>';
+            newListItem = $(newListItem);
+            listElement.prepend(newListItem);
+            initDeleteItemButton();
+
             $('li.new_item').hoverIntent(hoverConfig);
             $textarea.focus().val('');
 
             // Add to localStorage.
-            addItemToLocalStorage(currentListName, [itemText]);
+            var newItem = addItemToLocalStorage(currentListName, [itemText]);
+            newListItem.attr('data-id', newItem.id);
+            newListItem.attr('data-rank', newItem.rank);
 
             $textarea.removeClass('medium small');
             textareaMultiline = false;
         }
 
 
-        function addItemToListInit(listElement, listObjs) {
+        function addObjToList(listName, listElement, item) {
             // Takes in the DOM list and list object and adds list item to
-            // given <li> element.
-            listObjs.each(function(index, listItem) {
+            // given <li> element. Used in initalization.
+            $(item).each(function(index, listItem) {
                 var newListItem = '<li class="new_item">';
                 // Individual p elements.
                 $(JSON.parse(listItem['items'])).each(function(index, item) {
@@ -386,25 +408,13 @@ Lists have data attributes data-id and data-name.
                 newListItem.attr('data-rank', listItem['rank']);
                 listElement.append(newListItem);
             });
-        }
-
-
-        function addItemToList(listElement, listItems) {
-            // Takes in a list of strings and adds to given DOM list.
-            var newListItem = '<li class="new_item">';
-            listItems.each(function(index, listItem) {
-                newListItem += '<p>' + listItem + '</p>';
-            });
-            newListItem += getActionElements() + '</li>';
-
-            newListItem = $(newListItem);
-            listElement.prepend(newListItem);
+            initDeleteItemButton();
         }
 
 
         function getRankedListItem(listName, rank) {
             // Given a list and rank, grab the list item that has the rank.
-            var listItems = $(JSON.parse(localStorage[listName]));
+            var listItems = $(JSON.parse(JSON.parse(localStorage[listName])['list']));
             var ret;
             listItems.each(function(index) {
                 if (parseInt(listItems[index]['rank']) == rank) {
@@ -453,14 +463,17 @@ Lists have data attributes data-id and data-name.
             newItem = {
                 'id': '' + list.length,
                 'items': JSON.stringify(listItems),
-                'rank': '' + list.length // TODO: push to top of rank
+                'rank': '0'
             }
+            // Squeeze item to top rank.
+            $(list).each(function(index, item) {
+                item.rank++;
+            });
 
             list.push(newItem);
             listObj['list'] = JSON.stringify(list);
 
             localStorage[listName] = JSON.stringify(listObj);
-            // reRankItem(currentListName, listObj.length - 1, 0)
             return newItem;
         }
 
