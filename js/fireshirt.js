@@ -42,7 +42,6 @@ $(function(){
         };
 
         function init() {
-            $('h1').delay(800).fadeOut();
             initLists();
             initTextArea();
             initNewListButton();
@@ -58,7 +57,9 @@ $(function(){
             if (localStorage['lastViewedListId']) {
                 currentListId = localStorage['lastViewedListId'];
                 currentListName = localStorage['lastViewedListName'];
+                $('h1').text(currentListName).delay(800).fadeOut();
             } else {
+                $('h1').delay(800).fadeOut();
                 currentListName = 'First List';
                 localStorage['lists'] = JSON.stringify(['First List']);
                 localStorage[currentListName] = JSON.stringify({
@@ -184,26 +185,27 @@ $(function(){
 
                     // Add list to localStorage.
                     var lists = JSON.parse(localStorage['lists']);
+                    var listId = lists.length;
                     lists.push(listTitle);
                     localStorage['lists'] = JSON.stringify(lists);
-                    localStorage[currentListName] = JSON.stringify(
-                        {
-                            'id': lists.length,
-                            'list': []
-                        }
-                    );
-                    localStorage['lastViewedListId'] = lists.length;
-                    localStorage['lastViewedListName'] = listTitle;
-
+                    localStorage[currentListName] = JSON.stringify({
+                        'id': listId,
+                        'list': JSON.stringify([])
+                    });
                     // Add new list name to list switcher.
-                    $('.lists-switcher').prepend($('<li>' + listTitle + '</li>'));
+                    var listSwitcher = $('.lists-switcher');
+                    listSwitcher.prepend($('<li>' + listTitle + '</li>').attr('data-id', listId));
 
                     // Swap out list.
-                    var lists = $('.lists-switcher')
                     var newList = $('<ul></ul>');
                     newList.addClass('current-list');
                     newList.addClass('list');
+                    newList.attr('data-id', listId);
                     $('.current-list').removeClass('current-list');
+                    $('.lists').append(newList);
+
+                    localStorage['lastViewedListId'] = listId;
+                    localStorage['lastViewedListName'] = listTitle;
                 }
             });
         }
@@ -229,11 +231,15 @@ $(function(){
                     }).addClass('hinge-close');
                 } else {
                     $('.current-list').removeClass('current-list hinge-close').removeAttr('style');
-                    $('.lists ul[data-id=' + listId + ']').fadeIn().addClass('current-list');
+                    $('.lists ul[data-id="' + listId + '"]').fadeIn().addClass('current-list');
                 }
+
+                localStorage['lastViewedListId'] = listId;
+                localStorage['lastViewedListName'] = title;
 
                 // Unshow list switcher.
                 $('.lists-switcher').removeClass('show');
+
                 return false;
             });
 
