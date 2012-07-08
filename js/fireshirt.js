@@ -362,7 +362,7 @@ $(function(){
                 e.preventDefault();
 
                 var title = this.innerHTML
-                $('h1').text(title).delay(500).fadeOut();
+                $('h1').text(title).fadeIn().delay(500).fadeOut();
 
                 var listID = $(this).data('list');
 
