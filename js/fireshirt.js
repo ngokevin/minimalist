@@ -41,6 +41,7 @@ Lists have data attributes data-id and data-name.
              timeout: 400, // number = milliseconds delay before onMouseOut
              out: function(){ $(this).removeClass('show-actions'); } // function = onMouseOut callback
         };
+        var headerTimeout;
 
         function init() {
             initLists();
@@ -58,7 +59,7 @@ Lists have data attributes data-id and data-name.
             if (localStorage['lastViewedListId']) {
                 currentListId = localStorage['lastViewedListId'];
                 currentListName = localStorage['lastViewedListName'];
-                $('h1').text(currentListName).delay(800).fadeOut();
+                fadeHeader(currentListName, 800);
             } else {
                 // Create default list if no list exist.
                 $('h1').delay(800).fadeOut();
@@ -214,6 +215,10 @@ Lists have data attributes data-id and data-name.
                     localStorage['lastViewedListId'] = listId;
                     localStorage['lastViewedListName'] = listTitle;
                     currentListId = listId;
+                    fadeHeader(listTitle);
+
+                    // Bind new list swticher button.
+                    initListSwitcher();
                 }
             });
         }
@@ -226,7 +231,7 @@ Lists have data attributes data-id and data-name.
 
                 // Display title briefly.
                 var title = this.innerHTML
-                $('h1').text(title).fadeIn().delay(500).fadeOut();
+                fadeHeader(title);
                 var listId = $(this).data('id');
 
                 // Change backend variables.
@@ -260,7 +265,7 @@ Lists have data attributes data-id and data-name.
                 var title = $nextList.data('name');
                 var listId = $nextList.data('id');
 
-                $('h1').text(title).fadeIn().delay(500).fadeOut();
+                fadeHeader(title);
                 if( $nextList.length ){
                     $currentList.removeClass('current-list').removeAttr('style');
                     $nextList.addClass('current-list');
@@ -279,7 +284,7 @@ Lists have data attributes data-id and data-name.
                 var title = $prevList.data('name');
                 var listId = $prevList.data('id');
 
-                $('h1').text(title).fadeIn().delay(500).fadeOut();
+                fadeHeader(title);
                 if( $prevList.length ){
                     $currentList.removeClass('current-list').removeAttr('style');
                     $prevList.addClass('current-list');
@@ -512,6 +517,20 @@ Lists have data attributes data-id and data-name.
         function getActionElements() {
             // Return div with action elements to add to list items.
             return '<div class="actions"><span class="delete ss-icon">delete</span><span class="edit ss-icon">write</span></div>';
+        }
+
+
+        function fadeHeader(title, delay) {
+            // Fades header in and out with a clearTimeout so multiple header
+            // fades on quick list switching are cancelled.
+            if (!delay) { delay = 700; }
+
+            var header = $('h1')
+            clearTimeout(headerTimeout)
+            header.text(title).fadeIn();
+            headerTimeout = setTimeout(function() {
+                header.fadeOut();
+            }, delay);
         }
 
 

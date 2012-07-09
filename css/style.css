@@ -755,7 +755,7 @@ form.new_item {
     line-height: 1;
     padding: 28px 110px 20px 20px;
     border: 0 none;
-    overflow: auto; }
+    overflow: hidden; }
     form.new_item textarea:focus {
       -webkit-box-shadow: inset 1px -1px rgba(0, 0, 0, 0.2);
       -moz-box-shadow: inset 1px -1px rgba(0, 0, 0, 0.2);
