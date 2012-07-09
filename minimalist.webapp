@@ -1,16 +1,16 @@
 {
   "version": "1.0",
-  "name": "Fireshirt",
+  "name": "Minimalist",
   "description": "Create lists of thoughts you want to remember.",
-  "launch_path": "/~ngoke/fireshirt/",
+  "launch_path": "/",
   "icons": {
     "16": "",
     "48": "",
     "128": ""
   },
   "developer": {
-    "name": "Sawyer Hollenstead and Kevin Ngo",
-    "url": "http://sawyerhollenstead.com"
+    "name": "Sawyer Hollenshead and Kevin Ngo",
+    "url": "http://sawyerhollenshead.com"
   },
   "installs_allowed_from": [
     "https://marketplace.mozilla.org"

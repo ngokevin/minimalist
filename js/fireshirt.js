@@ -1,24 +1,30 @@
 $(function(){
 /*
-{'lists.sample':
-    [
-        {
-            'id': 1,
-            'items': ['item1', 'item2'],
-            'rank': 2
-        },
-        {
-            'id': 2,
-            'items': ['item3', 'item4'],
-            'rank': 1
-        }
-    ]
+Lists have data attributes data-id and data-name.
+
+{
+    'lastViewedList': 0,
+    'lists': ['sample'],
+    'sample': {
+            'id': 0,
+            'list': [
+                {
+                    'id': 1,
+                    'items': ['item1', 'item2'],
+                    'rank': 2
+                },
+                {
+                    'id': 2,
+                    'items': ['item3', 'item4'],
+                    'rank': 1
+                }
+            ]
+    }
 }
 */
-
     $('.toggle-lists').on('click', function(e){
         e.preventDefault();
-        $('.lists', $(this).parent()).toggleClass('show');
+        $('.lists-switcher', $(this).parent()).toggleClass('show');
     });
 
     function dbg(s) {
@@ -26,7 +32,7 @@ $(function(){
     }
 
     var Fireshirt = function() {
-        var currentList;
+        var currentListName, currentListId;
         var localStorage = window.localStorage;
         var buttonPressed = false;
         var textareaMultiline = false;
@@ -35,180 +41,75 @@ $(function(){
              timeout: 400, // number = milliseconds delay before onMouseOut
              out: function(){ $(this).removeClass('show-actions'); } // function = onMouseOut callback
         };
+        var headerTimeout;
 
         function init() {
-            $('h1').delay(500).fadeOut();
-            initLocalStorage();
-            addItemButtons();
-            deleteItemButtons();
+            initLists();
             initTextArea();
-            initItemsListSorting();
-            initListsButtons();
+            initNewListButton();
+            initListSwitcher();
+            initPrevNextSwitcher();
+            initAddItemButton();
+            initDeleteItemButton();
+            initSorting();
         }
 
 
-        function initLocalStorage() {
+        function initLists() {
             // Grab last view list if exists.
-            if (localStorage['lastViewedList']) {
-                currentList = localStorage['lastViewedList'];
-                initList(currentList);
-            }
-            else {
-                // Grab the sample list from the HTML and add to localStorage
-                // if not already in localStorage.
-                currentList = 'lists.sample';
-                if (!localStorage[currentList]) {
-                    var listItems = [];
-                    var sampleList = $('.current-list li');
-
-                    // Build data structure for localStorage.
-                    sampleList.each(function(index, listItem) {
-                        // Add <li><p>TEXT</p><p>TEXT2</p></li>.
-                        listItem = $(listItem);
-                        var items = [];
-                        listItem.children('p').each(function(index, child) {
-                            items.push(child.innerHTML);
-                        });
-                        newListItem = {'id': listItem.attr('data-id'), 'items': items, 'rank': listItem.attr('data-rank')};
-                        listItems.push(newListItem);
-                    });
-
-                    localStorage[currentList] = JSON.stringify(listItems);
-                }
-                localStorage['lastViewedList'] = currentList;
-            }
-        }
-
-
-        function initList(listName) {
-            // Removes current list, grabs a list from localStorage and spits
-            // it to the page.
-            var listItems = $(JSON.parse(localStorage[listName]));
-            var list = $('.current-list');
-            list.empty();
-
-            listItems.each(function(index) {
-                var listItem = getRankedListItem(listName, index);
-
-                newListItem = $('<li></li>');
-                $(listItem['items']).each(function(index, pChild) {
-                    newListItem.append($('<p>' + pChild + '</p>'));
-                    $('.current-list').prepend(newListItem);
-                });
-                newListItem.data('id', listItem['id']);
-                newListItem.data('rank', listItem['rank']);
-                newListItem.append($(getActionElements()));
-                list.append(newListItem);
-            });
-
-            $(".items_list li").hoverIntent( hoverConfig );
-        }
-
-
-        function getRankedListItem(listName, rank) {
-            // Given a list and rank, grab the list item that has the rank.
-            var listItems = $(JSON.parse(localStorage[listName]));
-            var ret;
-            listItems.each(function(index) {
-                if (parseInt(listItems[index]['rank']) == rank) {
-                    ret = listItems[index];
-                }
-            });
-            return ret;
-        }
-
-
-        function reRankItem(list, oldRank, newRank) {
-            // Rerank a list item, shift other elements' ranks if necessary.
-            var listItems = $(JSON.parse(localStorage[list]));
-            var shift = 0;
-            if (newRank < oldRank) {
-                // Promoting.
-                shift = 1;
+            if (localStorage['lastViewedListId']) {
+                currentListId = localStorage['lastViewedListId'];
+                currentListName = localStorage['lastViewedListName'];
+                fadeHeader(currentListName, 800);
             } else {
-                // Demoting
-                shift = -1;
+                // Create default list if no list exist.
+                fadeHeader($('h1').text(), 800);
+                currentListName = 'First List';
+                localStorage['lists'] = JSON.stringify(['First List']);
+                localStorage[currentListName] = JSON.stringify({
+                    'id': 0,
+                    'list': JSON.stringify([])
+                });
+                localStorage['lastViewedListId'] = 0;
+                localStorage['lastViewedListName'] = currentListName;
+
+                // Display 'Minimalist' at first, but change header in
+                // background.
+                setTimeout(function() { $('h1').text(currentListName); }, 1200 );
             }
+            currentListId = JSON.parse(localStorage[currentListName])['id'];
 
-            dbg(listItems);
-            var rank;
-            listItems.each(function(index, element) {
-                rank = parseInt(element['rank'])
-                if ((rank < oldRank || parseInt(rank) > newRank)) {
-                    return;
+            // Loads in all lists from localStorage, sets currentList as active
+            // list.
+            var listNames = JSON.parse(localStorage['lists']);
+            $(listNames).each(function(index, listName) {
+                // Create list.
+                var listObj = JSON.parse(localStorage[listName]);
+                var newList = $('<ul></ul>').addClass('list');
+                newList.attr('data-id', listObj['id']);
+                newList.attr('data-name', listName);
+
+                // Populate list.
+                $(JSON.parse(listObj['list'])).each(function(index, listItems){
+                    var item = getRankedListItem(listName, index);
+                    addObjToList(listName, newList, item);
+                });
+
+                // Show last viewed list.
+                if (parseInt(listObj['id']) == currentListId) {
+                    newList.addClass('current-list');
                 }
-                if (rank == oldRank) {
-                    element['rank'] = newRank;
-                } else {
-                    element['rank'] = rank + shift;
-                }
-            });
-            dbg(listItems);
-            localStorage[list] = JSON.stringify(listItems);
-        }
 
+                // Add to list switcher.
+                var newListSwitcherItem = $('<li>' + listName + '</li>');
+                newListSwitcherItem.attr('data-id', newList.data('id'));
+                newListSwitcherItem.attr('data-name', listName);
+                $('.lists-switcher').prepend(newListSwitcherItem);
 
-        function addItemButtons() {
-            $('#add-item').on('click', function(e) {
-                addNewItem(e);
-            });
-        }
-
-        function deleteItemButtons(){
-            $('.items_list').on('click', '.actions .delete', function(e){
-                $(this).parents('li').remove();
-
-                // TODO: Remove item from localStorage
-            });
-        }
-
-
-        // Add item to list when submitting text.
-        function addNewItem(e){
-            e.preventDefault();
-
-            var $textarea = $('#add-item-text');
-            var itemText = $textarea.val();
-            var newListItem = $('<li class="new_item"><p>' + itemText + '</p>' + getActionElements() + '</li>');
-            $('li.new_item').removeClass('new_item');
-            $('.current-list').prepend(newListItem);
-            $('li.new_item').hoverIntent(hoverConfig);
-            $textarea.focus().val('');
-
-            // Add to localStorage.
-            addItemToLocalStorage(currentList, newListItem);
-
-            $textarea.removeClass('medium small');
-            textareaMultiline = false;
-        }
-
-
-        function getActionElements() {
-            // Return div with action elements to add to list items.
-            return '<div class="actions"><span class="delete ss-icon">delete</span><span class="edit ss-icon">write</span></div>';
-        }
-
-
-        function addItemToLocalStorage(listName, listItem) {
-            // Adds item to list in localStorage.
-            list = JSON.parse(localStorage[listName]);
-
-            // Get list of <p> elements' text to add to item.
-            var pChildren = [];
-            var children = listItem.children('p');
-            children.each(function(index, child) {
-                pChildren.push(child.innerHTML);
+                $('.lists').append(newList);
             });
 
-            newItem = {
-                'id': '' + list.length,
-                'items': pChildren,
-                'rank': '' + list.length // TODO: push to top of rank
-            }
-            list.prepend(newItem);
-            localStorage[listName] = JSON.stringify(list);
-            reRankItem(currentList, list.length - 1, 0)
-            return newItem;
+            $(".list li").hoverIntent(hoverConfig);
         }
 
 
@@ -223,7 +124,7 @@ $(function(){
                 }
 
                 // Focus mode
-                $('.items').addClass('focus-mode');
+                $('.lists').addClass('focus-mode');
             }).on('blur', function(){
                 var $this = $(this);
 
@@ -233,7 +134,7 @@ $(function(){
                 }
 
                 // Remove focus mode
-                if( !buttonPressed ) $('.items').removeClass('focus-mode');
+                if( !buttonPressed ) $('.lists').removeClass('focus-mode');
             }).on('keyup', function(e) {
                 var $this = $(this);
                 var valLength = $this.val().length;
@@ -269,7 +170,7 @@ $(function(){
             });
 
             $('.new_item input[type="submit"]').on('mousedown click', function(){
-                $('.items').addClass('focus-mode');
+                $('.lists').addClass('focus-mode');
                 buttonPressed = true;
             }).on('mouseup click', function(){
                 buttonPressed = false;
@@ -284,33 +185,299 @@ $(function(){
         }
 
 
-        function initItemsListSorting() {
+        function initNewListButton(){
+            // On click, prompt list name, create new list, add to list
+            // switcher, add to localStorage, switch to new empty list.
+            $('.lists-switcher .new').on('click', function(){
+                var listTitle = prompt('List Name', '');
+
+                if (listTitle !== null){
+                    currentListName = listTitle;
+
+                    // Add list to localStorage.
+                    var lists = JSON.parse(localStorage['lists']);
+                    var listId = lists.length;
+                    lists.push(listTitle);
+                    localStorage['lists'] = JSON.stringify(lists);
+                    localStorage[currentListName] = JSON.stringify({
+                        'id': listId,
+                        'list': JSON.stringify([])
+                    });
+                    // Add new list name to list switcher.
+                    var listSwitcher = $('.lists-switcher');
+                    var listSwitchItem = listSwitcher.prepend($('<li>' + listTitle + '</li>'));
+                    listSwitchItem.attr('data-id', listId).attr('data-name', listTitle);
+
+                    // Swap out list.
+                    var newList = $('<ul></ul>');
+                    newList.addClass('current-list');
+                    newList.addClass('list');
+                    newList.attr('data-id', listId);
+                    newList.attr('data-name', listTitle);
+                    $('.current-list').removeClass('current-list').removeAttr('style');
+                    $('.lists').append(newList);
+
+                    localStorage['lastViewedListId'] = listId;
+                    localStorage['lastViewedListName'] = listTitle;
+                    currentListId = listId;
+                    fadeHeader(listTitle);
+
+                    // Bind new list swticher button.
+                    initListSwitcher();
+                }
+            });
+        }
+
+
+        function initListSwitcher() {
+            // Clicking a new list swaps in list.
+            $('.lists-switcher li:not(.new)').on('click', function(e){
+                e.preventDefault();
+                var listId = $(this).data('id');
+                var title = this.innerHTML
+
+                // Display title briefly.
+                hingeAnimation(listId);
+                fadeHeader(title, 1000);
+
+                // Change backend variables.
+                currentListName = title;
+                currentListId = listId;
+                localStorage['lastViewedListName'] = title;
+                localStorage['lastViewedListId'] = listId;
+
+                // Unshow list switcher.
+                $('.lists-switcher').removeClass('show');
+
+                return false;
+            });
+        }
+
+
+        function initPrevNextSwitcher() {
+            $('.next-list').on('click', function(e){
+                // Swap to next list.
+                switchPrevNextList($('.current-list').next('ul'));
+            });
+
+            $('.prev-list').on('click', function(e){
+                // Swap to prev list.
+                switchPrevNextList($('.current-list').prev('ul'));
+            });
+        }
+
+
+        function switchPrevNextList($switchToList) {
+            // Swap to prev or next list if there is one, else just play
+            // animation and switch to self.
+            if ($switchToList.length > 0) {
+                currentListName = $switchToList.data('name');
+                currentListId = $switchToList.data('id');
+
+                $('.current-list').removeClass('current-list').removeAttr('style');
+                $switchToList.addClass('current-list');
+                fadeHeader(currentListName, 1000);
+
+                localStorage['lastViewedListName'] = currentListName;
+                localStorage['lastViewedListId'] = currentListId;
+            } else {
+                fadeHeader(currentListName, 1000);
+            }
+        }
+
+
+        function initSorting() {
             var oldRank = null;
-            $(".items_list").sortable({
+            $(".list").sortable({
                 placeholder: 'ui-state-highlight',
                 change: function(event, ui) {
                     oldRank = ui.item.data('rank');
                 },
                 update: function(event, ui) {
                     // Get position in link as new rank.
-                    var id = ui.item.data('id');
-                    var list = $('.current-list li');
                     var newRank;
-                    list.each(function(index, element) {
-                        var element = $(element);
-                        if (parseInt(element.data('id')) == id) {
-                            if (element.prev('li').length > 0) {
-                                newRank = element.prev('li').data('rank');
-                            } else {
-                                newRank = element.next('li').data('rank');
-                            }
+                    var id = ui.item.data('id');
+                    $('.current-list li').each(function(index, element) {
+                        if ($(element).data('id') == id) {
+                            newRank = index;
                         }
                     });
-                    // reRankItem(currentList, parseInt(oldRank), parseInt(newRank));
+                    reRankItem(currentListName, parseInt(oldRank), parseInt(newRank));
                 }
             });
-            $( ".items_list" ).disableSelection();
+            $( ".list" ).disableSelection();
         }
+
+
+        function initAddItemButton() {
+            $('#add-item').on('click', function(e) {
+                addNewItem(e);
+                initDeleteItemButton();
+                initSorting();
+            });
+        }
+
+
+        function initDeleteItemButton(){
+            $('.list').on('click', '.actions .delete', function(e){
+                var listItem = $(this).parents('li.new_item').remove();
+                var id = listItem.data('id');
+                listItem.remove()
+
+                // Remove from localStorage based on data-id.
+                var rank;
+                var listObj = JSON.parse(localStorage[currentListName]);
+                var items = JSON.parse(JSON.parse(localStorage[currentListName])['list']);
+                $(items).each(function(index, item) {
+                    if (item.id == id) {
+                        rank = item.rank;
+                        items.splice(index, 1);
+                        return;
+                    }
+                });
+
+                // Move ranks of other items up.
+                $(items).each(function(index, item) {
+                    if (item.rank > rank) {
+                        item.rank--;
+                    }
+                });
+
+                listObj['list'] = JSON.stringify(items);
+                localStorage[currentListName] = JSON.stringify(listObj);
+            });
+        }
+
+
+        function addNewItem(e){
+            // Add item to list when submitting text and to localStorage.
+            e.preventDefault();
+
+            var $textarea = $('#add-item-text');
+            var itemText = escape_($textarea.val());
+
+            // Add to current list
+            var listElement = $('.current-list'), listItems = $([itemText]);
+            var newListItem = '<li class="new_item">';
+            listItems.each(function(index, listItem) {
+                newListItem += '<p>' + listItem + '</p>';
+            });
+            newListItem += getActionElements() + '</li>';
+            newListItem = $(newListItem);
+
+            $('li.new_item').hoverIntent(hoverConfig);
+            $textarea.focus().val('');
+
+            // Add to localStorage.
+            var newItem = addItemToLocalStorage(currentListName, [itemText]);
+            newListItem.attr('data-id', newItem.id);
+            newListItem.attr('data-rank', newItem.rank);
+            listElement.prepend(newListItem);
+
+            $textarea.removeClass('medium small');
+            textareaMultiline = false;
+        }
+
+
+        function addObjToList(listName, listElement, item) {
+            // Takes in the DOM list and list object and adds list item to
+            // given <li> element. Used in initalization.
+            $(item).each(function(index, listItem) {
+                var newListItem = '<li class="new_item">';
+                // Individual p elements.
+                $(JSON.parse(listItem['items'])).each(function(index, item) {
+                    newListItem += '<p>' + item + '</p>';
+                });
+                newListItem += getActionElements() + '</li>';
+
+                newListItem = $(newListItem);
+                newListItem.attr('data-id', listItem['id']);
+                newListItem.attr('data-rank', listItem['rank']);
+                listElement.append(newListItem);
+            });
+            initDeleteItemButton();
+        }
+
+
+        function getRankedListItem(listName, rank) {
+            // Given a list and rank, grab the list item that has the rank.
+            var listItems = $(JSON.parse(JSON.parse(localStorage[listName])['list']));
+            var ret;
+            listItems.each(function(index) {
+                if (parseInt(listItems[index]['rank']) == rank) {
+                    ret = listItems[index];
+                }
+            });
+            return ret;
+        }
+
+
+        function reRankItem(listName, oldRank, newRank) {
+            // Rerank a list item, shift other elements' ranks when needed.
+            var list = JSON.parse(localStorage[listName])
+            var listItems = JSON.parse(JSON.parse(localStorage[listName])['list']);
+            var shift = -1;
+            if (newRank < oldRank) {
+                shift = 1;
+            }
+
+            // Rerank items in localStorage and DOM.
+            $(listItems).each(function(index, element) {
+                var id = parseInt(element['id'])
+                var rank = parseInt(element['rank'])
+
+                // Handle promotion.
+                if (newRank < oldRank && (rank > oldRank || rank < newRank)) {
+                    return;
+                }
+                // Handle demotion.
+                if (newRank > oldRank && (rank < oldRank || rank > newRank)) {
+                    return;
+                }
+
+                if (rank == oldRank) {
+                    element['rank'] = newRank;
+                    $('.current-list li[data-id="' + id + '"]').attr('data-rank', element['rank']);
+                }
+                else {
+                    element['rank'] = rank + shift;
+                    $('.current-list li[data-id="' + id + '"]').attr('data-rank', element['rank']);
+                }
+            });
+
+            list['list'] = JSON.stringify(listItems);
+            localStorage[listName] = JSON.stringify(list);
+        }
+
+
+        function addItemToLocalStorage(listName, listItems) {
+            // Adds item to list in localStorage. Call BEFORE adding item to
+            // DOM since we up the rank of every list item.
+            var listObj = JSON.parse(localStorage[listName]);
+            var list = JSON.parse(listObj['list']);
+            newItem = {
+                'id': '' + list.length,
+                'items': JSON.stringify(listItems),
+                'rank': '0'
+            }
+
+            // Squeeze item to top rank in localStorage and DOM.
+            $(list).each(function(index, item) {
+                item.rank++;
+            });
+            $('.current-list li').each(function(index, item) {
+                var item = $(item);
+                var rank = parseInt(item.attr('data-rank'));
+                item.attr('data-rank', rank + 1);
+            });
+
+            list.push(newItem);
+            listObj['list'] = JSON.stringify(list);
+
+            localStorage[listName] = JSON.stringify(listObj);
+            return newItem;
+        }
+
 
         function getCaret(el) {
           if (el.selectionStart) {
@@ -333,79 +500,58 @@ $(function(){
           return 0;
         }
 
-        function initListsButtons(){
-            $('.lists .new').on('click', function(){
-                var listTitle = prompt("List name","");
 
-                if (listTitle !== null){
-                    // Swap out list.
-                    var lists = $('.items')
-                    $('.current-list').removeClass('current-list');
-                    var newList = $('<ul></ul');
-                    lists.append(newList);
-                    newList.addClass('current-list');
-                    newList.addClass('items_list');
-
-                    // Add new list to list of lists.
-                    $('.lists').prepend($('<li>' + listTitle + '</li>'));
-                    var lists = JSON.parse(localStorage['lists']);
-                    lists.push(listTitle);
-                    localStorage['lists'] = JSON.stringify(lists);
-
-                    currentList = 'lists.' + listTitle;
-                    localStorage[currentList] = JSON.stringify([]);
-                    localStorage['lastViewedList'] = currentList;
-                }
-            });
-
-            $('.lists li:not(.new)').on('click', function(e){
-                e.preventDefault();
-
-                var title = this.innerHTML
-                $('h1').text(title).fadeIn().delay(500).fadeOut();
-
-                var listID = $(this).data('list');
-
-                if($('.current-list li').length){
-                    $('.current-list').bind('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', function(e){
-                        $(this).removeClass('current-list hinge-close').removeAttr('style');
-                        $('.items ul[data-list="'+listID+'"]').fadeIn().addClass('current-list');
-                    }).addClass('hinge-close');
-                } else {
-                    $('.current-list').removeClass('current-list hinge-close').removeAttr('style');
-                    $('.items ul[data-list="'+listID+'"]').fadeIn().addClass('current-list');
-                }
-
-                $('.lists').removeClass('show');
-
-                return false;
-            });
-
-            $('.next-list').on('click', function(e){
-                var $currentList = $('.current-list');
-                var $nextList = $currentList.next('ul');
-
-                if( $nextList.length ){
-                    $currentList.removeClass('current-list').removeAttr('style');
-                    $nextList.addClass('current-list');
-                }
-            });
-
-            $('.prev-list').on('click', function(e){
-                var $currentList = $('.current-list');
-                var $prevList = $currentList.prev('ul');
-
-                if( $prevList.length ){
-                    $currentList.removeClass('current-list').removeAttr('style');
-                    $prevList.addClass('current-list');
-                }
-            });
+        function getActionElements() {
+            // Return div with action elements to add to list items.
+            return '<div class="actions"><span class="delete ss-icon">delete</span><span class="edit ss-icon">write</span></div>';
         }
+
+
+        function fadeHeader(title, delay) {
+            // Fades header in and out with a clearTimeout so multiple header
+            // fades on quick list switching are cancelled.
+            if (!delay) { delay = 700; }
+
+            var header = $('h1')
+            clearTimeout(headerTimeout)
+            header.text(title).fadeIn();
+            headerTimeout = setTimeout(function() {
+                header.fadeOut();
+            }, delay);
+        }
+
+
+        function hingeAnimation(listId) {
+            // Animation.
+            if($('.current-list li').length){
+                // If has items, do a hinge out animation.
+                $('.current-list').bind('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', function(e){
+                    $(this).removeClass('current-list hinge-close').removeAttr('style');
+                    $('.lists ul[data-id="' + listId + '"]').fadeIn().addClass('current-list');
+                }).addClass('hinge-close');
+            } else {
+                $('.current-list').removeClass('current-list hinge-close').removeAttr('style');
+                $('.lists ul[data-id="' + listId + '"]').fadeIn().addClass('current-list');
+            }
+        }
+
+
+        var escape_ = function(s) {
+            if (s === undefined) {
+                return;
+            }
+            return s.replace(/&/g, '&amp;').replace(/>/g, '&gt;').replace(/</g, '&lt;')
+                    .replace(/'/g, '&#39;').replace(/"/g, '&#34;');
+        };
+
 
         return {
             init: init
         };
     }();
+
+    $('.new_item').css('visibility', 'hidden');
     Fireshirt.init();
+    $('.new_item').css('visibility', 'visible');
 
 });
