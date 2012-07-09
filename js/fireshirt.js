@@ -22,7 +22,6 @@ Lists have data attributes data-id and data-name.
     }
 }
 */
-
     $('.toggle-lists').on('click', function(e){
         e.preventDefault();
         $('.lists-switcher', $(this).parent()).toggleClass('show');
@@ -303,20 +302,14 @@ Lists have data attributes data-id and data-name.
                 },
                 update: function(event, ui) {
                     // Get position in link as new rank.
-                    var id = ui.item.data('id');
-                    var list = $('.current-list li');
                     var newRank;
-                    list.each(function(index, element) {
-                        var element = $(element);
-                        if (parseInt(element.data('id')) == id) {
-                            if (element.prev('li').length > 0) {
-                                newRank = element.prev('li').data('rank');
-                            } else {
-                                newRank = element.next('li').data('rank');
-                            }
+                    var id = ui.item.data('id');
+                    $('.current-list li').each(function(index, element) {
+                        if ($(element).data('id') == id) {
+                            newRank = index;
                         }
                     });
-                    // reRankItem(currentListName, parseInt(oldRank), parseInt(newRank));
+                    reRankItem(currentListName, parseInt(oldRank), parseInt(newRank));
                 }
             });
             $( ".list" ).disableSelection();
@@ -326,6 +319,8 @@ Lists have data attributes data-id and data-name.
         function initAddItemButton() {
             $('#add-item').on('click', function(e) {
                 addNewItem(e);
+                initDeleteItemButton();
+                initSorting();
             });
         }
 
@@ -348,7 +343,7 @@ Lists have data attributes data-id and data-name.
                     }
                 });
 
-                // Move ranks of items up.
+                // Move ranks of other items up.
                 $(items).each(function(index, item) {
                     if (item.rank > rank) {
                         item.rank--;
@@ -376,8 +371,6 @@ Lists have data attributes data-id and data-name.
             });
             newListItem += getActionElements() + '</li>';
             newListItem = $(newListItem);
-            listElement.prepend(newListItem);
-            initDeleteItemButton();
 
             $('li.new_item').hoverIntent(hoverConfig);
             $textarea.focus().val('');
@@ -386,6 +379,7 @@ Lists have data attributes data-id and data-name.
             var newItem = addItemToLocalStorage(currentListName, [itemText]);
             newListItem.attr('data-id', newItem.id);
             newListItem.attr('data-rank', newItem.rank);
+            listElement.prepend(newListItem);
 
             $textarea.removeClass('medium small');
             textareaMultiline = false;
@@ -425,49 +419,64 @@ Lists have data attributes data-id and data-name.
         }
 
 
-        function reRankItem(list, oldRank, newRank) {
-            // Rerank a list item, shift other elements' ranks if necessary.
-            var listItems = $(JSON.parse(localStorage[list])['list']);
-            var shift = 0;
+        function reRankItem(listName, oldRank, newRank) {
+            // Rerank a list item, shift other elements' ranks when needed.
+            var list = JSON.parse(localStorage[listName])
+            var listItems = JSON.parse(JSON.parse(localStorage[listName])['list']);
+            var shift = -1;
             if (newRank < oldRank) {
-                // Promoting.
+                dbg('promoting');
                 shift = 1;
-            } else {
-                // Demoting
-                shift = -1;
             }
 
-            dbg(listItems);
-            var rank;
-            listItems.each(function(index, element) {
-                rank = parseInt(element['rank'])
-                if ((rank < oldRank || parseInt(rank) > newRank)) {
+            // Rerank items in localStorage and DOM.
+            $(listItems).each(function(index, element) {
+                var id = parseInt(element['id'])
+                var rank = parseInt(element['rank'])
+
+                // Handle promotion.
+                if (newRank < oldRank && (rank > oldRank || rank < newRank)) {
                     return;
                 }
+                // Handle demotion.
+                if (newRank > oldRank && (rank < oldRank || rank > newRank)) {
+                    return;
+                }
+
                 if (rank == oldRank) {
                     element['rank'] = newRank;
-                } else {
+                    $('.current-list li[data-id="' + id + '"]').attr('data-rank', element['rank']);
+                }
+                else {
                     element['rank'] = rank + shift;
+                    $('.current-list li[data-id="' + id + '"]').attr('data-rank', element['rank']);
                 }
             });
-            dbg(listItems);
-            localStorage[list]['list'] = JSON.stringify(listItems);
+
+            list['list'] = JSON.stringify(listItems);
+            localStorage[listName] = JSON.stringify(list);
         }
 
 
         function addItemToLocalStorage(listName, listItems) {
-            // Adds item to list in localStorage.
+            // Adds item to list in localStorage. Call BEFORE adding item to
+            // DOM since we up the rank of every list item.
             var listObj = JSON.parse(localStorage[listName]);
             var list = JSON.parse(listObj['list']);
-
             newItem = {
                 'id': '' + list.length,
                 'items': JSON.stringify(listItems),
                 'rank': '0'
             }
-            // Squeeze item to top rank.
+
+            // Squeeze item to top rank in localStorage and DOM.
             $(list).each(function(index, item) {
                 item.rank++;
+            });
+            $('.current-list li').each(function(index, item) {
+                var item = $(item);
+                var rank = parseInt(item.attr('data-rank'));
+                item.attr('data-rank', rank + 1);
             });
 
             list.push(newItem);
@@ -514,4 +523,5 @@ Lists have data attributes data-id and data-name.
     $('.new_item').css('visibility', 'hidden');
     Fireshirt.init();
     $('.new_item').css('visibility', 'visible');
+
 });
