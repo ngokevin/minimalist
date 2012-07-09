@@ -4,14 +4,15 @@
   "description": "Create lists of thoughts you want to remember.",
   "launch_path": "/",
   "icons": {
-    "16": "",
-    "48": "",
-    "128": ""
+    "16": "/img/favicon.ico",
+    "48": "/img/icon-48.png",
+    "128": "/img/icon-128.png"
   },
   "developer": {
     "name": "Sawyer Hollenshead and Kevin Ngo",
     "url": "http://sawyerhollenshead.com"
   },
+  "appcache_path": "/.cache.manifest",
   "installs_allowed_from": [
     "https://marketplace.mozilla.org"
   ],
