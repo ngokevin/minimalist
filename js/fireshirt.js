@@ -354,7 +354,7 @@ Lists have data attributes data-id and data-name.
             e.preventDefault();
 
             var $textarea = $('#add-item-text');
-            var itemText = $textarea.val();
+            var itemText = escape_($textarea.val());
 
             // Add to current list
             var listElement = $('.current-list'), listItems = $([itemText]);
@@ -534,6 +534,15 @@ Lists have data attributes data-id and data-name.
                 $('.lists ul[data-id="' + listId + '"]').fadeIn().addClass('current-list');
             }
         }
+
+
+        var escape_ = function(s) {
+            if (s === undefined) {
+                return;
+            }
+            return s.replace(/&/g, '&amp;').replace(/>/g, '&gt;').replace(/</g, '&lt;')
+                    .replace(/'/g, '&#39;').replace(/"/g, '&#34;');
+        };
 
 
         return {
