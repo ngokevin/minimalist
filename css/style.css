@@ -1174,7 +1174,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
         padding: 17px 0 13px; }
       nav.prime li:first-child {
         width: 34%; }
-    nav.prime .lists {
+    nav.prime .lists-switcher {
       -webkit-transition: top 400ms ease;
       -moz-transition: top 400ms ease;
       -ms-transition: top 400ms ease;
@@ -1190,14 +1190,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       border-top: 1px solid #d5d7d8;
       overflow: auto;
       max-height: none; }
-      nav.prime .lists li {
+      nav.prime .lists-switcher li {
         float: none;
         margin: 0;
         border-right: 0 none;
         border-bottom: 1px solid #d5d7d8;
         padding: 20px 0;
         overflow: visible; }
-        nav.prime .lists li:first-child {
+        nav.prime .lists-switcher li:first-child {
           width: auto; }
     nav.prime .show {
       top: 46px; }
