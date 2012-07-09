@@ -48,6 +48,7 @@ Lists have data attributes data-id and data-name.
             initTextArea();
             initNewListButton();
             initListSwitcher();
+            initPrevNextSwitcher();
             initAddItemButton();
             initDeleteItemButton();
             initSorting();
@@ -62,7 +63,7 @@ Lists have data attributes data-id and data-name.
                 fadeHeader(currentListName, 800);
             } else {
                 // Create default list if no list exist.
-                $('h1').delay(800).fadeOut();
+                fadeHeader($('h1').text(), 800);
                 currentListName = 'First List';
                 localStorage['lists'] = JSON.stringify(['First List']);
                 localStorage[currentListName] = JSON.stringify({
@@ -71,6 +72,10 @@ Lists have data attributes data-id and data-name.
                 });
                 localStorage['lastViewedListId'] = 0;
                 localStorage['lastViewedListName'] = currentListName;
+
+                // Display 'Minimalist' at first, but change header in
+                // background.
+                setTimeout(function() { $('h1').text(currentListName); }, 1200 );
             }
             currentListId = JSON.parse(localStorage[currentListName])['id'];
 
@@ -228,73 +233,56 @@ Lists have data attributes data-id and data-name.
             // Clicking a new list swaps in list.
             $('.lists-switcher li:not(.new)').on('click', function(e){
                 e.preventDefault();
+                var listId = $(this).data('id');
+                var title = this.innerHTML
 
                 // Display title briefly.
-                var title = this.innerHTML
-                fadeHeader(title);
-                var listId = $(this).data('id');
+                hingeAnimation(listId);
+                fadeHeader(title, 1000);
 
                 // Change backend variables.
                 currentListName = title;
-                currentListId= listId;
+                currentListId = listId;
                 localStorage['lastViewedListName'] = title;
                 localStorage['lastViewedListId'] = listId;
-
-                // Animation.
-                if($('.current-list li').length){
-                    // If has items, do a hinge out animation.
-                    $('.current-list').bind('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', function(e){
-                        $(this).removeClass('current-list hinge-close').removeAttr('style');
-                        $('.lists ul[data-id="' + listId + '"]').fadeIn().addClass('current-list');
-                    }).addClass('hinge-close');
-                } else {
-                    $('.current-list').removeClass('current-list hinge-close').removeAttr('style');
-                    $('.lists ul[data-id="' + listId + '"]').fadeIn().addClass('current-list');
-                }
 
                 // Unshow list switcher.
                 $('.lists-switcher').removeClass('show');
 
                 return false;
             });
+        }
 
+
+        function initPrevNextSwitcher() {
             $('.next-list').on('click', function(e){
                 // Swap to next list.
-                var $currentList = $('.current-list');
-                var $nextList = $currentList.next('ul');
-                var title = $nextList.data('name');
-                var listId = $nextList.data('id');
-
-                fadeHeader(title);
-                if( $nextList.length ){
-                    $currentList.removeClass('current-list').removeAttr('style');
-                    $nextList.addClass('current-list');
-                }
-
-                currentListName = title;
-                currentListId= listId;
-                localStorage['lastViewedListName'] = title;
-                localStorage['lastViewedListId'] = listId;
+                switchPrevNextList($('.current-list').next('ul'));
             });
 
             $('.prev-list').on('click', function(e){
                 // Swap to prev list.
-                var $currentList = $('.current-list');
-                var $prevList = $currentList.prev('ul');
-                var title = $prevList.data('name');
-                var listId = $prevList.data('id');
-
-                fadeHeader(title);
-                if( $prevList.length ){
-                    $currentList.removeClass('current-list').removeAttr('style');
-                    $prevList.addClass('current-list');
-                }
-
-                currentListName = title;
-                currentListId= listId;
-                localStorage['lastViewedListName'] = title;
-                localStorage['lastViewedListId'] = listId;
+                switchPrevNextList($('.current-list').prev('ul'));
             });
+        }
+
+
+        function switchPrevNextList($switchToList) {
+            // Swap to prev or next list if there is one, else just play
+            // animation and switch to self.
+            if ($switchToList.length > 0) {
+                currentListName = $switchToList.data('name');
+                currentListId = $switchToList.data('id');
+
+                $('.current-list').removeClass('current-list').removeAttr('style');
+                $switchToList.addClass('current-list');
+                fadeHeader(currentListName, 1000);
+
+                localStorage['lastViewedListName'] = currentListName;
+                localStorage['lastViewedListId'] = currentListId;
+            } else {
+                fadeHeader(currentListName, 1000);
+            }
         }
 
 
@@ -430,14 +418,13 @@ Lists have data attributes data-id and data-name.
             var listItems = JSON.parse(JSON.parse(localStorage[listName])['list']);
             var shift = -1;
             if (newRank < oldRank) {
-                dbg('promoting');
                 shift = 1;
             }
 
             // Rerank items in localStorage and DOM.
             $(listItems).each(function(index, element) {
                 var id = parseInt(element['id'])
-                var rank = parseInt(element['rank'])
+                var rak = parseInt(element['rank'])
 
                 // Handle promotion.
                 if (newRank < oldRank && (rank > oldRank || rank < newRank)) {
@@ -531,6 +518,21 @@ Lists have data attributes data-id and data-name.
             headerTimeout = setTimeout(function() {
                 header.fadeOut();
             }, delay);
+        }
+
+
+        function hingeAnimation(listId) {
+            // Animation.
+            if($('.current-list li').length){
+                // If has items, do a hinge out animation.
+                $('.current-list').bind('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', function(e){
+                    $(this).removeClass('current-list hinge-close').removeAttr('style');
+                    $('.lists ul[data-id="' + listId + '"]').fadeIn().addClass('current-list');
+                }).addClass('hinge-close');
+            } else {
+                $('.current-list').removeClass('current-list hinge-close').removeAttr('style');
+                $('.lists ul[data-id="' + listId + '"]').fadeIn().addClass('current-list');
+            }
         }
 
 
