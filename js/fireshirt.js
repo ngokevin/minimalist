@@ -214,7 +214,7 @@ Lists have data attributes data-id and data-name.
                     newList.addClass('list');
                     newList.attr('data-id', listId);
                     newList.attr('data-name', listTitle);
-                    $('.current-list').removeClass('current-list');
+                    $('.current-list').removeClass('current-list').removeAttr('style');
                     $('.lists').append(newList);
 
                     localStorage['lastViewedListId'] = listId;
@@ -424,7 +424,7 @@ Lists have data attributes data-id and data-name.
             // Rerank items in localStorage and DOM.
             $(listItems).each(function(index, element) {
                 var id = parseInt(element['id'])
-                var rak = parseInt(element['rank'])
+                var rank = parseInt(element['rank'])
 
                 // Handle promotion.
                 if (newRank < oldRank && (rank > oldRank || rank < newRank)) {
