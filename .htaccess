@@ -1,4 +1,5 @@
 AddType text/cache-manifest .manifest
+AddType application/x-web-app-manifest+json .webapp
 
 <Files .cache.manifest>
     ExpiresActive On
