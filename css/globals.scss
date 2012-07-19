@@ -7,6 +7,7 @@ $light_text_color: #bbbebf;
 $link_color: #e62f70;
 $border_color: #d5d7d8;
 
+$red: rgb(200, 20, 20);
 $green: #1bd495;
 
 // Dimensions
@@ -57,7 +58,7 @@ $helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
     overflow: hidden;
 }
 
-@mixin img-and-vertical-gradient($image, $start: #000, $stop: #FFF) {    
+@mixin img-and-vertical-gradient($image, $start: #000, $stop: #FFF) {
     background: $image $start;
     background: $image, -webkit-gradient(linear, left top, left bottom, from($start), to($stop));
     background: $image, -webkit-linear-gradient($start, $stop);
@@ -74,21 +75,21 @@ $helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
     -webkit-animation-fill-mode: $fill;
     -webkit-animation-delay: $delay;
     -webkit-animation-iteration-count: $iterations;
-    
+
     -moz-animation-name: $name;
     -moz-animation-duration: $duration;
     -moz-animation-timing-function: $timing;
     -moz-animation-fill-mode: $fill;
     -moz-animation-delay: $delay;
     -moz-animation-iteration-count: $iterations;
-    
+
     -ms-animation-name: $name;
     -ms-animation-duration: $duration;
     -ms-animation-timing-function: $timing;
     -ms-animation-fill-mode: $fill;
     -ms-animation-delay: $delay;
     -ms-animation-iteration-count: $iterations;
-    
+
     animation-name: $name;
     animation-duration: $duration;
     animation-timing-function: $timing;

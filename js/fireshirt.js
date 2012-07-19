@@ -46,6 +46,7 @@ Lists have data attributes data-id and data-name.
         function init() {
             initLists();
             initTextArea();
+            initDeleteListButton();
             initNewListButton();
             initListSwitcher();
             initPrevNextSwitcher();
@@ -185,6 +186,43 @@ Lists have data attributes data-id and data-name.
         }
 
 
+        function initDeleteListButton(){
+            $('.lists-switcher .delete').on('click', function(){
+                if (confirm('Delete ' + currentListName + '?')) {
+                    if (JSON.parse(localStorage['lists']).length <= 1) {
+                        alert('Sorry, I cannot allow you to delete your only list.');
+                        return;
+                    }
+
+                    // Delete list from localStorage.
+                    var lists = JSON.parse(localStorage['lists']);
+                    var items = JSON.parse(JSON.parse(localStorage[currentListName])['list']);
+                    $(lists).each(function(index, list) {
+                        if (list == currentListName) {
+                            lists.splice(index, 1);
+                            return;
+                        }
+                    });
+                    localStorage['lists'] = JSON.stringify(lists);
+                    delete localStorage[currentListName];
+
+                    // Delete list name from list switcher.
+                    $('.lists-switcher li[data-id=' + currentListId + ']').remove();
+
+                    // Move to next list.
+                    var oldListId = currentListId;
+                    var $currentList = $('.current-list');
+                    if ($currentList.next('ul').length) {
+                        switchPrevNextList($currentList.next('ul'));
+                    } else if ($currentList.prev('ul').length) {
+                        switchPrevNextList($currentList.prev('ul'));
+                    }
+                    $('.list[data-id=' + oldListId + ']').remove();
+                }
+            });
+        }
+
+
         function initNewListButton(){
             // On click, prompt list name, create new list, add to list
             // switcher, add to localStorage, switch to new empty list.
@@ -234,7 +272,7 @@ Lists have data attributes data-id and data-name.
 
         function initListSwitcher() {
             // Clicking a new list swaps in list.
-            $('.lists-switcher li:not(.new)').on('click', function(e){
+            $('.lists-switcher li:not(.new, .delete)').on('click', function(e){
                 e.preventDefault();
                 var listId = $(this).data('id');
                 var title = this.innerHTML

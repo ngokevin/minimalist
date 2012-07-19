@@ -104,6 +104,16 @@ nav.prime{
 					color: darken($green, 10%);
 				}
 			} // .new
+			&.delete{
+				font-weight: bold;
+
+				color: $red;
+				cursor: pointer;
+
+				&:hover{
+					color: darken($red, 10%);
+				}
+			} // .new
             &.active {
                 font-weight: bold;
             }
