@@ -576,13 +576,13 @@ Lists have data attributes data-id and data-name.
         function fadeHeader(title, delay) {
             // Fades header in and out with a clearTimeout so multiple header
             // fades on quick list switching are cancelled.
-            if (!delay) { delay = 700; }
+            if (!delay) { delay = 1000; }
 
-            var header = $('h1');
+            var header = $('.list-title');
             clearTimeout(headerTimeout);
             header.text(title).fadeIn();
             headerTimeout = setTimeout(function() {
-                header.fadeOut();
+                header.fadeOut('slow');
             }, delay);
         }
 

@@ -115,7 +115,8 @@ nav.prime{
 				}
 			} // .new
             &.active {
-                font-weight: bold;
+            	color: $text_color;
+                font-weight: 400;
             }
 		}
 	}
@@ -322,16 +323,17 @@ form.new_item{
 .list-title{
 	position: absolute;
 	display: inline-block;
-	background: rgba(#000, 0.9);
+	background: rgba(#000, 0.75);
 	font-size: 18px;
 	text-align: center;
 	padding: 20px;
-	width: 240px;
-	top: 10%;
-	left: 50%;
-	margin-left: -(240 / 2) + 0px;
+	width: 100%;
+	top: 0;
+	left: 0;
+	margin: 0;
 	color: #fff;
 	z-index: 900;
+	pointer-events: none;
 }
 
 .hinge-close{
