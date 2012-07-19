@@ -108,6 +108,7 @@ Lists have data attributes data-id and data-name.
 
                 $('.lists').append(newList);
             });
+            $('.lists-switcher li[data-id=' + currentListId + ']').addClass('active');
 
             $(".list li").hoverIntent(hoverConfig);
         }
@@ -138,8 +139,7 @@ Lists have data attributes data-id and data-name.
             }).on('keyup', function(e) {
                 var $this = $(this);
                 var valLength = $this.val().length;
-
-                // Change font size in textarea
+// Change font size in textarea
                 if( !textareaMultiline ){
                     if( valLength >= 130 ){
                         $this.addClass('small');
@@ -205,8 +205,11 @@ Lists have data attributes data-id and data-name.
                     });
                     // Add new list name to list switcher.
                     var listSwitcher = $('.lists-switcher');
-                    var listSwitchItem = listSwitcher.prepend($('<li>' + listTitle + '</li>'));
+                    var listSwitchItem = $('<li>' + listTitle + '</li>');
                     listSwitchItem.attr('data-id', listId).attr('data-name', listTitle);
+                    $('.lists-switcher li[data-id=' + currentListId + ']').removeClass('active');
+                    listSwitchItem.addClass('active');
+                    listSwitcher.prepend(listSwitchItem);
 
                     // Swap out list.
                     var newList = $('<ul></ul>');
@@ -235,6 +238,10 @@ Lists have data attributes data-id and data-name.
                 e.preventDefault();
                 var listId = $(this).data('id');
                 var title = this.innerHTML
+
+                // Indicate current list.
+                $('.lists-switcher li[data-id="' + currentListId + '"]').removeClass('active');
+                $('.lists-switcher li[data-id="' + listId + '"]').addClass('active');
 
                 // Display title briefly.
                 hingeAnimation(listId);
@@ -271,8 +278,13 @@ Lists have data attributes data-id and data-name.
             // Swap to prev or next list if there is one, else just play
             // animation and switch to self.
             if ($switchToList.length > 0) {
+                // Change active list in list switcher.
+                $('.lists-switcher li[data-id=' + currentListId + ']').removeClass('active');
+
                 currentListName = $switchToList.data('name');
                 currentListId = $switchToList.data('id');
+
+                $('.lists-switcher li[data-id=' + currentListId + ']').addClass('active');
 
                 $('.current-list').removeClass('current-list').removeAttr('style');
                 $switchToList.addClass('current-list');

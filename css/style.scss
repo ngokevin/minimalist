@@ -104,8 +104,9 @@ nav.prime{
 					color: darken($green, 10%);
 				}
 			} // .new
-
-
+            &.active {
+                font-weight: bold;
+            }
 		}
 	}
 
