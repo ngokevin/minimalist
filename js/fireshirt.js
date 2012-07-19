@@ -118,7 +118,9 @@ Lists have data attributes data-id and data-name.
                 var $li = $(this);
                 $('.edit-mode').removeClass('edit-mode'); // remove edit mode from others
                 $li.addClass('edit-mode');
-                $('textarea', $li).focus();
+                $('textarea', $li).focus().on('blur', function(){
+                    $li.removeClass('edit-mode');
+                });
             });
         }
 
@@ -406,6 +408,7 @@ Lists have data attributes data-id and data-name.
                 localStorage[currentListName] = JSON.stringify(listObj);
             }).on('click', '.save', function(e){
                 var $li = $(this).closest('li');
+                $li.removeClass('edit-mode');
                 alert('TODO: Save id ' + $li.data('id'));
             });
         }

@@ -207,6 +207,11 @@ form.new_item{
 			border-bottom: 0 none;
 		}
 
+		.delete:hover{
+			background: $red;
+			color: #fff;
+		}
+
 		&.edit-mode{
 			.actions{
 				left: -110px;
@@ -266,7 +271,7 @@ form.new_item{
 	}
 }
 
-.show-actions{
+.show-actions, .edit-mode{
 	.actions{
 		opacity: 1;
 		left: -70px;
