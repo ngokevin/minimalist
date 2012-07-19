@@ -140,7 +140,7 @@ Lists have data attributes data-id and data-name.
             }).on('keyup', function(e) {
                 var $this = $(this);
                 var valLength = $this.val().length;
-// Change font size in textarea
+                // Change font size in textarea
                 if( !textareaMultiline ){
                     if( valLength >= 130 ){
                         $this.addClass('small');
@@ -370,7 +370,7 @@ Lists have data attributes data-id and data-name.
 
         function initDeleteItemButton(){
             $('.list').on('click', '.actions .delete', function(e){
-                var listItem = $(this).parents('li.new_item').remove();
+                var listItem = $(this).parents('li').remove();
                 var id = listItem.data('id');
                 listItem.remove()
 
@@ -408,7 +408,7 @@ Lists have data attributes data-id and data-name.
 
             // Add to current list
             var listElement = $('.current-list'), listItems = $([itemText]);
-            var newListItem = '<li class="new_item">';
+            var newListItem = '<li>';
             listItems.each(function(index, listItem) {
                 newListItem += '<p>' + listItem + '</p>';
             });
@@ -433,7 +433,7 @@ Lists have data attributes data-id and data-name.
             // Takes in the DOM list and list object and adds list item to
             // given <li> element. Used in initalization.
             $(item).each(function(index, listItem) {
-                var newListItem = '<li class="new_item">';
+                var newListItem = '<li>';
                 // Individual p elements.
                 $(JSON.parse(listItem['items'])).each(function(index, item) {
                     newListItem += '<p>' + item + '</p>';
