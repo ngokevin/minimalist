@@ -415,7 +415,6 @@ Lists have data attributes data-id and data-name.
             newListItem += getActionElements() + '</li>';
             newListItem = $(newListItem);
 
-            $('li.new_item').hoverIntent(hoverConfig);
             $textarea.focus().val('');
 
             // Add to localStorage.
@@ -423,6 +422,7 @@ Lists have data attributes data-id and data-name.
             newListItem.attr('data-id', newItem.id);
             newListItem.attr('data-rank', newItem.rank);
             listElement.prepend(newListItem);
+            $(newListItem).hoverIntent(hoverConfig);
 
             $textarea.removeClass('medium small');
             textareaMultiline = false;
@@ -562,8 +562,8 @@ Lists have data attributes data-id and data-name.
             // fades on quick list switching are cancelled.
             if (!delay) { delay = 700; }
 
-            var header = $('h1')
-            clearTimeout(headerTimeout)
+            var header = $('h1');
+            clearTimeout(headerTimeout);
             header.text(title).fadeIn();
             headerTimeout = setTimeout(function() {
                 header.fadeOut();
@@ -600,8 +600,6 @@ Lists have data attributes data-id and data-name.
         };
     }();
 
-    $('.new_item').css('visibility', 'hidden');
     Fireshirt.init();
-    $('.new_item').css('visibility', 'visible');
 
 });
