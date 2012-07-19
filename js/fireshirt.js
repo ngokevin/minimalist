@@ -51,7 +51,7 @@ Lists have data attributes data-id and data-name.
             initListSwitcher();
             initPrevNextSwitcher();
             initAddItemButton();
-            initDeleteItemButton();
+            initListActionButtons();
             initSorting();
         }
 
@@ -112,6 +112,14 @@ Lists have data attributes data-id and data-name.
             $('.lists-switcher li[data-id=' + currentListId + ']').addClass('active');
 
             $(".list li").hoverIntent(hoverConfig);
+
+            // Switch to edit mode on double click
+            $('.lists').on('dblclick', 'li', function(){
+                var $li = $(this);
+                $('.edit-mode').removeClass('edit-mode'); // remove edit mode from others
+                $li.addClass('edit-mode');
+                $('textarea', $li).focus();
+            });
         }
 
 
@@ -275,7 +283,7 @@ Lists have data attributes data-id and data-name.
             $('.lists-switcher li:not(.new, .delete)').on('click', function(e){
                 e.preventDefault();
                 var listId = $(this).data('id');
-                var title = this.innerHTML
+                var title = this.innerHTML;
 
                 // Indicate current list.
                 $('.lists-switcher li[data-id="' + currentListId + '"]').removeClass('active');
@@ -362,17 +370,18 @@ Lists have data attributes data-id and data-name.
         function initAddItemButton() {
             $('#add-item').on('click', function(e) {
                 addNewItem(e);
-                initDeleteItemButton();
+                initListActionButtons();
                 initSorting();
             });
         }
 
 
-        function initDeleteItemButton(){
-            $('.list').on('click', '.actions .delete', function(e){
+        function initListActionButtons(){
+            // Delete button
+            $('.list').on('click', '.delete', function(e){
                 var listItem = $(this).parents('li').remove();
                 var id = listItem.data('id');
-                listItem.remove()
+                listItem.remove();
 
                 // Remove from localStorage based on data-id.
                 var rank;
@@ -395,6 +404,9 @@ Lists have data attributes data-id and data-name.
 
                 listObj['list'] = JSON.stringify(items);
                 localStorage[currentListName] = JSON.stringify(listObj);
+            }).on('click', '.save', function(e){
+                var $li = $(this).closest('li');
+                alert('TODO: Save id ' + $li.data('id'));
             });
         }
 
@@ -406,11 +418,11 @@ Lists have data attributes data-id and data-name.
             var $textarea = $('#add-item-text');
             var itemText = escape_($textarea.val());
 
-            // Add to current list
             var listElement = $('.current-list'), listItems = $([itemText]);
             var newListItem = '<li>';
             listItems.each(function(index, listItem) {
                 newListItem += '<p>' + listItem + '</p>';
+                newListItem += '<textarea>' + listItem + '</textarea>';
             });
             newListItem += getActionElements() + '</li>';
             newListItem = $(newListItem);
@@ -437,6 +449,7 @@ Lists have data attributes data-id and data-name.
                 // Individual p elements.
                 $(JSON.parse(listItem['items'])).each(function(index, item) {
                     newListItem += '<p>' + item + '</p>';
+                    newListItem += '<textarea>' + item + '</textarea>';
                 });
                 newListItem += getActionElements() + '</li>';
 
@@ -445,7 +458,7 @@ Lists have data attributes data-id and data-name.
                 newListItem.attr('data-rank', listItem['rank']);
                 listElement.append(newListItem);
             });
-            initDeleteItemButton();
+            initListActionButtons();
         }
 
 
@@ -553,7 +566,7 @@ Lists have data attributes data-id and data-name.
 
         function getActionElements() {
             // Return div with action elements to add to list items.
-            return '<div class="actions"><span class="delete ss-icon">delete</span><span class="edit ss-icon">write</span></div>';
+            return '<div class="actions"><span class="delete ss-icon">delete</span><span class="save ss-icon">check</span></div>';
         }
 
 

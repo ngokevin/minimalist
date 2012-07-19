@@ -206,6 +206,20 @@ form.new_item{
 		&:last-child{
 			border-bottom: 0 none;
 		}
+
+		&.edit-mode{
+			.actions{
+				left: -110px;
+			}
+
+			textarea, .save{
+				display: block;
+			}
+
+			p{
+				display: none;
+			}
+		}
 	}
 
 	.ui-state-highlight, .ui-state-highlight:last-child{
@@ -223,6 +237,22 @@ form.new_item{
 
 		&:last-of-type{
 			margin-bottom: 0;
+		}
+	}
+
+	textarea{
+		@include box-shadow(none);
+		background: #fff;
+		border: 0 none;
+		width: 100%;
+		font-weight: 300;
+		color: $text_color;
+		padding: 10px;
+		height: 70px;
+		display: none;
+
+		&:focus{
+			outline: 0;
 		}
 	}
 
@@ -272,9 +302,15 @@ form.new_item{
 		}
 	}
 
-	// Hide this until we get time to add it
-	.edit{
+	.save{
+		background: $green;
+		color: #fff;
 		display: none;
+
+		&:hover{
+			background: darken($green, 10%);
+			color: #fff;
+		}
 	}
 }
 
