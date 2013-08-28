@@ -5,28 +5,28 @@
 //	Base
 // **********************************************************
 
-*{
+* {
 	@include box-sizing(border-box);
 }
 
-body{
+body {
 	max-width: 100%;
 }
 
-body{
+body {
 	background: $bg;
 	color: $text_color;
 	font-weight: 300;
 	font-size: 20px;
 }
 
-ul{
+ul {
 	margin: 0;
 	padding: 0;
 	list-style: none;
 }
 
-li{
+li {
 	list-style: none;
 	margin: 0;
 	padding: 0;
@@ -35,20 +35,20 @@ li{
 //	Layout
 // **********************************************************
 
-.list, form.new_item{
+.list, form.new_item {
 	width: 90%;
 	max-width: $full;
 	margin: auto;
 }
 
 // Main Nav Links
-nav.prime{
+nav {
 	position: fixed;
 	top: 10px;
 	right: 10px;
 	font-size: 14px;
 
-	li{
+	li {
 		background: #fff;
 		width: 40px;
 		margin-bottom: 10px;
@@ -56,19 +56,19 @@ nav.prime{
 		text-align: center;
 		cursor: pointer;
 
-		a, span{
+		a, span {
 			display: block;
 			color: $light_text_color;
 			padding: 12px 0 9px;
 			text-decoration: none;
 
-			&:hover{
+			&:hover {
 				color: darken($light_text_color, 20%);
 			}
 		}
 	}
 
-	.lists-switcher{
+	.lists-switcher {
 		@include transition(all 300ms ease);
 		background: #fff;
 		position: absolute;
@@ -83,46 +83,46 @@ nav.prime{
 		z-index: 100;
 		color: $light_text_color;
 
-		li{
+		li {
 			@include ellipsis;
 			width: auto;
 			text-align: left;
 			padding: 5px 0;
 
-			&:hover{
+			&:hover {
 				color: $text_color;
 				cursor: pointer;
 			}
 
-			&.new{
+			&.new {
 				margin-bottom: 0;
 				font-weight: bold;
 
 				color: $green;
 				cursor: pointer;
 
-				&:hover{
+				&:hover {
 					color: darken($green, 10%);
 				}
 			} // .new
-			&.delete{
+			&.delete {
 				font-weight: bold;
 
 				color: $red;
 				cursor: pointer;
 
-				&:hover{
+				&:hover {
 					color: darken($red, 10%);
 				}
 			} // .new
-            &.active {
+            &.active  {
             	color: $text_color;
                 font-weight: 400;
             }
 		}
 	}
 
-	.show{
+	.show {
 		top: 0;
 		opacity: 1;
 		pointer-events: auto;
@@ -130,12 +130,12 @@ nav.prime{
 }
 
 //	New List Item Form
-form.new_item{
+form.new_item {
 	$button_width: 90px;
 	margin: 100px auto $gutter;
 	position: relative;
 
-	textarea{
+	textarea {
 		@include transition(all 300ms ease);
 		height: 90px;
 		width: 100%;
@@ -147,23 +147,23 @@ form.new_item{
 		border: 0 none;
 		overflow: hidden;
 
-		&:focus{
+		&:focus {
 			@include box-shadow(inset 1px -1px rgba(#000, 0.2));
 			border: 0 none;
 			outline: none;
 			color: $text_color;
 		}
 
-		&.medium{
+		&.medium {
 			font-size: 24px;
 		}
 
-		&.small{
+		&.small {
 			font-size: 16px;
 		}
 	}
 
-	input[type="submit"]{
+	input[type="submit"] {
 		@include hide-text;
 		@include border-radius(0);
 		background: $green;
@@ -175,79 +175,79 @@ form.new_item{
 		right: 0;
 		border: 0 none;
 
-		&:hover{
+		&:hover {
 			background: darken($green, 5%);
 		}
 	}
 }
 
 //	List items
-.list{
+.list {
 	line-height: 1.5;
 	display: none;
 
-	&.current-list{
+	&.current-list {
 		display: block;
 	}
 
-	li{
+	li {
 		@include transition(color 400ms ease);
 		padding: 20px 0;
 		position: relative;
 		border-bottom: 1px solid $border_color;
 		cursor: move;
 
-		&:active, &:focus{
+		&:active, &:focus {
 			@include transition(none);
 
-			.actions{
+			.actions {
 				opacity: 0;
 			}
 		}
 
-		&:last-child{
+		&:last-child {
 			border-bottom: 0 none;
 		}
 
-		.delete:hover{
+		.delete:hover {
 			background: $red;
 			color: #fff;
 		}
 
-		&.edit-mode{
-			.actions{
+		&.edit-mode {
+			.actions {
 				left: -110px;
 			}
 
-			textarea, .save{
+			textarea, .save {
 				display: block;
 			}
 
-			p{
+			p {
 				display: none;
 			}
 		}
 	}
 
-	.ui-state-highlight, .ui-state-highlight:last-child{
+	.ui-state-highlight, .ui-state-highlight:last-child {
 		border: 2px dashed $border_color;
 		height: 40px;
 	}
 
-	.ui-sortable-helper{
+	.ui-sortable-helper {
 		@include transform(scale(0.8));
 		@include transform-origin(left center);
 	}
 
-	p{
+	p {
 		margin: 0 0 1em;
 
-		&:last-of-type{
+		&:last-of-type {
 			margin-bottom: 0;
 		}
 	}
 
-	textarea{
+	textarea {
 		@include box-shadow(none);
 		background: #fff;
 		border: 0 none;
@@ -258,29 +258,29 @@ form.new_item{
 		height: 70px;
 		display: none;
 
-		&:focus{
+		&:focus {
 			outline: 0;
 		}
 	}
 
 }
 
-.focus-mode li:not(:first-child){
+.focus-mode li:not(:first-child) {
 	color: $light_text_color;
 
-	&:hover{
+	&:hover {
 		color: $text_color;
 	}
 }
 
-.show-actions, .edit-mode{
-	.actions{
+.show-actions, .edit-mode {
+	.actions {
 		opacity: 1;
 		left: -70px;
 	}
 }
 
-.actions{
+.actions {
 	@include clearfix;
 	@include transition(all 300ms ease);
 	position: absolute;
@@ -293,7 +293,7 @@ form.new_item{
 	font-weight: normal;
 	color: lighten(#b1b7ba, 10%);
 
-	span{
+	span {
 		background: #fff;
 		display: block;
 		width: 40px;
@@ -303,25 +303,25 @@ form.new_item{
 		padding: 13px 0 10px;
 		line-height: 1;
 
-		&:hover{
+		&:hover {
 			color: $light_text_color;
 			cursor: pointer;
 		}
 	}
 
-	.save{
+	.save {
 		background: $green;
 		color: #fff;
 		display: none;
 
-		&:hover{
+		&:hover {
 			background: darken($green, 10%);
 			color: #fff;
 		}
 	}
 }
 
-.list-title{
+.list-title {
 	position: absolute;
 	display: inline-block;
 	background: rgba(#000, 0.75);
@@ -337,6 +337,6 @@ form.new_item{
 	pointer-events: none;
 }
 
-.hinge-close{
+.hinge-close {
 	@include soy-animate(hinge);
 }

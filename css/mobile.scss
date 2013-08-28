@@ -1,35 +1,35 @@
 @import 'globals';
 
-@media only screen and (max-width: 800px){
+@media only screen and (max-width: 800px) {
     // If you change max-width, also change it in the JS
-	body{
+	body {
 		font-size: 16px;
 	}
 
-	nav.prime{
+	nav.prime {
 		@include clearfix;
 		position: static;
 		top: auto;
 		background: #fff;
 		border-bottom: 1px solid $border_color;
 
-		li{
+		li {
 			float: left;
 			margin: 0;
 			border-right: 1px solid $border_color;
 			position: static;
 			width: 33%;
 
-			a, span{
+			a, span {
 				padding: 17px 0 13px;
 			}
 
-			&:first-child{
+			&:first-child {
 				width: 34%;
 			}
 		}
 
-		.lists-switcher{
+		.lists-switcher {
 			@include transition(top 400ms ease);
 			top: 200px;
 			bottom: 0;
@@ -42,7 +42,7 @@
 			overflow: auto;
 			max-height: none;
 
-			li{
+			li {
 				float: none;
 				margin: 0;
 				border-right: 0 none;
@@ -50,50 +50,50 @@
 				padding: 20px 0;
 				overflow: visible;
 
-				&:first-child{
+				&:first-child {
 					width: auto;
 				}
 			}
 		}
 
-		.show{
+		.show {
 			top: 46px;
 		}
 	}
 
-	form.new_item{
+	form.new_item {
 		margin: 0;
 		margin-top: 0 !important;
 		width: 100%;
 		max-width: none;
 
-		textarea{
+		textarea {
 			font-size: 24px;
 			height: 60px;
 			padding: 20px 80px 5px 20px;
 		}
 
-		input[type="submit"]{
+		input[type="submit"] {
 			height: 60px;
 			width: 60px;
 		}
 	}
 
-	.items_list{
+	.items_list {
 		overflow: hidden;
 		margin-bottom: 40px;
 	}
 
-	.actions{
+	.actions {
 		left: auto;
 		right: -80px;
 
-		.delete{
+		.delete {
 			float: right;
 		}
 	}
 
-	.show-actions .actions{
+	.show-actions .actions {
 		left: auto;
 		right: -30px;
 	}

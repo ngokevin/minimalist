@@ -2,61 +2,34 @@ angular.module('MinimalistApp', [])
 
 
 .service('EntryService', function() {
-    var entries = [];
-    if (localStorage.getItem('entries')) {
-        entries = parse(localStorage.getItem('entries'));
+    var dumps = JSON.stringify;
+    var loads = JSON.parse;
+
+    var storage = {
+        lastViewedList: 0,
+        listNames: [],
+        lists: {}
+    };
+    if (localStorage.getItem('storage')) {
+        storage = loads(localStorage.getItem('storage'));
     } else {
-        localStorage.setItem('entries', stringify(entries));
+        localStorage.setItem('storage', dumps(storage));
     }
 
     return {
-        get: function() {
-            return entries;
+        get: function(listName) {
+            return storage[listName];
         },
-        add: function(entry) {
-            var added = false;
-            for (var i = 0; i < entries.length; i++) {
-                // Add while maintaing order based on sleep times.
-                if (entry.sleep < entries[i].sleep) {
-                    entries.splice(i, 0, entry);
-                    added = true;
-                    break;
-                }
-            }
-            if (!added) {
-                // In case there were no entries to compare.
-                entries.push(entry);
-            }
-            localStorage.setItem('entries', stringify(entries));
-            return entries;
+        add: function(listName, entry) {
+            storage[listName].push(entry);
+            localStorage.setItem('storage', dumps(storage));
+            return storage[listName];
         },
-        del: function(sleepDate) {
-            for (var i = 0; i < entries.length; i++) {
-                if (entries[i].sleep == sleepDate) {
-                    entries.splice(i, 1);
-                    break;
-                }
-            }
-            localStorage.setItem('entries', stringify(entries));
-            return entries;
+        del: function(listName, item) {
+            i = storage[listName].indexOf(item);
+            storage[listName].splice(i, 1);
+            localStorage.setItem('storage', dumps(storage));
+            return storage[listName];
         }
     };
-
-    function parse(entries) {
-        entries = $.extend(true, [], JSON.parse(entries));
-        for (var i = 0; i < entries.length; i++) {
-            entries[i].sleep = new Date(entries[i].sleep);
-            entries[i].wake = new Date(entries[i].wake);
-        }
-        return entries;
-    }
-
-    function stringify(entries) {
-        entries = $.extend(true, [], entries);
-        for (var i = 0; i < entries.length; i++) {
-            entries[i].sleep = Date.parse(entries[i].sleep);
-            entries[i].wake = Date.parse(entries[i].wake);
-        }
-        return JSON.stringify(entries);
-    }
 });

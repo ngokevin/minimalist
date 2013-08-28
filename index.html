@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html manifest="/.cache.manifest">
+<html ng-app='MinimalistApp' manifest="/.cache.manifest">
 <head>
     <title>Minimalist</title>
     <meta charset="UTF-8">
@@ -10,15 +10,19 @@
     <link rel="stylesheet" href="css/base.css" />
     <link rel="stylesheet" href="css/mobile.css" />
 
+    <script src="js/lib/angular.min.js"></script>
     <script src="js/lib/jquery.min.js"></script>
     <script src="js/lib/plugins.js"></script>
+    <script src="js/services.js"></script>
+    <script src="js/controllers.js"></script>
+    <script src="js/app.js"></script>
     <script src="js/minimalist.js"></script>
 </head>
 
-<body>
+<body ng-controller="MainCtrl">
   <h1 class="list-title">Minimalist</h1>
 
-  <nav class="prime">
+  <nav>
     <ul>
       <li>
         <a href="/" class="ss-icon toggle-lists">list</a>
