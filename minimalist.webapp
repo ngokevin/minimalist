@@ -1,5 +1,5 @@
 {
-  "version": "1.0",
+  "version": "1.1",
   "name": "Minimalist",
   "description": "Create lists of thoughts you want to remember.",
   "launch_path": "/",
@@ -15,6 +15,7 @@
   "appcache_path": "/.cache.manifest",
   "installs_allowed_from": [
     "https://marketplace.mozilla.org"
+    "https://marketplace.firefox.com"
   ],
   "locales": {
   },
