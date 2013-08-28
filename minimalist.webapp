@@ -1,5 +1,5 @@
 {
-  "version": "1.3",
+  "version": "1.4",
   "name": "Minimalist",
   "description": "Create lists of thoughts you want to remember.",
   "launch_path": "/",
@@ -13,7 +13,7 @@
     "name": "Sawyer Hollenshead and Kevin Ngo",
     "url": "http://sawyerhollenshead.com"
   },
-  "appcache_path": "/.cache.manifest",
+  "appcache_path": "/.minimalist.appcache",
   "installs_allowed_from": [
     "https://marketplace.mozilla.org",
     "https://marketplace.firefox.com"
