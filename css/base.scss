@@ -1,6 +1,7 @@
 @import 'normalize';
 @import 'globals';
 
+
 //	Base
 // **********************************************************
 
@@ -339,5 +340,3 @@ form.new_item{
 .hinge-close{
 	@include soy-animate(hinge);
 }
-
-@import 'media-query.scss';

@@ -1,12 +1,13 @@
 @import 'globals';
 
-@media only screen and (max-width: 800px){ // If you change max-width, also change it in the JS
+@media only screen and (max-width: 800px){
+    // If you change max-width, also change it in the JS
 	body{
 		font-size: 16px;
 	}
 
 	nav.prime{
-		@include clearfix;	
+		@include clearfix;
 		position: static;
 		top: auto;
 		background: #fff;
