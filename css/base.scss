@@ -16,19 +16,19 @@ body {
 body {
 	background: $bg;
 	color: $text_color;
-	font-weight: 300;
 	font-size: 20px;
+	font-weight: 300;
 }
 
 ul {
 	margin: 0;
-	padding: 0;
 	list-style: none;
+	padding: 0;
 }
 
 li {
-	list-style: none;
 	margin: 0;
+	list-style: none;
 	padding: 0;
 }
 
@@ -37,8 +37,8 @@ li {
 
 .list, form.new_item {
 	width: 90%;
-	max-width: $full;
 	margin: auto;
+	max-width: $full;
 }
 
 // Main Nav Links

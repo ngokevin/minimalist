@@ -661,23 +661,23 @@ body {
 body {
   background: #e3e5e6;
   color: #1d1e1f;
-  font-weight: 300;
-  font-size: 20px; }
+  font-size: 20px;
+  font-weight: 300; }
 
 ul {
   margin: 0;
-  padding: 0;
-  list-style: none; }
+  list-style: none;
+  padding: 0; }
 
 li {
-  list-style: none;
   margin: 0;
+  list-style: none;
   padding: 0; }
 
 .list, form.new_item {
   width: 90%;
-  max-width: 600px;
-  margin: auto; }
+  margin: auto;
+  max-width: 600px; }
 
 nav {
   position: fixed;

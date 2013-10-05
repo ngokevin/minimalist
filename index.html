@@ -46,11 +46,11 @@
   <section class="lists">
   	<ul class="list" data-name="{{ _listName }}"
   		ng-class="{'current-list': _listName == listName}" ng-repeat="_listName in listNames">
-  	  <li ng-repeat="entry in lists[_listName]">
+  	  <li ng-mouseenter='showActions($event)' ng-mouseleave='hideActions($event)' ng-repeat="entry in lists[_listName]">
   	  	<p>{{ entry }}</p>
   	  	<textarea>{{ entry }}</textarea>
   	  	<div class="actions">
-  	  	  <span class="delete ss-icon">delete</span>
+  	  	  <span ng-click="delEntry(entry)" class="delete ss-icon">delete</span>
   	  	  <span class="save ss-icon">check</span>
   	  	</div>
   	  </li>

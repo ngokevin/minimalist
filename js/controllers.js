@@ -14,4 +14,15 @@ angular.module('MinimalistApp')
         EntryService.add($scope.listName, $scope.entry);
         $scope.entry = '';
     };
+
+    $scope.delEntry = function(entry) {
+        EntryService.del($scope.listName, entry);
+    };
+
+    $scope.showActions= function(e) {
+        $(e.target).addClass('show-actions');
+    };
+    $scope.hideActions= function(e) {
+        $(e.target).removeClass('show-actions');
+    };
 }]);
