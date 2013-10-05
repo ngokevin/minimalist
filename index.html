@@ -16,7 +16,6 @@
     <script src="js/services.js"></script>
     <script src="js/controllers.js"></script>
     <script src="js/app.js"></script>
-    <script src="js/minimalist.js"></script>
 </head>
 
 <body ng-controller="MainCtrl">
@@ -36,12 +35,26 @@
     </ul>
   </nav>
 
-  <form class="new_item">
-    <textarea name="item" id="add-item-text" title="Write&hellip;">Write&hellip;</textarea>
-    <input id="add-item" type="submit" name="add_item" value="Add" />
+  <form class="new_item" ng-submit="addEntry()">
+    <textarea id="add-item-text" title="Write&hellip;"
+    	      ng-model="entry">
+  	  Write&hellip;
+ 	</textarea>
+    <input type="submit" id="add-item" value="Add">
   </form>
 
   <section class="lists">
+  	<ul class="list" data-name="{{ _listName }}"
+  		ng-class="{'current-list': _listName == listName}" ng-repeat="_listName in listNames">
+  	  <li ng-repeat="entry in lists[_listName]">
+  	  	<p>{{ entry }}</p>
+  	  	<textarea>{{ entry }}</textarea>
+  	  	<div class="actions">
+  	  	  <span class="delete ss-icon">delete</span>
+  	  	  <span class="save ss-icon">check</span>
+  	  	</div>
+  	  </li>
+  	</ul>
   </section>
 </body>
 

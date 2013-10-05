@@ -679,26 +679,26 @@ li {
   max-width: 600px;
   margin: auto; }
 
-nav.prime {
+nav {
   position: fixed;
   top: 10px;
   right: 10px;
   font-size: 14px; }
-  nav.prime li {
+  nav li {
     background: #fff;
     width: 40px;
     margin-bottom: 10px;
     position: relative;
     text-align: center;
     cursor: pointer; }
-    nav.prime li a, nav.prime li span {
+    nav li a, nav li span {
       display: block;
       color: #bbbebf;
       padding: 12px 0 9px;
       text-decoration: none; }
-      nav.prime li a:hover, nav.prime li span:hover {
+      nav li a:hover, nav li span:hover {
         color: #868c8e; }
-  nav.prime .lists-switcher {
+  nav .lists-switcher {
     -webkit-transition: all 300ms ease;
     -moz-transition: all 300ms ease;
     -ms-transition: all 300ms ease;
@@ -716,33 +716,33 @@ nav.prime {
     pointer-events: none;
     z-index: 100;
     color: #bbbebf; }
-    nav.prime .lists-switcher li {
+    nav .lists-switcher li {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       width: auto;
       text-align: left;
       padding: 5px 0; }
-      nav.prime .lists-switcher li:hover {
+      nav .lists-switcher li:hover {
         color: #1d1e1f;
         cursor: pointer; }
-      nav.prime .lists-switcher li.new {
+      nav .lists-switcher li.new {
         margin-bottom: 0;
         font-weight: bold;
         color: #1bd495;
         cursor: pointer; }
-        nav.prime .lists-switcher li.new:hover {
+        nav .lists-switcher li.new:hover {
           color: #15a775; }
-      nav.prime .lists-switcher li.delete {
+      nav .lists-switcher li.delete {
         font-weight: bold;
         color: #c81414;
         cursor: pointer; }
-        nav.prime .lists-switcher li.delete:hover {
+        nav .lists-switcher li.delete:hover {
           color: #9a0f0f; }
-      nav.prime .lists-switcher li.active {
+      nav .lists-switcher li.active {
         color: #1d1e1f;
         font-weight: 400; }
-  nav.prime .show {
+  nav .show {
     top: 0;
     opacity: 1;
     pointer-events: auto; }
