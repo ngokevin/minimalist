@@ -13,9 +13,6 @@
     <script src="js/lib/angular.min.js"></script>
     <script src="js/lib/jquery.min.js"></script>
     <script src="js/lib/plugins.js"></script>
-    <script src="js/services.js"></script>
-    <script src="js/controllers.js"></script>
-    <script src="js/app.js"></script>
 </head>
 
 <body ng-controller="MainCtrl">
@@ -35,27 +32,30 @@
     </ul>
   </nav>
 
-  <form class="new_item" ng-submit="addEntry()">
-    <textarea id="add-item-text" title="Write&hellip;"
-    	      ng-model="entry">
-  	  Write&hellip;
- 	</textarea>
+  <form class="new_item" ng-submit="addItem()">
+    <textarea id="add-item-text" placeholder="Write&hellip;"
+    	      ng-model="entry"></textarea>
     <input type="submit" id="add-item" value="Add">
   </form>
 
   <section class="lists">
-  	<ul class="list" data-name="{{ _listName }}"
-  		ng-class="{'current-list': _listName == listName}" ng-repeat="_listName in listNames">
-  	  <li ng-mouseenter='showActions($event)' ng-mouseleave='hideActions($event)' ng-repeat="entry in lists[_listName]">
-  	  	<p>{{ entry }}</p>
-  	  	<textarea>{{ entry }}</textarea>
+  	<ul class="list" data-id="{{ _listId }}"
+  		ng-repeat="_listId in listIndex" ng-class="{'current-list': _listId == listId}">
+  	  <li ng-repeat="itemId in lists[_listId].itemIndex" ng-mouseenter='showActions($event)' ng-mouseleave='hideActions($event)'>
+  	  	<p>{{ lists[_listId].items[itemId].text }}</p>
+  	  	<textarea>{{ lists[_listId].items[itemId].text }}</textarea>
   	  	<div class="actions">
-  	  	  <span ng-click="delEntry(entry)" class="delete ss-icon">delete</span>
+  	  	  <span ng-click="delItem(itemId)" class="delete ss-icon">delete</span>
   	  	  <span class="save ss-icon">check</span>
   	  	</div>
   	  </li>
   	</ul>
   </section>
+
+  <script src="js/app.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/controllers.js"></script>
+
 </body>
 
 </html>

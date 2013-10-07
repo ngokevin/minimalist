@@ -1,22 +1,23 @@
 angular.module('MinimalistApp')
 
 
-.controller('MainCtrl', ['$scope', 'EntryService',
-                         function($scope, EntryService) {
+.controller('MainCtrl', ['$scope', 'ItemService',
+                         function($scope, ItemService) {
 
-    $scope.listNames = EntryService.getListNames();
-    $scope.lists= EntryService.getLists();
+    // All.
+    $scope.lists= ItemService.getLists();
+    $scope.listIndex = ItemService.getListIndex();
 
-    $scope.listName = EntryService.getLastViewedList();
-    $scope.list = EntryService.get($scope.listName);
+    // Current.
+    $scope.listId = ItemService.getLastViewedList();
+    $scope.list = ItemService.getList($scope.listId);
 
-    $scope.addEntry = function() {
-        EntryService.add($scope.listName, $scope.entry);
+    $scope.addItem = function() {
+        ItemService.addItem($scope.listId, $scope.entry);
         $scope.entry = '';
     };
-
-    $scope.delEntry = function(entry) {
-        EntryService.del($scope.listName, entry);
+    $scope.delItem = function(item) {
+        ItemService.delItem($scope.listId, item);
     };
 
     $scope.showActions= function(e) {
@@ -25,4 +26,5 @@ angular.module('MinimalistApp')
     $scope.hideActions= function(e) {
         $(e.target).removeClass('show-actions');
     };
+
 }]);
