@@ -31,6 +31,9 @@ angular.module('MinimalistApp', [])
         // Initialize localStorage if doesn't exist.
         localStorage.setItem('storage', dumps(storage));
     }
+    function updateStorage() {
+        localStorage.setItem('storage', dumps(storage));
+    }
 
     var lists = storage.lists;
 
@@ -44,16 +47,16 @@ angular.module('MinimalistApp', [])
             list.itemIndex.push(list.items.autoId);
 
             // Sync to localStorage.
-            localStorage.setItem('storage', dumps(storage));
+            updateStorage();
             return list;
         },
 
-        delItem: function(listName, id) {
-            var list = this.getList(listName);
-            delete list.items[id];
-            var i = list.itemIndex.indexOf(id);
+        delItem: function(listId, itemId) {
+            var list = this.getList(listId);
+            delete list.items[itemId];
+            var i = list.itemIndex.indexOf(itemId);
             list.itemIndex.splice(i, 1);
-            localStorage.setItem('storage', dumps(storage));
+            updateStorage();
             return list;
         },
 
@@ -61,17 +64,17 @@ angular.module('MinimalistApp', [])
             return storage.lastViewedList;
         },
 
-        getList: function(listName) {
-            if (!(listName in lists)) {
+        getList: function(listId) {
+            if (!(listId in lists)) {
                 // Create new list.
-                lists[listName] = {
+                lists[listId] = {
                     items: {},
                     itemIndex: [],
-                    name: listName,
+                    name: 'New List',
                 };
                 listIndex.push(autoId++);
             }
-            return lists[listName];
+            return lists[listId];
         },
 
         getLists: function() {
@@ -81,5 +84,10 @@ angular.module('MinimalistApp', [])
         getListIndex: function() {
             return storage.listIndex;
         },
+
+        setItemIndex: function(listId, ids) {
+            this.getList(listId).itemIndex = ids;
+            updateStorage();
+        }
     };
 });

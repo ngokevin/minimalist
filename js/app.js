@@ -1,1 +1,1 @@
-angular.module('MinimalistApp', ['ui.sortable']);
+angular.module('MinimalistApp', []);

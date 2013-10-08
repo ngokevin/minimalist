@@ -39,11 +39,14 @@
   </form>
 
   <section class="lists">
-  	<ul class="list" data-id="{{ _listId }}"
+  	<ul data-id="{{ _listId }}"
+  		class="list" data-id="{{ _listId }}"
   		ng-repeat="_listId in listIndex" ng-class="{'current-list': _listId == listId}">
-  	  <li ng-repeat="itemId in lists[_listId].itemIndex" ng-mouseenter='showActions($event)' ng-mouseleave='hideActions($event)'>
-  	  	<p>{{ lists[_listId].items[itemId].text }}</p>
-  	  	<textarea>{{ lists[_listId].items[itemId].text }}</textarea>
+  	  <li data-id="{{ _itemId }}"
+  	  	  ng-repeat="_itemId in lists[_listId].itemIndex"
+  	  	  ng-mouseenter='showActions($event)' ng-mouseleave='hideActions($event)'>
+  	  	<p>{{ lists[_listId].items[_itemId].text }}</p>
+  	  	<textarea>{{ lists[_listId].items[_itemId].text }}</textarea>
   	  	<div class="actions">
   	  	  <span ng-click="delItem(itemId)" class="delete ss-icon">delete</span>
   	  	  <span class="save ss-icon">check</span>

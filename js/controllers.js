@@ -27,4 +27,16 @@ angular.module('MinimalistApp')
         $(e.target).removeClass('show-actions');
     };
 
+    setTimeout(function() {
+        $('.list').sortable({
+            placeholder: 'ui-state-highlight',
+            update: function() {
+                var ids = [];
+                $('.current-list li').each(function(i, item) {
+                    ids.push($(item).data('id'));
+                });
+                ItemService.setItemIndex($scope.listId, ids);
+            }
+        }).disableSelection();
+    });
 }]);
