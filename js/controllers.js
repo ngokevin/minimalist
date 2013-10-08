@@ -3,30 +3,50 @@ angular.module('MinimalistApp')
 
 .controller('MainCtrl', ['$scope', 'ItemService',
                          function($scope, ItemService) {
-
     // All.
-    $scope.lists= ItemService.getLists();
+    $scope.lists = ItemService.getLists();
     $scope.listIndex = ItemService.getListIndex();
 
     // Current.
-    $scope.listId = ItemService.getLastViewedList();
-    $scope.list = ItemService.getList($scope.listId);
+    $scope.list = ItemService.getList(ItemService.getLastViewedListId());
 
+    // Event handlers.
     $scope.addItem = function() {
-        ItemService.addItem($scope.listId, $scope.entry);
+        ItemService.addItem($scope.list.id, $scope.entry);
         $scope.entry = '';
     };
     $scope.delItem = function(item) {
-        ItemService.delItem($scope.listId, item);
+        ItemService.delItem($scope.list.id, item);
     };
 
-    $scope.showActions= function(e) {
+    $scope.showActions = function(e) {
         $(e.target).addClass('show-actions');
     };
-    $scope.hideActions= function(e) {
-        $(e.target).removeClass('show-actions');
+    $scope.hideActions = function(e) {
+        setTimeout(function() {
+            $(e.target).removeClass('show-actions');
+        });
     };
 
+    $scope.toggleListSwitcher = function(e) {
+        $('.list-switcher').toggleClass('show');
+    };
+    $scope.switchList = function(listId) {
+        $scope.list = ItemService.getList(listId);
+    };
+
+    $scope.addList = function() {
+        var listName = prompt('List Name');
+        if (listName) {
+            var listId = ItemService.addList(listName);
+            $scope.switchList(listId);
+        }
+    };
+    $scope.deleteList = function(listId) {
+        ItemService.deleteList(listId || $scope.list.id);
+    };
+
+    // Sorting.
     setTimeout(function() {
         $('.list').sortable({
             placeholder: 'ui-state-highlight',
@@ -35,8 +55,31 @@ angular.module('MinimalistApp')
                 $('.current-list li').each(function(i, item) {
                     ids.push($(item).data('id'));
                 });
-                ItemService.setItemIndex($scope.listId, ids);
+                ItemService.setItemIndex($scope.list.id, ids);
             }
         }).disableSelection();
     });
+
+    // Header.
+    var fadeHeader = buildFadeHeader();
+    fadeHeader($scope.list.listName);
+    $scope.$watch('list', function(oldList, newList) {
+        fadeHeader(newList.listName);
+    });
 }]);
+
+
+function buildFadeHeader() {
+    // Fades header in and out with a clearTimeout so multiple header
+    // fades on quick list switching are cancelled.
+    var headerTimeout;
+
+    return function(delay) {
+        var header = $('.list-title');
+        clearTimeout(headerTimeout);
+        header.fadeIn();
+        headerTimeout = setTimeout(function() {
+            header.fadeOut('slow');
+        }, delay || 300);
+    };
+}

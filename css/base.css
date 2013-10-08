@@ -698,7 +698,7 @@ nav {
       text-decoration: none; }
       nav li a:hover, nav li span:hover {
         color: #868c8e; }
-  nav .lists-switcher {
+  nav .list-switcher {
     -webkit-transition: all 300ms ease;
     -moz-transition: all 300ms ease;
     -ms-transition: all 300ms ease;
@@ -716,30 +716,30 @@ nav {
     pointer-events: none;
     z-index: 100;
     color: #bbbebf; }
-    nav .lists-switcher li {
+    nav .list-switcher li {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
       width: auto;
       text-align: left;
       padding: 5px 0; }
-      nav .lists-switcher li:hover {
+      nav .list-switcher li:hover {
         color: #1d1e1f;
         cursor: pointer; }
-      nav .lists-switcher li.new {
+      nav .list-switcher li.new {
         margin-bottom: 0;
         font-weight: bold;
         color: #1bd495;
         cursor: pointer; }
-        nav .lists-switcher li.new:hover {
+        nav .list-switcher li.new:hover {
           color: #15a775; }
-      nav .lists-switcher li.delete {
+      nav .list-switcher li.delete {
         font-weight: bold;
         color: #c81414;
         cursor: pointer; }
-        nav .lists-switcher li.delete:hover {
+        nav .list-switcher li.delete:hover {
           color: #9a0f0f; }
-      nav .lists-switcher li.active {
+      nav .list-switcher li.active {
         color: #1d1e1f;
         font-weight: 400; }
   nav .show {

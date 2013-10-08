@@ -16,15 +16,22 @@
 </head>
 
 <body ng-controller="MainCtrl">
-  <h1 class="list-title">Minimalist</h1>
+  <h1 class="list-title">{{ list.name }}</h1>
 
   <nav>
     <ul>
       <li>
-        <a href="/" class="ss-icon toggle-lists">list</a>
-        <ul class="lists-switcher hide">
-          <li class="delete">-- Delete</li>
-          <li class="new">+ New</li>
+        <a href="#" class="ss-icon toggle-lists"
+           ng-click="toggleListSwitcher()">
+       	  list
+       	</a>
+        <ul class="list-switcher">
+          <li ng-repeat="_listId in listIndex" ng-click="switchList(_listId)"
+          	  ng-class="{'active': _listId == list.id}" >
+          	{{ lists[_listId].name }}
+          </li>
+          <li class="delete" ng-click="deleteList()">&minus; Delete List</li>
+          <li class="new" ng-click="addList()">&#43; New List</li>
         </ul>
       </li>
       <li class="arrow prev-list"><span class="ss-icon">previous</span></li>
@@ -41,7 +48,7 @@
   <section class="lists">
   	<ul data-id="{{ _listId }}"
   		class="list" data-id="{{ _listId }}"
-  		ng-repeat="_listId in listIndex" ng-class="{'current-list': _listId == listId}">
+  		ng-repeat="_listId in listIndex" ng-class="{'current-list': _listId == list.id}">
   	  <li data-id="{{ _itemId }}"
   	  	  ng-repeat="_itemId in lists[_listId].itemIndex"
   	  	  ng-mouseenter='showActions($event)' ng-mouseleave='hideActions($event)'>

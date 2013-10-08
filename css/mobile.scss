@@ -29,7 +29,7 @@
 			}
 		}
 
-		.lists-switcher {
+		.list-switcher {
 			@include transition(top 400ms ease);
 			top: 200px;
 			bottom: 0;

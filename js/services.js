@@ -7,12 +7,14 @@ angular.module('MinimalistApp', [])
 
     var storage = {
         autoId: 0,
-        lastViewedList: 0,
+        lastViewedListId: 0,
         lists: {
             0: {
+                id: 0,
                 items: {
                     autoId: 0,
                     0: {
+                        id: 0,
                         text: 'First Item'
                     },
                 },
@@ -41,14 +43,30 @@ angular.module('MinimalistApp', [])
         addItem: function(listId, text) {
             // Add item.
             var list = this.getList(listId);
-            list.items[++list.items.autoId] = {
+            var itemId = ++list.items.autoId;
+            list.items[itemId] = {
+                id: itemId,
                 text: text
             };
-            list.itemIndex.push(list.items.autoId);
+            list.itemIndex.push(itemId);
 
             // Sync to localStorage.
             updateStorage();
-            return list;
+            return list.items[itemId];
+        },
+
+        addList: function(listName) {
+            // Create new list.
+            var listId = ++storage.autoId;
+            lists[listId] = {
+                id: listId,
+                items: {},
+                itemIndex: [],
+                name: listName,
+            };
+            storage.listIndex.push(listId);
+            updateStorage();
+            return listId;
         },
 
         delItem: function(listId, itemId) {
@@ -60,20 +78,11 @@ angular.module('MinimalistApp', [])
             return list;
         },
 
-        getLastViewedList: function() {
-            return storage.lastViewedList;
+        getLastViewedListId: function() {
+            return storage.lastViewedListId;
         },
 
         getList: function(listId) {
-            if (!(listId in lists)) {
-                // Create new list.
-                lists[listId] = {
-                    items: {},
-                    itemIndex: [],
-                    name: 'New List',
-                };
-                listIndex.push(autoId++);
-            }
             return lists[listId];
         },
 
