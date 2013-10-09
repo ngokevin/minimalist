@@ -230,28 +230,28 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   body {
     font-size: 16px; }
 
-  nav.prime {
+  nav {
     zoom: 1;
     position: static;
     top: auto;
     background: #fff;
     border-bottom: 1px solid #d5d7d8; }
-    nav.prime:before, nav.prime:after {
+    nav:before, nav:after {
       content: "";
       display: table; }
-    nav.prime:after {
+    nav:after {
       clear: both; }
-    nav.prime li {
+    nav li {
       float: left;
       margin: 0;
       border-right: 1px solid #d5d7d8;
       position: static;
       width: 33%; }
-      nav.prime li a, nav.prime li span {
+      nav li a, nav li span {
         padding: 17px 0 13px; }
-      nav.prime li:first-child {
+      nav li:first-child {
         width: 34%; }
-    nav.prime .list-switcher {
+    nav .list-switcher {
       -webkit-transition: top 400ms ease;
       -moz-transition: top 400ms ease;
       -ms-transition: top 400ms ease;
@@ -267,16 +267,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       border-top: 1px solid #d5d7d8;
       overflow: auto;
       max-height: none; }
-      nav.prime .list-switcher li {
+      nav .list-switcher li {
         float: none;
         margin: 0;
         border-right: 0 none;
         border-bottom: 1px solid #d5d7d8;
         padding: 20px 0;
         overflow: visible; }
-        nav.prime .list-switcher li:first-child {
+        nav .list-switcher li:first-child {
           width: auto; }
-    nav.prime .show {
+    nav .show {
       top: 46px; }
 
   form.new_item {

@@ -655,6 +655,14 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   -o-box-sizing: border-box;
   box-sizing: border-box; }
 
+.c {
+  zoom: 1; }
+  .c:before, .c:after {
+    content: "";
+    display: table; }
+  .c:after {
+    clear: both; }
+
 body {
   max-width: 100%; }
 
@@ -673,6 +681,9 @@ li {
   margin: 0;
   list-style: none;
   padding: 0; }
+
+.hidden {
+  display: none; }
 
 .list, form.new_item {
   width: 90%;
@@ -723,6 +734,16 @@ nav {
       width: auto;
       text-align: left;
       padding: 5px 0; }
+      nav .list-switcher li.new-list input {
+        float: left;
+        width: 84%; }
+      nav .list-switcher li.new-list a {
+        border: 1px solid #bbbebf;
+        color: #1bd495;
+        float: right;
+        font-weight: bold;
+        padding: 3px 6px;
+        position: relative; }
       nav .list-switcher li:hover {
         color: #1d1e1f;
         cursor: pointer; }
@@ -746,6 +767,16 @@ nav {
     top: 0;
     opacity: 1;
     pointer-events: auto; }
+
+.no-list {
+  color: #15a775;
+  cursor: pointer;
+  left: 0;
+  height: 20px;
+  position: absolute;
+  right: 0;
+  text-align: center;
+  top: 30%; }
 
 form.new_item {
   margin: 100px auto 40px;
@@ -934,6 +965,8 @@ form.new_item {
   color: #fff;
   z-index: 900;
   pointer-events: none; }
+  .list-title.hidden {
+    display: none; }
 
 .hinge-close {
   -webkit-animation-name: hinge;
@@ -960,3 +993,6 @@ form.new_item {
   animation-fill-mode: both;
   -animation-delay: 230ms;
   animation-iteration-count: 1; }
+
+.modal {
+  position: fixed; }

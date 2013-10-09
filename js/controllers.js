@@ -33,17 +33,28 @@ angular.module('MinimalistApp')
     };
     $scope.switchList = function(listId) {
         $scope.list = ItemService.getList(listId);
+        ItemService.setLastViewedListId(listId);
     };
 
+    $scope.$watch('showAddList', function(newVal) {
+        console.log(newVal);
+        if (newVal) {
+            setTimeout(function() {
+                $('.new-list input').focus();
+            });
+        }
+    });
     $scope.addList = function() {
-        var listName = prompt('List Name');
-        if (listName) {
-            var listId = ItemService.addList(listName);
+        if ($scope.newListName) {
+            var listId = ItemService.addList($scope.newListName);
             $scope.switchList(listId);
         }
+        $scope.showAddList = false;
+        $scope.newListName = '';
     };
-    $scope.deleteList = function(listId) {
-        ItemService.deleteList(listId || $scope.list.id);
+    $scope.delList = function(listId) {
+        var switchListId = ItemService.delList(listId || $scope.list.id);
+        $scope.switchList(switchListId);
     };
 
     // Sorting.
@@ -61,15 +72,20 @@ angular.module('MinimalistApp')
     });
 
     // Header.
-    var fadeHeader = buildFadeHeader();
-    fadeHeader($scope.list.listName);
-    $scope.$watch('list', function(oldList, newList) {
-        fadeHeader(newList.listName);
+    var fadeHeader = new FadeHeader();
+    $scope.$watch('list', function(newList) {
+        if ($scope.listIndex.length === 0) {
+            return;
+        } else if (newList) {
+            fadeHeader(newList.listName);
+        } else {
+            fadeHeader();
+        }
     });
 }]);
 
 
-function buildFadeHeader() {
+function FadeHeader() {
     // Fades header in and out with a clearTimeout so multiple header
     // fades on quick list switching are cancelled.
     var headerTimeout;

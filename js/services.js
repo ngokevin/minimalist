@@ -60,7 +60,9 @@ angular.module('MinimalistApp', [])
             var listId = ++storage.autoId;
             lists[listId] = {
                 id: listId,
-                items: {},
+                items: {
+                    autoId: -1,
+                },
                 itemIndex: [],
                 name: listName,
             };
@@ -75,7 +77,20 @@ angular.module('MinimalistApp', [])
             var i = list.itemIndex.indexOf(itemId);
             list.itemIndex.splice(i, 1);
             updateStorage();
-            return list;
+        },
+
+        delList: function(listId) {
+            delete storage.lists[listId];
+            var i = storage.listIndex.indexOf(listId);
+            storage.listIndex.splice(i, 1);
+
+            var switchListId = storage.listIndex[0];
+            if (i > 0) {
+                switchListId = storage.listIndex[i - 1];
+            }
+            this.setLastViewedListId(listId);
+            updateStorage();
+            return switchListId;
         },
 
         getLastViewedListId: function() {
@@ -92,6 +107,11 @@ angular.module('MinimalistApp', [])
 
         getListIndex: function() {
             return storage.listIndex;
+        },
+
+        setLastViewedListId: function(listId) {
+            storage.lastViewedListId = listId;
+            updateStorage();
         },
 
         setItemIndex: function(listId, ids) {
