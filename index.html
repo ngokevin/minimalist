@@ -40,8 +40,12 @@
           <li class="new" ng-click="showAddList = true">&#43; New List</li>
         </ul>
       </li>
-      <li class="arrow prev-list"><span class="ss-icon">previous</span></li>
-      <li class="arrow next-list"><span class="ss-icon">next</span></li>
+      <li class="arrow prev-list"
+          ng-click="prevList()">
+        <span class="ss-icon">previous</span></li>
+      <li class="arrow next-list"
+          ng-click="nextList()">
+        <span class="ss-icon">next</span></li>
     </ul>
   </nav>
 

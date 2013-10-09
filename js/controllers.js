@@ -28,16 +28,31 @@ angular.module('MinimalistApp')
         });
     };
 
-    $scope.toggleListSwitcher = function(e) {
-        $('.list-switcher').toggleClass('show');
-    };
     $scope.switchList = function(listId) {
         $scope.list = ItemService.getList(listId);
         ItemService.setLastViewedListId(listId);
     };
 
+    $scope.prevList = function() {
+        var listIndex = $scope.listIndex;
+        var i = listIndex.indexOf($scope.list.id);
+        if (i === 0) {
+            $scope.switchList(listIndex[listIndex.length - 1]);
+        } else {
+            $scope.switchList(listIndex[i - 1]);
+        }
+    };
+    $scope.nextList = function() {
+        var listIndex = $scope.listIndex;
+        var i = listIndex.indexOf($scope.list.id);
+        if (i === listIndex.length - 1) {
+            $scope.switchList(listIndex[0]);
+        } else {
+            $scope.switchList(listIndex[i + 1]);
+        }
+    };
+
     $scope.$watch('showAddList', function(newVal) {
-        console.log(newVal);
         if (newVal) {
             setTimeout(function() {
                 $('.new-list input').focus();
@@ -48,9 +63,10 @@ angular.module('MinimalistApp')
         if ($scope.newListName) {
             var listId = ItemService.addList($scope.newListName);
             $scope.switchList(listId);
+            $scope.newListName = '';
+            $scope.showAddList = false;
+            $scope.showListSwitcher= false;
         }
-        $scope.showAddList = false;
-        $scope.newListName = '';
     };
     $scope.delList = function(listId) {
         var switchListId = ItemService.delList(listId || $scope.list.id);
