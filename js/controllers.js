@@ -45,8 +45,8 @@ angular.module('MinimalistApp')
         $item.disableSelection();
         $('.list').disableSelection();
 
-        ItemService.editItem($scope.list.id, item.data('id'),
-                             item.find('textarea').val());
+        ItemService.editItem($scope.list.id, $item.data('id'),
+                             $item.find('textarea').val());
     };
 
     $scope.showActions = function(e) {
@@ -88,7 +88,11 @@ angular.module('MinimalistApp')
     $scope.$watch('showAddList', function(newVal) {
         if (newVal) {
             setTimeout(function() {
-                $('.new-list input').focus();
+                $('.new-list input').focus().blur(function() {
+                    // Unshow new list input if click out.
+                    $scope.showAddList = false;
+                    $scope.$apply();
+                });
             });
         }
     });
