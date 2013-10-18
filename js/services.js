@@ -93,6 +93,11 @@ angular.module('MinimalistApp', [])
             return switchListId;
         },
 
+        editItem: function(listId, itemId, text) {
+            this.getList(listId).items[itemId].text = text;
+            updateStorage();
+        },
+
         getLastViewedListId: function() {
             return storage.lastViewedListId;
         },

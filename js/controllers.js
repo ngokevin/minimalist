@@ -19,12 +19,36 @@ angular.module('MinimalistApp')
         ItemService.delItem($scope.list.id, item);
     };
 
+    $scope.showEditMode = function(e) {
+        var item = $(e.target).closest('li');
+        item.find('p').hide();
+        item.find('textarea').show().focus();
+        item.find('.actions .edit').hide();
+        item.find('.actions .submit-edit').show();
+        $('.list').enableSelection();
+        $scope.editMode = true;
+    };
+    $scope.submitEdit = function(e) {
+        var item = $(e.target).closest('li');
+        item.find('p').show();
+        item.find('textarea').hide().blur();
+        item.find('.actions .edit').show();
+        item.find('.actions .submit-edit').hide();
+        $('.list').disableSelection();
+
+        ItemService.editItem($scope.list.id, item.data('id'),
+                             item.find('textarea').val());
+        $scope.editMode = false;
+    };
+
     $scope.showActions = function(e) {
         $(e.target).addClass('show-actions');
     };
     $scope.hideActions = function(e) {
         setTimeout(function() {
-            $(e.target).removeClass('show-actions');
+            if (!$scope.editMode) {
+                $(e.target).removeClass('show-actions');
+            }
         });
     };
 

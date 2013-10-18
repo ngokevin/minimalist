@@ -66,8 +66,12 @@
     	  	<p>{{ lists[_listId].items[_itemId].text }}</p>
     	  	<textarea>{{ lists[_listId].items[_itemId].text }}</textarea>
     	  	<div class="actions">
-    	  	  <span ng-click="delItem(itemId)" class="delete ss-icon">delete</span>
-    	  	  <span class="save ss-icon">check</span>
+    	  	  <span class="delete ss-icon"
+                  ng-click="delItem(itemId)">delete</span>
+    	  	  <span class="edit ss-icon"
+                  ng-click="showEditMode($event)">write</span>
+            <span class="submit-edit ss-icon hidden"
+                  ng-click="submitEdit($event)">check</span>
     	  	</div>
     	  </li>
     	</ul>

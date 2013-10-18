@@ -297,10 +297,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     margin-bottom: 40px; }
 
   .actions {
-    left: auto;
-    right: -80px; }
-    .actions .delete {
-      float: right; }
+    position: relative; }
 
   .show-actions .actions {
     left: auto;

@@ -36,7 +36,7 @@ li {
     padding: 0;
 }
 
-.hidden {
+html body .hidden {
     display: none;
 }
 
@@ -135,6 +135,15 @@ nav {
 
                 &:hover {
                     color: darken($red, 10%);
+                }
+            }
+            &.edit, &.submit-edit {
+                font-weight: bold;
+
+                cursor: pointer;
+
+                &:hover {
+                    color: darken($green, 10%);
                 }
             }
             &.active  {
@@ -246,6 +255,12 @@ form.new_item {
             background: $red;
             color: #fff;
         }
+        .edit, .submit-edit {
+            &:hover {
+                background: $green;
+                color: #fff;
+            }
+        }
 
         &.edit-mode {
             .actions {
@@ -309,7 +324,7 @@ form.new_item {
 .show-actions, .edit-mode {
     .actions {
         opacity: 1;
-        left: -70px;
+        left: -120px;
     }
 }
 

@@ -682,7 +682,7 @@ li {
   list-style: none;
   padding: 0; }
 
-.hidden {
+html body .hidden {
   display: none; }
 
 .list, form.new_item {
@@ -760,6 +760,11 @@ nav {
         cursor: pointer; }
         nav .list-switcher li.delete:hover {
           color: #9a0f0f; }
+      nav .list-switcher li.edit, nav .list-switcher li.submit-edit {
+        font-weight: bold;
+        cursor: pointer; }
+        nav .list-switcher li.edit:hover, nav .list-switcher li.submit-edit:hover {
+          color: #15a775; }
       nav .list-switcher li.active {
         color: #1d1e1f;
         font-weight: 400; }
@@ -860,6 +865,9 @@ form.new_item {
     .list li .delete:hover {
       background: #c81414;
       color: #fff; }
+    .list li .edit:hover, .list li .submit-edit:hover {
+      background: #1bd495;
+      color: #fff; }
     .list li.edit-mode .actions {
       left: -110px; }
     .list li.edit-mode textarea, .list li.edit-mode .save {
@@ -908,7 +916,7 @@ form.new_item {
 
 .show-actions .actions, .edit-mode .actions {
   opacity: 1;
-  left: -70px; }
+  left: -120px; }
 
 .actions {
   zoom: 1;

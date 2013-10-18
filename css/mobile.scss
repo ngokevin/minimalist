@@ -85,12 +85,7 @@
 	}
 
 	.actions {
-		left: auto;
-		right: -80px;
-
-		.delete {
-			float: right;
-		}
+		position: relative;
 	}
 
 	.show-actions .actions {
