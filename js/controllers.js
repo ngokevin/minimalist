@@ -92,12 +92,19 @@ angular.module('MinimalistApp')
     };
 
     $scope.$watch('showAddList', function(newVal) {
+        var clicked;
+        $(document).mousedown(function(e) {
+            clicked = $(e.target);
+        });
+
         if (newVal) {
             setTimeout(function() {
                 $('.new-list input').focus().blur(function() {
-                    // Unshow new list input if click out.
-                    $scope.showAddList = false;
-                    $scope.$apply();
+                    if (!clicked.hasClass('submit-new-list')) {
+                        // Unshow new list input if click out.
+                        $scope.showAddList = false;
+                        $scope.$apply();
+                    }
                 });
             });
         }
