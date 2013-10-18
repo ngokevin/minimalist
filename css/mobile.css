@@ -300,9 +300,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     display: none;
     position: relative; }
 
-  .show-actions .actions {
+  .show-actions .actions, .edit-mode .actions {
     display: block;
     left: 0;
     margin-top: 10px;
     padding-right: 0;
-    float: right; } }
+    float: right; }
+    .show-actions .actions .submit-edit, .edit-mode .actions .submit-edit {
+      bottom: 0;
+      left: 0; } }

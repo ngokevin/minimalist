@@ -87,12 +87,17 @@
 		display: none;
 		position: relative;
 	}
-	.show-actions .actions {
+	.show-actions .actions, .edit-mode .actions {
 		display: block;
 		left: 0;
 		margin-top: 10px;
 		padding-right: 0;
 		float: right;
+
+		.submit-edit {
+			bottom: 0;
+			left: 0;
+		}
 	}
 
 } // 700px
