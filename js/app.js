@@ -1,1 +1,1 @@
-angular.module('MinimalistApp', []);
+angular.module('MinimalistApp', ['ngTouch']);

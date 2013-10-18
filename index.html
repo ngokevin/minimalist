@@ -11,6 +11,8 @@
     <link rel="stylesheet" href="css/mobile.css" />
 
     <script src="js/lib/angular.min.js"></script>
+    <script src="js/lib/angular-touch.js"></script>
+    <script src="js/lib/modernizr.min.js"></script>
     <script src="js/lib/jquery.min.js"></script>
     <script src="js/lib/plugins.js"></script>
 </head>
@@ -64,7 +66,7 @@
             ng-class="{'edit-mode': editMode[_listId][_itemId]}"
     	  	  ng-repeat="_itemId in lists[_listId].itemIndex"
     	  	  ng-mouseenter='showActions($event)' ng-mouseleave='hideActions($event)'
-            ng-tap='tapActions($event)'>
+              ng-click='tapActions($event)'>
 
     	  	<p ng-hide="editMode[_listId][_itemId]">{{ lists[_listId].items[_itemId].text }}</p>
     	  	<textarea ng-hide="!editMode[_listId][_itemId]">{{ lists[_listId].items[_itemId].text }}</textarea>

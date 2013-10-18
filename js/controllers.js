@@ -50,15 +50,21 @@ angular.module('MinimalistApp')
     };
 
     $scope.showActions = function(e) {
-        $(e.target).addClass('show-actions');
+        if (!Modernizr.touch) {
+            $(e.target).addClass('show-actions');
+        }
     };
     $scope.hideActions = function(e) {
-        setTimeout(function() {
-            $(e.target).removeClass('show-actions');
-        });
+        if (!Modernizr.touch) {
+            setTimeout(function() {
+                $(e.target).removeClass('show-actions');
+            });
+        }
     };
     $scope.tapActions = function(e) {
-        $(e.target).toggleClass('show-actions');
+        if (Modernizr.touch) {
+            $(e.target).toggleClass('show-actions');
+        }
     };
 
     $scope.switchList = function(listId) {
