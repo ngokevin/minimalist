@@ -60,18 +60,28 @@
     	<ul data-id="{{ _listId }}"
     		class="list" data-id="{{ _listId }}"
     		ng-repeat="_listId in listIndex" ng-class="{'current-list': _listId == list.id}">
+
     	  <li data-id="{{ _itemId }}"
+            ng-class="{'edit-mode': editMode[_listId][_itemId]}"
     	  	  ng-repeat="_itemId in lists[_listId].itemIndex"
     	  	  ng-mouseenter='showActions($event)' ng-mouseleave='hideActions($event)'>
-    	  	<p>{{ lists[_listId].items[_itemId].text }}</p>
-    	  	<textarea>{{ lists[_listId].items[_itemId].text }}</textarea>
+
+    	  	<p ng-hide="editMode[_listId][_itemId]">{{ lists[_listId].items[_itemId].text }}</p>
+    	  	<textarea ng-hide="!editMode[_listId][_itemId]">{{ lists[_listId].items[_itemId].text }}</textarea>
+
     	  	<div class="actions">
     	  	  <span class="delete ss-icon"
-                  ng-click="delItem(itemId)">delete</span>
+                  ng-click="delItem(itemId)"
+                  ng-hide="editMode[_listId][_itemId]">
+                  delete</span>
     	  	  <span class="edit ss-icon"
-                  ng-click="showEditMode($event)">write</span>
-            <span class="submit-edit ss-icon hidden"
-                  ng-click="submitEdit($event)">check</span>
+                  ng-click="showEditMode($event)"
+                  ng-hide="editMode[_listId][_itemId]">
+                  write</span>
+            <span class="submit-edit ss-icon"
+                  ng-click="submitEdit($event)"
+                  ng-hide="!editMode[_listId][_itemId]">
+                  check</span>
     	  	</div>
     	  </li>
     	</ul>

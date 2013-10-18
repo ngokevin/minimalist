@@ -761,8 +761,8 @@ nav {
         nav .list-switcher li.delete:hover {
           color: #9a0f0f; }
       nav .list-switcher li.edit, nav .list-switcher li.submit-edit {
-        font-weight: bold;
-        cursor: pointer; }
+        cursor: pointer;
+        font-weight: bold; }
         nav .list-switcher li.edit:hover, nav .list-switcher li.submit-edit:hover {
           color: #15a775; }
       nav .list-switcher li.active {
@@ -868,8 +868,10 @@ form.new_item {
     .list li .edit:hover, .list li .submit-edit:hover {
       background: #1bd495;
       color: #fff; }
-    .list li.edit-mode .actions {
-      left: -110px; }
+    .list li .submit-edit {
+      bottom: 20px;
+      left: 50px;
+      position: relative; }
     .list li.edit-mode textarea, .list li.edit-mode .save {
       display: block; }
     .list li.edit-mode p {
@@ -900,12 +902,13 @@ form.new_item {
     box-shadow: none;
     background: #fff;
     border: 0 none;
-    width: 100%;
-    font-weight: 300;
+    bottom: 5px;
     color: #1d1e1f;
-    padding: 10px;
+    font-weight: 300;
     height: 70px;
-    display: none; }
+    padding: 10px;
+    position: relative;
+    width: 100%; }
     .list textarea:focus {
       outline: 0; }
 

@@ -10,6 +10,15 @@ angular.module('MinimalistApp')
     // Current.
     $scope.list = ItemService.getList(ItemService.getLastViewedListId());
 
+    // Dictionary used to dynamically hide stuff.
+    $scope.editMode = {};
+    function setEditMode(listId, itemId, val) {
+        if (!(listId in $scope.editMode)) {
+            $scope.editMode[listId] = {};
+        }
+        $scope.editMode[listId][itemId] = val;
+    }
+
     // Event handlers.
     $scope.addItem = function() {
         ItemService.addItem($scope.list.id, $scope.entry);
@@ -20,25 +29,24 @@ angular.module('MinimalistApp')
     };
 
     $scope.showEditMode = function(e) {
-        var item = $(e.target).closest('li');
-        item.find('p').hide();
-        item.find('textarea').show().focus();
-        item.find('.actions .edit').hide();
-        item.find('.actions .submit-edit').show();
-        $('.list').enableSelection();
-        $scope.editMode = true;
+        var listId = $(e.target).closest('ul').data('id');
+        var $item = $(e.target).closest('li');
+
+        setEditMode(listId, $item.data('id'), true);
+        $('textarea', $item).focus();
+        $item.enableSelection();
     };
     $scope.submitEdit = function(e) {
-        var item = $(e.target).closest('li');
-        item.find('p').show();
-        item.find('textarea').hide().blur();
-        item.find('.actions .edit').show();
-        item.find('.actions .submit-edit').hide();
+        var listId = $(e.target).closest('ul').data('id');
+        var $item = $(e.target).closest('li');
+
+        setEditMode(listId, $item.data('id'), false);
+        $('textarea', $item).blur();
+        $item.disableSelection();
         $('.list').disableSelection();
 
         ItemService.editItem($scope.list.id, item.data('id'),
                              item.find('textarea').val());
-        $scope.editMode = false;
     };
 
     $scope.showActions = function(e) {
@@ -46,9 +54,7 @@ angular.module('MinimalistApp')
     };
     $scope.hideActions = function(e) {
         setTimeout(function() {
-            if (!$scope.editMode) {
-                $(e.target).removeClass('show-actions');
-            }
+            $(e.target).removeClass('show-actions');
         });
     };
 
@@ -108,7 +114,7 @@ angular.module('MinimalistApp')
                 });
                 ItemService.setItemIndex($scope.list.id, ids);
             }
-        }).disableSelection();
+        }).find('li').disableSelection();
     });
 
     // Header.

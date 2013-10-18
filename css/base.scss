@@ -138,9 +138,8 @@ nav {
                 }
             }
             &.edit, &.submit-edit {
-                font-weight: bold;
-
                 cursor: pointer;
+                font-weight: bold;
 
                 &:hover {
                     color: darken($green, 10%);
@@ -261,16 +260,15 @@ form.new_item {
                 color: #fff;
             }
         }
-
+        .submit-edit {
+            bottom: 20px;
+            left: 50px;
+            position: relative;
+        }
         &.edit-mode {
-            .actions {
-                left: -110px;
-            }
-
             textarea, .save {
                 display: block;
             }
-
             p {
                 display: none;
             }
@@ -299,12 +297,13 @@ form.new_item {
         @include box-shadow(none);
         background: #fff;
         border: 0 none;
-        width: 100%;
-        font-weight: 300;
+        bottom: 5px;
         color: $text_color;
-        padding: 10px;
+        font-weight: 300;
         height: 70px;
-        display: none;
+        padding: 10px;
+        position: relative;
+        width: 100%;
 
         &:focus {
             outline: 0;
