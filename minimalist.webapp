@@ -2,7 +2,7 @@
   "version": "1.4",
   "name": "Minimalist",
   "description": "Create lists of thoughts you want to remember.",
-  "launch_path": "/",
+  "launch_path": "/index.html",
   "icons": {
     "16": "/img/favicon.ico",
     "48": "/img/icon-48.png",

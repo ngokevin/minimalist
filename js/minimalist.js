@@ -6,19 +6,19 @@ Lists have data attributes data-id and data-name.
     'lastViewedList': 0,
     'lists': ['sample'],
     'sample': {
-            'id': 0,
-            'list': [
-                {
-                    'id': 1,
-                    'items': ['item1', 'item2'],
-                    'rank': 2
-                },
-                {
-                    'id': 2,
-                    'items': ['item3', 'item4'],
-                    'rank': 1
-                }
-            ]
+        'id': 0,
+        'list': [
+            {
+                'id': 1,
+                'rank': 2,
+                'item': 'text'
+            },
+            {
+                'id': 2,
+                'rank': 1,
+                'item': 'text'
+            }
+        ]
     }
 }
 */

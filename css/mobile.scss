@@ -1,34 +1,34 @@
 @import 'globals';
 
-@media only screen and (max-width: 800px){ // If you change max-width, also change it in the JS
-	body{
+@media only screen and (max-width: 800px) {
+    // If you change max-width, also change it in the JS
+	body {
 		font-size: 16px;
 	}
 
-	nav.prime{
-		@include clearfix;	
-		position: static;
-		top: auto;
+	nav {
+		@include clearfix;
 		background: #fff;
 		border-bottom: 1px solid $border_color;
+		position: static;
+		top: auto;
 
-		li{
+		li {
+			border-right: 1px solid $border_color;
 			float: left;
 			margin: 0;
-			border-right: 1px solid $border_color;
 			position: static;
 			width: 33%;
 
-			a, span{
+			a, span {
 				padding: 17px 0 13px;
 			}
-
-			&:first-child{
+			&:first-child {
 				width: 34%;
 			}
 		}
 
-		.lists-switcher{
+		.list-switcher {
 			@include transition(top 400ms ease);
 			top: 200px;
 			bottom: 0;
@@ -41,7 +41,7 @@
 			overflow: auto;
 			max-height: none;
 
-			li{
+			li {
 				float: none;
 				margin: 0;
 				border-right: 0 none;
@@ -49,52 +49,55 @@
 				padding: 20px 0;
 				overflow: visible;
 
-				&:first-child{
+				&:first-child {
 					width: auto;
 				}
 			}
 		}
 
-		.show{
+		.show {
 			top: 46px;
 		}
 	}
 
-	form.new_item{
+	form.new-item {
 		margin: 0;
 		margin-top: 0 !important;
-		width: 100%;
 		max-width: none;
+		width: 100%;
 
-		textarea{
+		textarea {
 			font-size: 24px;
 			height: 60px;
 			padding: 20px 80px 5px 20px;
 		}
 
-		input[type="submit"]{
+		input[type="submit"] {
 			height: 60px;
 			width: 60px;
 		}
 	}
 
-	.items_list{
+	.list {
 		overflow: hidden;
 		margin-bottom: 40px;
 	}
 
-	.actions{
-		left: auto;
-		right: -80px;
-
-		.delete{
-			float: right;
-		}
+	.actions {
+		display: none;
+		position: relative;
 	}
+	.show-actions .actions, .edit-mode .actions {
+		display: block;
+		left: 0;
+		margin-top: 10px;
+		padding-right: 0;
+		float: right;
 
-	.show-actions .actions{
-		left: auto;
-		right: -30px;
+		.submit-edit {
+			bottom: 0;
+			left: 0;
+		}
 	}
 
 } // 700px
