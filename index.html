@@ -50,21 +50,21 @@
   </nav>
 
   <div ng-class="{'hidden': listIndex.length == 0}">
-    <form class="new_item" ng-submit="addItem()">
+    <form class="new-item" ng-submit="addItem()">
       <textarea id="add-item-text" placeholder="Write&hellip;"
       	      ng-model="entry"></textarea>
       <input type="submit" id="add-item" value="Add">
     </form>
 
     <section class="lists">
-    	<ul data-id="{{ _listId }}"
-    		class="list" data-id="{{ _listId }}"
-    		ng-repeat="_listId in listIndex" ng-class="{'current-list': _listId == list.id}">
+    	<ul class="list" data-id="{{ _listId }}"
+      		ng-repeat="_listId in listIndex" ng-class="{'current-list': _listId == list.id}">
 
-    	  <li data-id="{{ _itemId }}"
+    	  <li class="item c" data-id="{{ _itemId }}"
             ng-class="{'edit-mode': editMode[_listId][_itemId]}"
     	  	  ng-repeat="_itemId in lists[_listId].itemIndex"
-    	  	  ng-mouseenter='showActions($event)' ng-mouseleave='hideActions($event)'>
+    	  	  ng-mouseenter='showActions($event)' ng-mouseleave='hideActions($event)'
+            ng-tap='tapActions($event)'>
 
     	  	<p ng-hide="editMode[_listId][_itemId]">{{ lists[_listId].items[_itemId].text }}</p>
     	  	<textarea ng-hide="!editMode[_listId][_itemId]">{{ lists[_listId].items[_itemId].text }}</textarea>
@@ -94,6 +94,7 @@
   </div>
 
   <script src="js/app.js"></script>
+  <script src="js/directives.js"></script>
   <script src="js/services.js"></script>
   <script src="js/controllers.js"></script>
 </body>

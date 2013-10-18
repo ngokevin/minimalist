@@ -685,7 +685,7 @@ li {
 html body .hidden {
   display: none; }
 
-.list, form.new_item {
+.list, form.new-item {
   width: 90%;
   margin: auto;
   max-width: 600px; }
@@ -783,10 +783,10 @@ nav {
   text-align: center;
   top: 30%; }
 
-form.new_item {
+form.new-item {
   margin: 100px auto 40px;
   position: relative; }
-  form.new_item textarea {
+  form.new-item textarea {
     -webkit-transition: all 300ms ease;
     -moz-transition: all 300ms ease;
     -ms-transition: all 300ms ease;
@@ -801,7 +801,7 @@ form.new_item {
     padding: 28px 110px 20px 20px;
     border: 0 none;
     overflow: hidden; }
-    form.new_item textarea:focus {
+    form.new-item textarea:focus {
       -webkit-box-shadow: inset 1px -1px rgba(0, 0, 0, 0.2);
       -moz-box-shadow: inset 1px -1px rgba(0, 0, 0, 0.2);
       -ms-box-shadow: inset 1px -1px rgba(0, 0, 0, 0.2);
@@ -810,11 +810,11 @@ form.new_item {
       border: 0 none;
       outline: none;
       color: #1d1e1f; }
-    form.new_item textarea.medium {
+    form.new-item textarea.medium {
       font-size: 24px; }
-    form.new_item textarea.small {
+    form.new-item textarea.small {
       font-size: 16px; }
-  form.new_item input[type="submit"] {
+  form.new-item input[type="submit"] {
     text-indent: -9999px;
     white-space: nowrap;
     overflow: hidden;
@@ -834,7 +834,7 @@ form.new_item {
     top: 0;
     right: 0;
     border: 0 none; }
-    form.new_item input[type="submit"]:hover {
+    form.new-item input[type="submit"]:hover {
       background: #18bd85; }
 
 .list {
@@ -842,7 +842,7 @@ form.new_item {
   display: none; }
   .list.current-list {
     display: block; }
-  .list li {
+  .list .item {
     -webkit-transition: color 400ms ease;
     -moz-transition: color 400ms ease;
     -ms-transition: color 400ms ease;
@@ -852,29 +852,29 @@ form.new_item {
     position: relative;
     border-bottom: 1px solid #d5d7d8;
     cursor: move; }
-    .list li:active, .list li:focus {
+    .list .item:active, .list .item:focus {
       -webkit-transition: none;
       -moz-transition: none;
       -ms-transition: none;
       -o-transition: none;
       transition: none; }
-      .list li:active .actions, .list li:focus .actions {
+      .list .item:active .actions, .list .item:focus .actions {
         opacity: 0; }
-    .list li:last-child {
+    .list .item:last-child {
       border-bottom: 0 none; }
-    .list li .delete:hover {
+    .list .item .delete:hover {
       background: #c81414;
       color: #fff; }
-    .list li .edit:hover, .list li .submit-edit:hover {
+    .list .item .edit:hover, .list .item .submit-edit:hover {
       background: #1bd495;
       color: #fff; }
-    .list li .submit-edit {
+    .list .item .submit-edit {
       bottom: 20px;
       left: 50px;
       position: relative; }
-    .list li.edit-mode textarea, .list li.edit-mode .save {
+    .list .item.edit-mode textarea, .list .item.edit-mode .save {
       display: block; }
-    .list li.edit-mode p {
+    .list .item.edit-mode p {
       display: none; }
   .list .ui-state-highlight, .list .ui-state-highlight:last-child {
     border: 2px dashed #d5d7d8;

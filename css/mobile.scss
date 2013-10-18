@@ -8,22 +8,21 @@
 
 	nav {
 		@include clearfix;
-		position: static;
-		top: auto;
 		background: #fff;
 		border-bottom: 1px solid $border_color;
+		position: static;
+		top: auto;
 
 		li {
+			border-right: 1px solid $border_color;
 			float: left;
 			margin: 0;
-			border-right: 1px solid $border_color;
 			position: static;
 			width: 33%;
 
 			a, span {
 				padding: 17px 0 13px;
 			}
-
 			&:first-child {
 				width: 34%;
 			}
@@ -61,11 +60,11 @@
 		}
 	}
 
-	form.new_item {
+	form.new-item {
 		margin: 0;
 		margin-top: 0 !important;
-		width: 100%;
 		max-width: none;
+		width: 100%;
 
 		textarea {
 			font-size: 24px;
@@ -79,18 +78,21 @@
 		}
 	}
 
-	.items_list {
+	.list {
 		overflow: hidden;
 		margin-bottom: 40px;
 	}
 
 	.actions {
+		display: none;
 		position: relative;
 	}
-
 	.show-actions .actions {
-		left: auto;
-		right: -30px;
+		display: block;
+		left: 0;
+		margin-top: 10px;
+		padding-right: 0;
+		float: right;
 	}
 
 } // 700px

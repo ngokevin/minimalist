@@ -232,19 +232,19 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
   nav {
     zoom: 1;
-    position: static;
-    top: auto;
     background: #fff;
-    border-bottom: 1px solid #d5d7d8; }
+    border-bottom: 1px solid #d5d7d8;
+    position: static;
+    top: auto; }
     nav:before, nav:after {
       content: "";
       display: table; }
     nav:after {
       clear: both; }
     nav li {
+      border-right: 1px solid #d5d7d8;
       float: left;
       margin: 0;
-      border-right: 1px solid #d5d7d8;
       position: static;
       width: 33%; }
       nav li a, nav li span {
@@ -279,26 +279,30 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     nav .show {
       top: 46px; }
 
-  form.new_item {
+  form.new-item {
     margin: 0;
     margin-top: 0 !important;
-    width: 100%;
-    max-width: none; }
-    form.new_item textarea {
+    max-width: none;
+    width: 100%; }
+    form.new-item textarea {
       font-size: 24px;
       height: 60px;
       padding: 20px 80px 5px 20px; }
-    form.new_item input[type="submit"] {
+    form.new-item input[type="submit"] {
       height: 60px;
       width: 60px; }
 
-  .items_list {
+  .list {
     overflow: hidden;
     margin-bottom: 40px; }
 
   .actions {
+    display: none;
     position: relative; }
 
   .show-actions .actions {
-    left: auto;
-    right: -30px; } }
+    display: block;
+    left: 0;
+    margin-top: 10px;
+    padding-right: 0;
+    float: right; } }

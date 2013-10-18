@@ -43,7 +43,7 @@ html body .hidden {
 //  Layout
 // **********************************************************
 
-.list, form.new_item {
+.list, form.new-item {
     width: 90%;
     margin: auto;
     max-width: $full;
@@ -171,7 +171,7 @@ nav {
 }
 
 //  New List Item Form
-form.new_item {
+form.new-item {
     $button_width: 90px;
     margin: 100px auto $gutter;
     position: relative;
@@ -231,7 +231,7 @@ form.new_item {
         display: block;
     }
 
-    li {
+    .item {
         @include transition(color 400ms ease);
         padding: 20px 0;
         position: relative;

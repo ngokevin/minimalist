@@ -57,6 +57,9 @@ angular.module('MinimalistApp')
             $(e.target).removeClass('show-actions');
         });
     };
+    $scope.tapActions = function(e) {
+        $(e.target).toggleClass('show-actions');
+    };
 
     $scope.switchList = function(listId) {
         $scope.list = ItemService.getList(listId);
