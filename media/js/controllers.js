@@ -61,11 +61,11 @@ angular.module('MinimalistApp')
             });
         }
     };
-    $scope.tapActions = function(e) {
+    $scope.tapActions = _.throttle(function(e) {
         if (Modernizr.touch) {
             $(e.target).toggleClass('show-actions');
         }
-    };
+    }, 1000);
 
     $scope.switchList = function(listId) {
         $scope.list = ItemService.getList(listId);

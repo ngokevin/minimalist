@@ -28,6 +28,10 @@ $helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
 //============================================================
 //    Custom mixins
 
+@mixin def-box-shadow() {
+    @include box-shadow(0 0 2px $border-color);
+}
+
 @mixin clearfix {
   zoom: 1;
   &:before, &:after {

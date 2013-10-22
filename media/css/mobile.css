@@ -302,10 +302,16 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
 
   .show-actions .actions, .edit-mode .actions {
     display: block;
+    float: right;
     left: 0;
     margin-top: 10px;
-    padding-right: 0;
-    float: right; }
+    padding-right: 0; }
+    .show-actions .actions span, .edit-mode .actions span {
+      -webkit-box-shadow: 0 0 2px #d5d7d8;
+      -moz-box-shadow: 0 0 2px #d5d7d8;
+      -ms-box-shadow: 0 0 2px #d5d7d8;
+      -o-box-shadow: 0 0 2px #d5d7d8;
+      box-shadow: 0 0 2px #d5d7d8; }
     .show-actions .actions .submit-edit, .edit-mode .actions .submit-edit {
       bottom: 0;
       left: 0; } }

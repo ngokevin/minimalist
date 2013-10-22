@@ -89,11 +89,14 @@
     }
     .show-actions .actions, .edit-mode .actions {
         display: block;
+        float: right;
         left: 0;
         margin-top: 10px;
         padding-right: 0;
-        float: right;
 
+        span {
+            @include def-box-shadow();
+        }
         .submit-edit {
             bottom: 0;
             left: 0;

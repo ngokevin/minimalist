@@ -12,6 +12,7 @@
 
     <script src="media/js/lib/angular.min.js"></script>
     <script src="media/js/lib/angular-touch.js"></script>
+    <script src="media/js/lib/underscore-min.js"></script>
     <script src="media/js/lib/modernizr.min.js"></script>
     <script src="media/js/lib/jquery.min.js"></script>
     <script src="media/js/lib/plugins.js"></script>
@@ -63,7 +64,7 @@
       		ng-repeat="_listId in listIndex" ng-class="{'current-list': _listId == list.id}">
 
     	  <li class="item c" data-id="{{ _itemId }}"
-            ng-class="{'edit-mode': editMode[_listId][_itemId]}"
+              ng-class="{'edit-mode': editMode[_listId][_itemId]}"
     	  	  ng-repeat="_itemId in lists[_listId].itemIndex"
     	  	  ng-mouseenter='showActions($event)' ng-mouseleave='hideActions($event)'
               ng-click='tapActions($event)'>
