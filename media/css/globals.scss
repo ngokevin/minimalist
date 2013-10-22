@@ -3,10 +3,10 @@
 
 // Colors
 $bg: #e3e5e6;
-$text_color: #1d1e1f;
-$light_text_color: #bbbebf;
-$link_color: #e62f70;
-$border_color: #d5d7d8;
+$text-color: #1d1e1f;
+$light-text-color: #bbbebf;
+$link-color: #e62f70;
+$border-color: #d5d7d8;
 
 $red: rgb(200, 20, 20);
 $green: #1bd495;
@@ -29,7 +29,7 @@ $helvetica: "Helvetica Neue", Helvetica, Arial, sans-serif;
 //    Custom mixins
 
 @mixin def-box-shadow() {
-    @include box-shadow(0 0 2px $border-color);
+    @include box-shadow(0 1px 2px $border_color);
 }
 
 @mixin clearfix {

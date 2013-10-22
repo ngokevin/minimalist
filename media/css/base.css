@@ -678,33 +678,33 @@ ul {
   padding: 0; }
 
 li {
-  margin: 0;
   list-style: none;
+  margin: 0;
   padding: 0; }
 
 html body .hidden {
   display: none; }
 
 .list, form.new-item {
-  width: 90%;
   margin: auto;
-  max-width: 600px; }
+  max-width: 600px;
+  width: 90%; }
 
 nav {
+  font-size: 14px;
   position: fixed;
-  top: 10px;
   right: 10px;
-  font-size: 14px; }
+  top: 10px; }
   nav li {
     background: #fff;
-    width: 40px;
+    cursor: pointer;
     margin-bottom: 10px;
     position: relative;
     text-align: center;
-    cursor: pointer; }
+    width: 40px; }
     nav li a, nav li span {
-      display: block;
       color: #bbbebf;
+      display: block;
       padding: 12px 0 9px;
       text-decoration: none; }
       nav li a:hover, nav li span:hover {
@@ -716,24 +716,24 @@ nav {
     -o-transition: all 300ms ease;
     transition: all 300ms ease;
     background: #fff;
+    color: #bbbebf;
+    max-height: 300px;
+    opacity: 0;
+    overflow: auto;
+    padding: 15px 20px;
+    pointer-events: none;
     position: absolute;
     right: 50px;
     top: -90px;
     width: 200px;
-    max-height: 300px;
-    overflow: auto;
-    padding: 15px 20px;
-    opacity: 0;
-    pointer-events: none;
-    z-index: 100;
-    color: #bbbebf; }
+    z-index: 100; }
     nav .list-switcher li {
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      width: auto;
+      padding: 5px 0;
       text-align: left;
-      padding: 5px 0; }
+      width: auto; }
       nav .list-switcher li.new-list input {
         float: left;
         width: 84%; }
@@ -748,16 +748,16 @@ nav {
         color: #1d1e1f;
         cursor: pointer; }
       nav .list-switcher li.new {
-        margin-bottom: 0;
         font-weight: bold;
+        margin-bottom: 0;
         color: #1bd495;
         cursor: pointer; }
         nav .list-switcher li.new:hover {
           color: #15a775; }
       nav .list-switcher li.delete {
-        font-weight: bold;
         color: #c81414;
-        cursor: pointer; }
+        cursor: pointer;
+        font-weight: bold; }
         nav .list-switcher li.delete:hover {
           color: #9a0f0f; }
       nav .list-switcher li.edit, nav .list-switcher li.submit-edit {
@@ -769,15 +769,15 @@ nav {
         color: #1d1e1f;
         font-weight: 400; }
   nav .show {
-    top: 0;
     opacity: 1;
-    pointer-events: auto; }
+    pointer-events: auto;
+    top: 0; }
 
 .no-list {
   color: #15a775;
   cursor: pointer;
-  left: 0;
   height: 20px;
+  left: 0;
   position: absolute;
   right: 0;
   text-align: center;
@@ -792,15 +792,15 @@ form.new-item {
     -ms-transition: all 300ms ease;
     -o-transition: all 300ms ease;
     transition: all 300ms ease;
-    height: 90px;
-    width: 100%;
+    border: 0 none;
+    color: #bbbebf;
     font-size: 42px;
     font-weight: 300;
-    color: #bbbebf;
+    height: 90px;
     line-height: 1;
+    overflow: hidden;
     padding: 28px 110px 20px 20px;
-    border: 0 none;
-    overflow: hidden; }
+    width: 100%; }
     form.new-item textarea:focus {
       -webkit-box-shadow: inset 1px -1px rgba(0, 0, 0, 0.2);
       -moz-box-shadow: inset 1px -1px rgba(0, 0, 0, 0.2);
@@ -808,8 +808,8 @@ form.new-item {
       -o-box-shadow: inset 1px -1px rgba(0, 0, 0, 0.2);
       box-shadow: inset 1px -1px rgba(0, 0, 0, 0.2);
       border: 0 none;
-      outline: none;
-      color: #1d1e1f; }
+      color: #1d1e1f;
+      outline: none; }
     form.new-item textarea.medium {
       font-size: 24px; }
     form.new-item textarea.small {
@@ -827,13 +827,13 @@ form.new-item {
     -moz-background-clip: padding-box;
     background-clip: padding-box;
     background: #1bd495;
+    border: 0 none;
     color: #fff;
     height: 90px;
-    width: 90px;
     position: absolute;
-    top: 0;
     right: 0;
-    border: 0 none; }
+    top: 0;
+    width: 90px; }
     form.new-item input[type="submit"]:hover {
       background: #18bd85; }
 
@@ -848,10 +848,10 @@ form.new-item {
     -ms-transition: color 400ms ease;
     -o-transition: color 400ms ease;
     transition: color 400ms ease;
-    padding: 20px 0;
-    position: relative;
     border-bottom: 1px solid #d5d7d8;
-    cursor: move; }
+    cursor: move;
+    padding: 20px 0;
+    position: relative; }
     .list .item:active, .list .item:focus {
       -webkit-transition: none;
       -moz-transition: none;
@@ -928,15 +928,15 @@ form.new-item {
   -ms-transition: all 300ms ease;
   -o-transition: all 300ms ease;
   transition: all 300ms ease;
-  position: absolute;
-  left: -30px;
-  top: 50%;
-  margin-top: -20px;
-  padding-right: 30px;
-  opacity: 0;
+  color: #ccd0d2;
   font-size: 14px;
   font-weight: normal;
-  color: #ccd0d2; }
+  left: -30px;
+  margin-top: -20px;
+  padding-right: 30px;
+  position: absolute;
+  opacity: 0;
+  top: 50%; }
   .actions:before, .actions:after {
     content: "";
     display: table; }
@@ -945,12 +945,12 @@ form.new-item {
   .actions span {
     background: #fff;
     display: block;
-    width: 40px;
-    margin-left: 10px;
     float: left;
+    line-height: 1;
+    margin-left: 10px;
     text-align: center;
     padding: 13px 0 10px;
-    line-height: 1; }
+    width: 40px; }
     .actions span:hover {
       color: #bbbebf;
       cursor: pointer; }
@@ -963,19 +963,19 @@ form.new-item {
       color: #fff; }
 
 .list-title {
-  position: absolute;
-  display: inline-block;
   background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  display: inline-block;
   font-size: 18px;
-  text-align: center;
-  padding: 20px;
-  width: 100%;
-  top: 0;
   left: 0;
   margin: 0;
-  color: #fff;
-  z-index: 900;
-  pointer-events: none; }
+  padding: 18px;
+  pointer-events: none;
+  position: absolute;
+  text-align: center;
+  top: 0;
+  width: 100%;
+  z-index: 900; }
   .list-title.hidden {
     display: none; }
 

@@ -230,6 +230,9 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
   body {
     font-size: 16px; }
 
+  .list-title {
+    padding: 15px; }
+
   nav {
     zoom: 1;
     background: #fff;
@@ -257,25 +260,28 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       -ms-transition: top 400ms ease;
       -o-transition: top 400ms ease;
       transition: top 400ms ease;
-      top: 200px;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      width: 100%;
-      font-size: 18px;
-      padding: 0 20px;
       border-top: 1px solid #d5d7d8;
+      bottom: 0;
+      font-size: 18px;
+      left: 0;
+      max-height: none;
+      padding: 0 20px;
       overflow: auto;
-      max-height: none; }
+      right: 0;
+      top: 200px;
+      width: 100%; }
       nav .list-switcher li {
+        border-bottom: 1px solid #d5d7d8;
+        border-right: 0 none;
         float: none;
         margin: 0;
-        border-right: 0 none;
-        border-bottom: 1px solid #d5d7d8;
         padding: 20px 0;
         overflow: visible; }
         nav .list-switcher li:first-child {
           width: auto; }
+      nav .list-switcher .new-list a.submit-new-list {
+        font-size: 20px;
+        padding: 2px 10px; }
     nav .show {
       top: 46px; }
 
@@ -293,8 +299,8 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       width: 60px; }
 
   .list {
-    overflow: hidden;
-    margin-bottom: 40px; }
+    margin-bottom: 40px;
+    overflow: hidden; }
 
   .actions {
     display: none;
@@ -307,11 +313,12 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
     margin-top: 10px;
     padding-right: 0; }
     .show-actions .actions span, .edit-mode .actions span {
-      -webkit-box-shadow: 0 0 2px #d5d7d8;
-      -moz-box-shadow: 0 0 2px #d5d7d8;
-      -ms-box-shadow: 0 0 2px #d5d7d8;
-      -o-box-shadow: 0 0 2px #d5d7d8;
-      box-shadow: 0 0 2px #d5d7d8; }
+      -webkit-box-shadow: 0 1px 2px #d5d7d8;
+      -moz-box-shadow: 0 1px 2px #d5d7d8;
+      -ms-box-shadow: 0 1px 2px #d5d7d8;
+      -o-box-shadow: 0 1px 2px #d5d7d8;
+      box-shadow: 0 1px 2px #d5d7d8;
+      border: 1px solid #d5d7d8; }
     .show-actions .actions .submit-edit, .edit-mode .actions .submit-edit {
       bottom: 0;
       left: 0; } }

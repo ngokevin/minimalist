@@ -1,20 +1,24 @@
 @import 'globals';
 
 @media only screen and (max-width: 800px) {
-    // If you change max-width, also change it in the JS
+
     body {
         font-size: 16px;
+    }
+
+    .list-title {
+        padding: 15px;
     }
 
     nav {
         @include clearfix;
         background: #fff;
-        border-bottom: 1px solid $border_color;
+        border-bottom: 1px solid $border-color;
         position: static;
         top: auto;
 
         li {
-            border-right: 1px solid $border_color;
+            border-right: 1px solid $border-color;
             float: left;
             margin: 0;
             position: static;
@@ -30,28 +34,33 @@
 
         .list-switcher {
             @include transition(top 400ms ease);
-            top: 200px;
+            border-top: 1px solid $border-color;
             bottom: 0;
-            left: 0;
-            right: 0;
-            width: 100%;
             font-size: 18px;
-            padding: 0 20px;
-            border-top: 1px solid $border_color;
-            overflow: auto;
+            left: 0;
             max-height: none;
+            padding: 0 20px;
+            overflow: auto;
+            right: 0;
+            top: 200px;
+            width: 100%;
 
             li {
+                border-bottom: 1px solid $border-color;
+                border-right: 0 none;
                 float: none;
                 margin: 0;
-                border-right: 0 none;
-                border-bottom: 1px solid $border_color;
                 padding: 20px 0;
                 overflow: visible;
 
                 &:first-child {
                     width: auto;
                 }
+            }
+
+            .new-list a.submit-new-list {
+                font-size: 20px;
+                padding: 2px 10px;
             }
         }
 
@@ -79,8 +88,8 @@
     }
 
     .list {
-        overflow: hidden;
         margin-bottom: 40px;
+        overflow: hidden;
     }
 
     .actions {
@@ -96,11 +105,11 @@
 
         span {
             @include def-box-shadow();
+            border: 1px solid $border-color;
         }
         .submit-edit {
             bottom: 0;
             left: 0;
         }
     }
-
-} // 700px
+}
