@@ -1,0 +1,6 @@
+{
+    "name": "minimalist-tests",
+    "dependencies": {
+        "karma": "x"
+    }
+}

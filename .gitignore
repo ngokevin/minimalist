@@ -1,2 +1,4 @@
 *.swp
+manifest.webapp
 *.scssc
+node_modules
