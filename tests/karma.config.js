@@ -5,19 +5,22 @@ module.exports = function(config) {
   config.set({
 
     // base path, that will be used to resolve files and exclude
-    basePath: '',
+    basePath: '../',
 
 
     // frameworks to use
-    frameworks: ['jasmine', 'requirejs'],
+    frameworks: ['jasmine'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      {pattern: '*.js', included: false},
-      {pattern: 'lib/*.js', included: false},
-      {pattern: '../media/js/*.js', included: false},
-      {pattern: '../media/js/lib/*.js', included: false},
+      'media/js/lib/angular.min.js',
+      'media/js/lib/jquery.min.js',
+      'media/js/lib/jquery-ui.custom.min.js',
+      {pattern: 'media/js/lib/*.js', included: true},
+      {pattern: 'media/js/*.js', included: true},
+      {pattern: 'tests/lib/*.js', included: true},
+      {pattern: 'tests/*.js', included: true},
     ],
 
 
@@ -57,7 +60,7 @@ module.exports = function(config) {
     // - Safari (only Mac)
     // - PhantomJS
     // - IE (only Windows)
-    browsers: ['Firefox'],
+    browsers: ['PhantomJS'],
 
 
     // If browser does not capture in given timeout [ms], kill it
