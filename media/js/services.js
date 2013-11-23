@@ -26,20 +26,22 @@ angular.module('MinimalistApp', [])
         version: 0
     };
 
+    var lists = storage.lists;  // Shortcut.
     if (localStorage.getItem('storage')) {
-        // Load localStorage into context if exists.
         currentStorage = loads(localStorage.getItem('storage'));
-        if (currentStorage.version == undefined) {
+
+        if (currentStorage.version === undefined) {
+            // Migrate localStorage if finding an older schema.
             storage = migrateFromLegacy(currentStorage);
-            updateStorage();
         } else {
+            // Load localStorage into context if exists.
             storage = currentStorage;
         }
     } else {
         // Initialize localStorage if doesn't exist.
-        localStorage.setItem('storage', dumps(storage));
+        lists = storage.lists;
     }
-    var lists = storage.lists;
+    updateStorage();
 
     function updateStorage() {
         localStorage.setItem('storage', dumps(storage));
@@ -47,13 +49,30 @@ angular.module('MinimalistApp', [])
 
     function migrateFromLegacy(legacyLs) {
         // From older version of Minimalist with a different schema.
-        delList(0);
-        for (var i = 0; i < legacyLs.lists.length; i++) {
-            var listName = legacyLs.lists[i];
-            var listId = this.storage.addList(listName);
+        storage = {
+            autoId: -1,  // Will be pre-incremented.
+            lastViewedListId: 0,
+            lists: {},
+            listIndex: [],
+            version: 0
+        };
+        lists = storage.lists;
+        updateStorage();
 
+        for (var i = 0; i < legacyLs.lists.length; i++) {
+            // Add list.
+            var listName = legacyLs.lists[i];
+            var listId = addList(listName);
+
+            // Sort items by rank.
+            var items = legacyLs[listName].list
+            items.sort(function(a, b) {
+                return a.rank - b.rank;
+            });
+
+            // Add items.
             for (var j = 0; j < legacyLs[listName].list.length; j++) {
-                var item = legacyLs[listName].list[j];
+                var item = items[j];
                 addItem(listId, item.items.join('\n'));
             }
         }
