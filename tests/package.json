@@ -1,6 +1,7 @@
 {
     "name": "minimalist-tests",
     "dependencies": {
-        "karma": "x"
+        "karma": "x",
+        "protractor": "x"
     }
 }

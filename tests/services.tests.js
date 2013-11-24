@@ -3,7 +3,7 @@ describe('ItemService', function(){
     var store = {};
     var ls = function() {
         return JSON.parse(store.storage);
-    }
+    };
 
     beforeEach(function() {
         // setUp.
