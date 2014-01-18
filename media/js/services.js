@@ -26,7 +26,6 @@ angular.module('MinimalistApp', [])
         version: 0
     };
 
-    var lists = storage.lists;  // Shortcut.
     if (localStorage.getItem('storage')) {
         currentStorage = loads(localStorage.getItem('storage'));
 
@@ -37,10 +36,9 @@ angular.module('MinimalistApp', [])
             // Load localStorage into context if exists.
             storage = currentStorage;
         }
-    } else {
-        // Initialize localStorage if doesn't exist.
-        lists = storage.lists;
     }
+
+    var lists = storage.lists;  // Shortcut.
     updateStorage();
 
     function updateStorage() {
@@ -65,7 +63,7 @@ angular.module('MinimalistApp', [])
             var listId = addList(listName);
 
             // Sort items by rank.
-            var items = legacyLs[listName].list
+            var items = legacyLs[listName].list;
             items.sort(function(a, b) {
                 return a.rank - b.rank;
             });

@@ -1,14 +1,32 @@
 describe('minimalist', function() {
-    var items;
+    var $items;
+    var $textarea;
+    var $submit;
 
     beforeEach(function() {
-        browser.get('/');
-        items = element.all($('.item'));  // element.by.css('item');
+        browser.get('http://ngokevin.com/~ngoke/minimalist-dev');
+        // element = namespace. all = grouping. by = selector.
+        // TODO: element($) doesn't work very well.
+        $items = element.all(by.css('.item'));
+        $textarea = element(by.css('#add-item-text'));
+        $submit = element(by.css('#add-item'));
     });
 
-    it('have initial list item', function() {
-        expect(items.count()).toEqual(1);
+    it('has an initial list item', function() {
+        expect($items.count()).toEqual(1);
     });
+
+    it('add items', function() {
+        addItem();
+        setTimeout(function() {
+            expect($items.count()).toEqual(2);
+        });
+    });
+
+    function addItem() {
+        $textarea.sendKeys('lol');
+        $submit.click();
+    }
 
     /*
     it('should list todos', function() {
