@@ -64,6 +64,13 @@ angular.module('MinimalistApp')
     $scope.tapActions = _.debounce(function(e) {
         if (Modernizr.touch) {
             $target = $(e.target).closest('.item');
+
+            // Transition.
+            $target.addClass('clicked');
+            setTimeout(function() {
+                $target.removeClass('clicked');
+            }, 400);
+
             $('.item').not($target).removeClass('show-actions');
             $target.toggleClass('show-actions');
         }

@@ -46,7 +46,7 @@ html body .hidden {
 .list, form.new-item {
     margin: auto;
     max-width: $full;
-    width: 90%;
+    width: 100%;
 }
 
 // Main Nav Links
@@ -230,11 +230,12 @@ form.new-item {
     }
 
     .item {
-        @include transition(color 400ms ease);
+        @include transition(all 200ms);
         border-bottom: 1px solid $border_color;
         cursor: move;
-        padding: 20px 0;
+        padding: 20px 5%;
         position: relative;
+        width: 100%;
         z-index: 10;
 
         &:active, &:focus {
@@ -244,9 +245,19 @@ form.new-item {
                 opacity: 0;
             }
         }
-
         &:last-child {
             border-bottom: 0 none;
+        }
+        &.edit-mode {
+            textarea, .save {
+                display: block;
+            }
+            p {
+                display: none;
+            }
+        }
+         &.clicked {
+            background: $border_color;
         }
 
         .delete:hover {
@@ -264,14 +275,7 @@ form.new-item {
             left: 50px;
             position: relative;
         }
-        &.edit-mode {
-            textarea, .save {
-                display: block;
-            }
-            p {
-                display: none;
-            }
-        }
+
     }
 
     .ui-state-highlight, .ui-state-highlight:last-child {
@@ -321,8 +325,8 @@ form.new-item {
 
 .show-actions, .edit-mode {
     .actions {
-        opacity: 1;
         left: -120px;
+        opacity: 1;
     }
 }
 

@@ -67,7 +67,8 @@
     	  <li class="item c" data-id="{{ _itemId }}"
             ng-class="{'edit-mode': editMode[_listId][_itemId]}"
     	  	  ng-repeat="_itemId in lists[_listId].itemIndex"
-    	  	  ng-mouseenter='showActions($event)' ng-mouseleave='hideActions($event)'>
+    	  	  ng-mouseenter='showActions($event)' ng-mouseleave='hideActions($event)'
+            ng-click='tapActions($event)'>
 
     	  	<p ng-hide="editMode[_listId][_itemId]" ng-click="tapActions($event)">
             {{ lists[_listId].items[_itemId].text }}
