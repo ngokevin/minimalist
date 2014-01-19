@@ -23,7 +23,7 @@ media/js/lib/angular-touch.js
 media/js/lib/jquery-ui.custom.min.js
 media/js/lib/plugins.js
 media/js/lib/underscore-min.js
-img/favicon.ico
+media/img/favicon.ico
 
 NETWORK:
 
