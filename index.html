@@ -30,7 +30,8 @@
        	</a>
         <ul class="list-switcher"
             ng-class="{'show': showListSwitcher}">
-          <li ng-repeat="_listId in listIndex" ng-click="switchList(_listId)"
+          <li class="list-switch"
+              ng-repeat="_listId in listIndex" ng-click="switchList(_listId)"
           	  ng-class="{'active': _listId == list.id}" >
           	{{ lists[_listId].name }}
           </li>
