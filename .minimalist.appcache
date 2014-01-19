@@ -1,18 +1,29 @@
 CACHE MANIFEST
-# v11
-index.html
-css/style.css
-js/jquery.min.js
-js/plugins.js
-js/fireshirt.js
-fonts/ss-legacy.js
-fonts/ss-standard.css
-fonts/ss-standard.eot
-fonts/ss-standard.svg
-fonts/ss-standard.ttf
-fonts/ss-standard.woff
-img/favicon.ico
+# v12
 
+index.html
+media/css/base.css
+media/css/mixins.css
+media/css/mobile.css
+media/css/normalize.css
+media/fonts/ss-legacy.js
+media/fonts/ss-standard.css
+media/fonts/ss-standard.eot
+media/fonts/ss-standard.svg
+media/fonts/ss-standard.ttf
+media/fonts/ss-standard.woff
+media/js/app.js
+media/js/controllers.js
+media/js/services.js
+media/js/lib/angular.min.js
+media/js/lib/jquery.min.js
+media/js/lib/modernizr.min.js
+media/js/lib/sortable.js
+media/js/lib/angular-touch.js
+media/js/lib/jquery-ui.custom.min.js
+media/js/lib/plugins.js
+media/js/lib/underscore-min.js
+img/favicon.ico
 
 NETWORK:
 
