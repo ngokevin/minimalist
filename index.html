@@ -67,15 +67,16 @@
     	  <li class="item c" data-id="{{ _itemId }}"
             ng-class="{'edit-mode': editMode[_listId][_itemId]}"
     	  	  ng-repeat="_itemId in lists[_listId].itemIndex"
-    	  	  ng-mouseenter='showActions($event)' ng-mouseleave='hideActions($event)'
-            ng-click='tapActions($event)'>
+    	  	  ng-mouseenter='showActions($event)' ng-mouseleave='hideActions($event)'>
 
-    	  	<p ng-hide="editMode[_listId][_itemId]">{{ lists[_listId].items[_itemId].text }}</p>
+    	  	<p ng-hide="editMode[_listId][_itemId]" ng-click="tapActions($event)">
+            {{ lists[_listId].items[_itemId].text }}
+          </p>
     	  	<textarea ng-hide="!editMode[_listId][_itemId]">{{ lists[_listId].items[_itemId].text }}</textarea>
 
     	  	<div class="actions">
     	  	  <span class="delete ss-icon"
-                  ng-click="delItem(itemId)"
+                  ng-click="delItem(_itemId)"
                   ng-hide="editMode[_listId][_itemId]">
                   delete</span>
     	  	  <span class="edit ss-icon"

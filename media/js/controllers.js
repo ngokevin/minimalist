@@ -61,12 +61,13 @@ angular.module('MinimalistApp')
             });
         }
     };
-    $scope.tapActions = _.throttle(function(e) {
+    $scope.tapActions = _.debounce(function(e) {
         if (Modernizr.touch) {
-            $(e.target).toggleClass('show-actions');
+            $target = $(e.target).closest('.item');
+            $('.item').not($target).removeClass('show-actions');
+            $target.toggleClass('show-actions');
         }
-    }, 1000);
-
+    });
     $scope.switchList = function(listId) {
         $scope.list = ItemService.getList(listId);
         ItemService.setLastViewedListId(listId);

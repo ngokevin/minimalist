@@ -235,6 +235,7 @@ form.new-item {
         cursor: move;
         padding: 20px 0;
         position: relative;
+        z-index: 10;
 
         &:active, &:focus {
             @include transition(none);
