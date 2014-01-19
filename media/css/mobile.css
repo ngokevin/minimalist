@@ -321,4 +321,7 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       border: 1px solid #d5d7d8; }
     .show-actions .actions .submit-edit, .edit-mode .actions .submit-edit {
       bottom: 0;
-      left: 0; } }
+      left: 0; }
+
+  .item {
+    padding: 20px 5%; } }

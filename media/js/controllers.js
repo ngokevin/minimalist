@@ -42,8 +42,8 @@ angular.module('MinimalistApp')
 
         setEditMode(listId, $item.data('id'), false);
         $('textarea', $item).blur();
-        $item.disableSelection();
-        $('.list').disableSelection();
+        // $item.disableSelection();
+        // $('.list').disableSelection();
 
         ItemService.editItem($scope.list.id, $item.data('id'),
                              $item.find('textarea').val());

@@ -850,7 +850,7 @@ form.new-item {
     transition: all 200ms;
     border-bottom: 1px solid #d5d7d8;
     cursor: move;
-    padding: 20px 5%;
+    padding: 20px 0;
     position: relative;
     width: 100%;
     z-index: 10; }
