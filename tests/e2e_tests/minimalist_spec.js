@@ -7,7 +7,7 @@ describe('minimalist', function() {
         browser.get('http://minimalist.local');
         // element = namespace. all = grouping. by = selector.
         // NOTE: element($) doesn't work very well for me.
-        $items = element.all(by.css('.item p'));
+        $items = element.all(by.css('.current-list .item p'));
         $textarea = element(by.css('#add-item-text'));
         $submit = element(by.css('#add-item'));
     });
@@ -22,18 +22,18 @@ describe('minimalist', function() {
 
     it('add items', function() {
         for (var i = 1; i <= 3; i++) {
-            addItem('lol' + i);
+            addItem('list0-' + i);
         }
         setTimeout(function() {
             expect($items.count()).toEqual(4);
-            expect($items.get(1).getText()).toEqual('lol1');
-            expect($items.get(3).getText()).toEqual('lol3');
+            expect($items.get(1).getText()).toEqual('list0-1');
+            expect($items.get(3).getText()).toEqual('list0-3');
         });
     });
 
     it('delete items', function() {
-        addItem('lol');
-        addItem('lol');
+        addItem('list0-1');
+        addItem('list0-2');
         delItem(0);
         setTimeout(function() {
             // initial 1 + add 2 + del 1 = 2 items left.
@@ -41,10 +41,57 @@ describe('minimalist', function() {
         });
     });
 
-    it('add a list', function() {
-        addList('lol list');
+    it('add list', function() {
+        addList('list1');
+        addItem('list1-1');
+        addItem('list1-2');
+        setTimeout(function() {
+            expect($items.count()).toEqual(2);
+            expect($$('.list-switcher .list-switch').count()).toEqual(2);
+        });
+    });
+
+    it('delete lists', function() {
+        addList('list1');
+        addList('list2');
+        delList();
         setTimeout(function() {
             expect($$('.list-switcher .list-switch').count()).toEqual(2);
+        });
+    });
+
+    it('switch lists', function() {
+        addList('list1');
+        addItem('list1-1');
+        addItem('list1-2');
+        switchList(0);
+        setTimeout(function() {
+            expect($items.count()).toEqual(1);
+        });
+    });
+
+    it('switch prev list', function() {
+        addList('list1');
+        addList('list2');
+        prevList();
+        setTimeout(function() {
+            expect($('h1').getText()).toEqual('list1');
+        });
+    });
+
+    it('switch prev list', function() {
+        addList('list1');
+        addList('list2');
+        nextList();
+        setTimeout(function() {
+            expect($('h1').getText()).toEqual('First List');
+        });
+    });
+
+    it('edit items', function() {
+        editItem(0, 'list0-0');
+        setTimeout(function() {
+            expect($items.get(0).getText()).toEqual('list0-0');
         });
     });
 
@@ -77,5 +124,30 @@ describe('minimalist', function() {
         $('.list-switcher .new').click();
         $('.new-list input').sendKeys(listName);
         $('.submit-new-list').click();
+    }
+
+    function delList() {
+        $('.toggle-lists').click();
+        $('.list-switcher .delete').click();
+    }
+
+    function switchList(n) {
+        $('.toggle-lists').click();
+        $$('.list-switcher li').get(n).click();
+    }
+
+    function editItem(n, text) {
+        $$('.list .item .edit').get(n).click();
+        $$('.list .item textarea').get(n).clear();
+        $$('.list .item textarea').get(n).sendKeys(text);
+        $$('.list .item .submit-edit').get(n).click();
+    }
+
+    function prevList() {
+        $('.prev-list').click();
+    }
+
+    function nextList() {
+        $('.next-list').click();
     }
 });

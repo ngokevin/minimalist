@@ -91,8 +91,8 @@ angular.module('MinimalistApp')
         }
     };
 
+    var clicked;
     $scope.$watch('showAddList', function(newVal) {
-        var clicked;
         $(document).mousedown(function(e) {
             clicked = $(e.target);
         });
