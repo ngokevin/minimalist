@@ -1,5 +1,5 @@
 CACHE MANIFEST
-# v12
+# v13
 
 index.html
 media/css/base.css
@@ -18,11 +18,11 @@ media/js/services.js
 media/js/lib/angular.min.js
 media/js/lib/jquery.min.js
 media/js/lib/modernizr.min.js
-media/js/lib/sortable.js
 media/js/lib/angular-touch.js
 media/js/lib/jquery-ui.custom.min.js
 media/js/lib/plugins.js
 media/js/lib/underscore-min.js
+media/js/lib/jquery.ui.touch-punch.min.js
 media/img/favicon.ico
 
 NETWORK:
