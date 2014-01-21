@@ -323,5 +323,5 @@ THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLI
       bottom: 0;
       left: 0; }
 
-  .item {
+  .list .item {
     padding: 20px 5%; } }
