@@ -74,7 +74,7 @@ angular.module('MinimalistApp')
             $('.item').not($target).removeClass('show-actions');
             $target.toggleClass('show-actions');
         }
-    });
+    }, 100);
     $scope.switchList = function(listId) {
         $scope.list = ItemService.getList(listId);
         ItemService.setLastViewedListId(listId);
